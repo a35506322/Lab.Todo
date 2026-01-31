@@ -6,7 +6,7 @@ public static class APIExtension
 {
     public static void MapGroupEndpoints(this WebApplication app)
     {
-        RouteGroupBuilder endpoints = app.MapGroup("/api").WithOpenApi();
+        RouteGroupBuilder endpoints = app.MapGroup("/api");
         endpoints.MapUserGroupEndpoints();
     }
 

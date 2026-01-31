@@ -2,7 +2,7 @@ namespace TodoAPI.Modules.Auth.User.Login;
 
 public class LoginReqEx_Admin : IExampleProvider
 {
-    public object GetExample() => new LoginRequest { UserId = "admin", Password = "123456" };
+    public object GetExample() => new LoginRequest { UserId = "admin", Password = "p@ssw0rd" };
 }
 
 public class LoginReqEx_Demo : IExampleProvider

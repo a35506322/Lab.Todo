@@ -1,4 +1,4 @@
-namespace TodoAPI.Infrastructures.Scalar;
+namespace TodoAPI.Infrastructures.OpenAPI;
 
 /// <summary>
 /// 提供某個 request 或 response 範例（給 OpenAPI/Scalar 用）.

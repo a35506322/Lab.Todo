@@ -4,7 +4,7 @@ using System.Text.Json.Nodes;
 using Microsoft.AspNetCore.OpenApi;
 using Microsoft.OpenApi;
 
-namespace TodoAPI.Infrastructures.Scalar;
+namespace TodoAPI.Infrastructures.OpenAPI;
 
 /// <summary>
 /// 讀取 Handler 上的 <see cref="ResponseExampleAttribute"/>、<see cref="RequestExampleAttribute"/>，

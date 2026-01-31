@@ -8,9 +8,16 @@ public static class ScalarConfig
         app.MapScalarApiReference(options =>
         {
             options
-                .WithTitle("Lab.TodoAPI")
-                .WithTheme(ScalarTheme.Purple)
-                .WithDefaultHttpClient(ScalarTarget.CSharp, ScalarClient.HttpClient);
+                //.WithTheme(ScalarTheme.Purple)
+                .WithDefaultHttpClient(ScalarTarget.CSharp, ScalarClient.HttpClient)
+                .AddPreferredSecuritySchemes(JwtBearerDefaults.AuthenticationScheme)
+                .AddHttpAuthentication(
+                    JwtBearerDefaults.AuthenticationScheme,
+                    auth =>
+                    {
+                        auth.Token = ""; // 使用者可在 Scalar UI 輸入
+                    }
+                );
         });
     }
 }

@@ -1,10 +1,11 @@
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi(options => options.AddExamples());
-
+builder.Services.AddOpenAPI();
 builder.Services.AddEFCore(builder.Configuration);
+builder.Services.AddJWT(builder.Configuration);
+builder.Services.AddAuthorization();
+builder.Services.AddDI();
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 
@@ -16,6 +17,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+// app.UseCors();
+app.UseAuthentication();
+app.UseAuthorization();
 app.MapGroupEndpoints();
 
 app.Run();

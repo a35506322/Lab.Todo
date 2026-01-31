@@ -1,4 +1,4 @@
-namespace TodoAPI.Infrastructures.Scalar;
+namespace TodoAPI.Infrastructures.OpenAPI;
 
 /// <summary>
 /// 標在 endpoint handler 上，指定該狀態碼的 response 範例由哪個 IExampleProvider 提供.

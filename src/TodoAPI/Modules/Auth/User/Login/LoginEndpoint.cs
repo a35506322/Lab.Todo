@@ -20,6 +20,7 @@ public class LoginEndpoint : IEndpoint
     private static async Task<IResult> Handler(
         LoginRequest request,
         LabContext context,
+        IJWTHelper jwtHelper,
         CancellationToken cancellationToken
     )
     {
@@ -35,6 +36,11 @@ public class LoginEndpoint : IEndpoint
             return APIResponseHelper.BusinessLogicError<LoginResponse>(message: "帳號或密碼不正確");
         }
 
-        return APIResponseHelper.Ok(message: "登入成功", data: new LoginResponse());
+        var token = jwtHelper.GenerateToken(user.UserId);
+        var expiresIn = jwtHelper.GetExpiresIn();
+        return APIResponseHelper.Ok(
+            message: "登入成功",
+            data: new LoginResponse { Token = token, ExpiresIn = expiresIn }
+        );
     }
 }

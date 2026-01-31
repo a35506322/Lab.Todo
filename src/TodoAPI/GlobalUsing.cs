@@ -1,8 +1,16 @@
 global using System.ComponentModel.DataAnnotations;
+global using System.Security.Claims;
+global using System.Text;
+global using Microsoft.AspNetCore.Authentication.JwtBearer;
 global using Microsoft.AspNetCore.Http.HttpResults;
 global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.EntityFrameworkCore;
+global using Microsoft.IdentityModel.JsonWebTokens;
+global using Microsoft.IdentityModel.Tokens;
 global using Scalar.AspNetCore;
 global using TodoAPI.Infrastructures.API;
 global using TodoAPI.Infrastructures.Data;
+global using TodoAPI.Infrastructures.DI;
+global using TodoAPI.Infrastructures.JWT;
+global using TodoAPI.Infrastructures.OpenAPI;
 global using TodoAPI.Infrastructures.Scalar;
