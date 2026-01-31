@@ -26,13 +26,31 @@ public record APIResponse<T>(
     [Display(Name = "例外錯誤")] Exception? Exception = null
 );
 
+/// <summary>
+/// API 統一回應 Helper
+/// </summary>
+/// <remarks>
+/// <para>
+/// Handler 需搭配 <c>Results&lt;T1, T2, ...&gt;</c> union type 宣告返回類型，
+/// 否則類型信息會在返回 IResult 時丟失，導致 Scalar/Swagger Response Schema 無法正確顯示。
+/// </para>
+/// <para>
+/// 可改採 Attributes 設定 Response Type，範例：
+/// <code><![CDATA[
+/// [ProducesResponseType<APIResponse<LoginResponse>>(StatusCodes.Status200OK)]
+/// [ProducesResponseType<APIResponse<LoginResponse>>(StatusCodes.Status422UnprocessableEntity)]
+/// ]]></code>
+/// </para>
+/// </remarks>
 public static class APIResponseHelper
 {
-    public static IResult Ok<T>(string message = "操作成功", T data = default) =>
-        Results.Ok(new APIResponse<T>(Code: Code.成功, Message: message, Data: data));
+    public static Ok<APIResponse<T>> Ok<T>(string message = "操作成功", T data = default!) =>
+        TypedResults.Ok(new APIResponse<T>(Code: Code.成功, Message: message, Data: data));
 
-    public static IResult BadRequest<T>(Dictionary<string, string[]> validationErrors) =>
-        Results.BadRequest(
+    public static BadRequest<APIResponse<T>> BadRequest<T>(
+        Dictionary<string, string[]> validationErrors
+    ) =>
+        TypedResults.BadRequest(
             new APIResponse<T>(
                 Code: Code.資料驗證錯誤,
                 Message: "資料驗證錯誤",
@@ -40,11 +58,13 @@ public static class APIResponseHelper
             )
         );
 
-    public static IResult BusinessLogicError<T>(string message) =>
-        Results.UnprocessableEntity(new APIResponse<T>(Code: Code.商業邏輯錯誤, Message: message));
+    public static UnprocessableEntity<APIResponse<T>> BusinessLogicError<T>(string message) =>
+        TypedResults.UnprocessableEntity(
+            new APIResponse<T>(Code: Code.商業邏輯錯誤, Message: message)
+        );
 
-    public static IResult InternalServerError<T>(Exception exception) =>
-        Results.InternalServerError(
+    public static InternalServerError<APIResponse<T>> InternalServerError<T>(Exception exception) =>
+        TypedResults.InternalServerError(
             new APIResponse<T>(
                 Code: Code.程式內部錯誤,
                 Message: "程式內部錯誤",
