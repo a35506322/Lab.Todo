@@ -6,7 +6,7 @@ public static class UserGroupEndpoints
 {
     public static void MapUserGroupEndpoints(this IEndpointRouteBuilder app)
     {
-        var userEndpoints = app.MapGroup("/user").WithTags("User");
+        RouteGroupBuilder userEndpoints = app.MapGroup("/user").WithTags("User");
         userEndpoints.MapEndpoint<LoginEndpoint>();
     }
 }
