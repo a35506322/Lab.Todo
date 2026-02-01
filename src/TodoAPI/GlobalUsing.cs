@@ -14,3 +14,4 @@ global using TodoAPI.Infrastructures.DI;
 global using TodoAPI.Infrastructures.JWT;
 global using TodoAPI.Infrastructures.OpenAPI;
 global using TodoAPI.Infrastructures.Scalar;
+global using TodoAPI.Modules.Auth.User;

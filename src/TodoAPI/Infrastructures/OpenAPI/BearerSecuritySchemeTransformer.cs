@@ -7,7 +7,7 @@ using Microsoft.OpenApi;
 
 namespace TodoAPI.Infrastructures.OpenAPI;
 
-// https://learn.microsoft.com/zh-tw/aspnet/core/fundamentals/openapi/customize-openapi?view=aspnetcore-9.0
+// 參考文件: https://learn.microsoft.com/zh-tw/aspnet/core/fundamentals/openapi/customize-openapi?view=aspnetcore-9.0
 public class BearerSecuritySchemeTransformer(
     IAuthenticationSchemeProvider authenticationSchemeProvider
 ) : IOpenApiDocumentTransformer

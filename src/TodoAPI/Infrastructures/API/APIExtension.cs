@@ -1,5 +1,3 @@
-using TodoAPI.Modules.Auth.User;
-
 namespace TodoAPI.Infrastructures.API;
 
 public static class APIExtension

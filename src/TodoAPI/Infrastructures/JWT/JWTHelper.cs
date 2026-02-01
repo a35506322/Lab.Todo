@@ -36,17 +36,17 @@ public class JWTHelper(IConfiguration configuration) : IJWTHelper
 
         var userClaimsIdentity = new ClaimsIdentity(claims);
 
-        // Create a SymmetricSecurityKey for JWT Token signatures
+        // 建立 SymmetricSecurityKey 用於 JWT Token 簽名
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(signKey));
 
-        // HmacSha256 MUST be larger than 128 bits, so the key can't be too short. At least 16 and more characters.
+        // HmacSha256 必須大於 128 位元，所以金鑰不能太短。至少 16 個字元。
         // https://stackoverflow.com/questions/47279947/idx10603-the-algorithm-hs256-requires-the-securitykey-keysize-to-be-greater
         var signingCredentials = new SigningCredentials(
             securityKey,
             SecurityAlgorithms.HmacSha256Signature
         );
 
-        // Create SecurityTokenDescriptor
+        // 建立 SecurityTokenDescriptor
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Issuer = issuer,
@@ -58,7 +58,7 @@ public class JWTHelper(IConfiguration configuration) : IJWTHelper
             SigningCredentials = signingCredentials,
         };
 
-        // Generate a JWT, than get the serialized Token result (string)
+        // 生成 JWT，然後獲取序列化後的 Token 結果 (string)
         var tokenHandler = new JsonWebTokenHandler();
         var serializeToken = tokenHandler.CreateToken(tokenDescriptor);
 
