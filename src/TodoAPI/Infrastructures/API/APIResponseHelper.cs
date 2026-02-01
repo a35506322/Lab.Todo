@@ -20,13 +20,34 @@ public enum Code
 /// <param name="Data">status code 200 回傳資料</param>
 /// <param name="ValidationErrors">status code 400 資料驗證錯誤</param>
 /// <param name="Exception">status code 500 例外錯誤</param>
-public record APIResponse<T>(
-    [Display(Name = "狀態碼")] Code Code,
-    [Display(Name = "訊息")] string Message,
-    [Display(Name = "回傳資料")] T? Data = default,
-    [Display(Name = "資料驗證錯誤")] Dictionary<string, string[]>? ValidationErrors = null,
-    [Display(Name = "例外錯誤")] Exception? Exception = null
-);
+/// <param name="TraceId">追蹤 ID</param>
+///
+public record APIResponse<T>
+{
+    public Code Code { get; }
+    public string Message { get; }
+    public T? Data { get; }
+    public Dictionary<string, string[]>? ValidationErrors { get; }
+    public Exception? Exception { get; }
+    public string TraceId { get; }
+
+    public APIResponse(
+        [Display(Name = "狀態碼")] Code Code,
+        [Display(Name = "訊息")] string Message,
+        [Display(Name = "回傳資料")] T? Data = default,
+        [Display(Name = "資料驗證錯誤")] Dictionary<string, string[]>? ValidationErrors = null,
+        [Display(Name = "例外錯誤")] Exception? Exception = null,
+        [Display(Name = "追蹤 ID")] string? TraceId = null
+    )
+    {
+        this.Code = Code;
+        this.Message = Message;
+        this.Data = Data;
+        this.ValidationErrors = ValidationErrors;
+        this.Exception = Exception;
+        this.TraceId = TraceId ?? Activity.Current?.Id ?? "";
+    }
+}
 
 /// <summary>
 /// API 統一回應 Helper
