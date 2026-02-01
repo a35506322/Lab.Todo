@@ -14,4 +14,9 @@ public partial class User
     /// 帳號
     /// </summary>
     public string Password { get; set; } = null!;
+
+    /// <summary>
+    /// 角色
+    /// </summary>
+    public string Role { get; set; } = null!;
 }

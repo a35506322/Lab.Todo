@@ -56,6 +56,10 @@ public partial class LabContext : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasComment("帳號");
+            entity.Property(e => e.Role)
+                .HasMaxLength(10)
+                .IsUnicode(false)
+                .HasComment("角色");
         });
 
         OnModelCreatingPartial(modelBuilder);

@@ -36,7 +36,10 @@ public class LoginEndpoint : IEndpoint
             return APIResponseHelper.BusinessLogicError<LoginResponse>(message: "帳號或密碼不正確");
         }
 
-        var token = jwtHelper.GenerateToken(user.UserId);
+        var token = jwtHelper.GenerateToken(
+            userId: user.UserId,
+            roles: new List<string> { user.Role }
+        );
         var expiresIn = jwtHelper.GetExpiresIn();
         return APIResponseHelper.Ok(
             message: "登入成功",

@@ -4,6 +4,9 @@ public static class JWTConfig
 {
     public static void AddJWT(this IServiceCollection services, IConfiguration configuration)
     {
+        services.AddSingleton<IJWTHelper, JWTHelper>();
+        services.AddScoped<IJWTProfilerHelper, JWTProfilerHelper>();
+
         services
             .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
