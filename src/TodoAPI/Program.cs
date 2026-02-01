@@ -13,10 +13,7 @@ builder.Services.AddJWT(builder.Configuration);
 builder.Services.AddDI();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSecurity();
-builder.Services.AddValidation();
-
-builder.Services.AddProblemDetails();
-builder.Services.AddSingleton<IProblemDetailsService, CustomProblemDetailsService>();
+builder.Services.AddExceptionHandlerConfig();
 
 var app = builder.Build();
 
@@ -28,6 +25,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseExceptionHandler();
 
 // app.UseCors();
 app.UseAuthentication();
@@ -35,5 +33,13 @@ app.UseAuthorization();
 app.MapGroupEndpoints();
 app.MapGet("/test", [EndpointSummary("測試")] () => "Hello World")
     .RequireAuthorization(PolicyNames.RequireAdminRole);
+app.MapGet(
+    "/error",
+    [EndpointSummary("測試錯誤")]
+    () =>
+    {
+        throw new Exception("測試錯誤");
+    }
+);
 
 app.Run();

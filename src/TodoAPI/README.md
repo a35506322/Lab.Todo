@@ -13,7 +13,7 @@
 -   [] 資料存取工具 (Dapper+ Entity Framework Core)
 -   [] 測試專案 (MSTest)
 -   [] Logging (Serilog)
--   [] Exception Handling (Middleware)
+-   [x] Exception Handling (Middleware)
 -   [] HttpClient 最佳示範
 -   [] CORS 設定
 -   [x] RBAC 角色權限管理 (簡易)
