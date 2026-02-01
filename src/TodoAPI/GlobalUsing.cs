@@ -1,4 +1,5 @@
 global using System.ComponentModel.DataAnnotations;
+global using System.Diagnostics;
 global using System.Security.Claims;
 global using System.Text;
 global using System.Text.Json;
@@ -15,6 +16,7 @@ global using TodoAPI.Common.Constant;
 global using TodoAPI.Infrastructures.API;
 global using TodoAPI.Infrastructures.Data;
 global using TodoAPI.Infrastructures.DI;
+global using TodoAPI.Infrastructures.ExceptionHandler;
 global using TodoAPI.Infrastructures.JWT;
 global using TodoAPI.Infrastructures.OpenAPI;
 global using TodoAPI.Infrastructures.Scalar;
