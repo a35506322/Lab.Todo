@@ -173,8 +173,6 @@ public static class ExampleOperationTransformer
         if (!string.IsNullOrWhiteSpace(attr.Name))
             return attr.Name.Trim();
         var typeName = attr.ExampleProviderType.Name;
-        if (typeName.EndsWith("Example", StringComparison.OrdinalIgnoreCase) && typeName.Length > 7)
-            typeName = typeName[..^7];
         return typeName;
     }
 
