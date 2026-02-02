@@ -7,41 +7,58 @@ var builder = WebApplication.CreateBuilder(args);
 //     new WebApplicationOptions { ContentRootPath = contentRoot }
 // );
 
-builder.Services.AddDI();
-builder.Services.AddOpenAPI();
-builder.Services.AddDapper();
-builder.Services.AddRepositories();
-builder.Services.AddEFCore(builder.Configuration);
-builder.Services.AddHttpContextAccessor();
-builder.Services.AddJWT(builder.Configuration);
-builder.Services.AddSecurity();
-builder.Services.AddExceptionHandlerConfig();
+SerilogConfig.AddSerilLog(builder.Configuration, builder.Environment);
 
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+try
 {
-    app.MapOpenApi();
-    app.UseScalar();
-}
+    builder.Services.AddDI();
+    builder.Services.AddOpenAPI();
+    builder.Services.AddDapper();
+    builder.Services.AddRepositories();
+    builder.Services.AddEFCore(builder.Configuration);
+    builder.Services.AddHttpContextAccessor();
+    builder.Services.AddJWT(builder.Configuration);
+    builder.Services.AddSecurity();
+    builder.Services.AddExceptionHandlerConfig();
+    builder.Services.AddSerilog();
 
-app.UseHttpsRedirection();
-app.UseExceptionHandler();
+    var app = builder.Build();
 
-// app.UseCors();
-app.UseAuthentication();
-app.UseAuthorization();
-app.MapGroupEndpoints();
-app.MapGet("/test", [EndpointSummary("測試")] () => "Hello World")
-    .RequireAuthorization(PolicyNames.RequireAdminRole);
-app.MapGet(
-    "/error",
-    [EndpointSummary("測試錯誤")]
-    () =>
+    // Configure the HTTP request pipeline.
+    if (app.Environment.IsDevelopment())
     {
-        throw new Exception("測試錯誤");
+        app.MapOpenApi();
+        app.UseScalar();
     }
-);
 
-app.Run();
+    app.UseHttpsRedirection();
+    app.UseMiddleware<RequestResponseLoggingMiddleware>();
+    app.UseSerilogRequestLogging(opts =>
+        opts.EnrichDiagnosticContext = SerilogConfig.EnrichFromRequest
+    );
+    app.UseExceptionHandler();
+    // app.UseCors();
+    app.UseAuthentication();
+    app.UseAuthorization();
+    app.MapGroupEndpoints();
+    app.MapGet("/test", [EndpointSummary("測試")] () => "Hello World")
+        .RequireAuthorization(PolicyNames.RequireAdminRole);
+    app.MapGet(
+        "/error",
+        [EndpointSummary("測試錯誤")]
+        () =>
+        {
+            throw new Exception("測試錯誤");
+        }
+    );
+    app.LogAppLifeTime();
+    app.Run();
+}
+catch (Exception ex)
+{
+    Log.Fatal(ex, "Application terminated unexpectedly");
+}
+finally
+{
+    Log.CloseAndFlush();
+}

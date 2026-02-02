@@ -17,6 +17,10 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.2" />
     <PackageReference Include="Scalar.AspNetCore" Version="2.12.25" />
+    <PackageReference Include="Serilog.AspNetCore" Version="10.0.0" />
+    <PackageReference Include="Serilog.Exceptions.EntityFrameworkCore" Version="8.4.0+build.694" />
+    <PackageReference Include="Serilog.Exceptions.MsSqlServer" Version="8.4.0+build.694" />
+    <PackageReference Include="Serilog.Sinks.Map" Version="2.0.0" />
   </ItemGroup>
 
 </Project>
