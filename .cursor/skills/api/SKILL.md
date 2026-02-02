@@ -197,6 +197,20 @@ app.MapPost("/login", Handler).DisableValidation();
 
 ## DataBase Optimization
 
+資料夾結構
+
+-   Entities 資料庫實體類別，**如需知道資料欄位定義可參考此資料夾**
+-   XXXContext EF Core 資料庫上下文
+-   XXDapperContext 資料庫 Dapper 連線工具
+
+```text
+├── Infrastructures/
+│   ├── Data/
+│   │   ├── Entities/  # 資料庫實體類別
+│   │   ├── XXXContext.cs  # XXX 資料庫上下文
+│   │   ├── XXXDapperContext.cs  # XXX Dapper 連線工具
+```
+
 1. EF Core 查詢資料時使用 `AsNoTracking()` 避免不必要的資料庫查詢
 
 ```csharp
@@ -206,6 +220,148 @@ var user = await context
         x => x.UserId == request.UserId && x.Password == request.Password,
         cancellationToken
     );
+```
+
+2. EF Core + Dapper 混合使用
+
+如需**撰寫 SQL 操作**請使用 EF Core + Dapper 的擴充方法，方便管理上下文和交易
+
+```csharp
+
+✅ 引用 EF Core + Dapper 擴充方法
+✅ CRUD 操作
+var result = await context.Database.DapperExecuteAsync(
+    commandText:"INSERT INTO Users (Name, Email) VALUES (@Name, @Email)",
+    param: new { Name = "John Doe", Email = "john.doe@example.com" }
+);
+
+✅ 查詢操作
+var result = await context.Database.DapperQueryAsync<User>(
+    commandText: "SELECT * FROM Users WHERE Email = @Email",
+    param: new { Email = "john.doe@example.com" }
+)
+```
+
+3. 不要 N+1 查詢問題
+
+```csharp
+❌ N+1
+var todos = await context.Todos.ToListAsync(cancellationToken);
+foreach (var todo in todos)
+{
+    todo.User = await context.Users.FirstOrDefaultAsync(u => u.UserId == todo.UserId);
+}
+
+✅ 兩次查詢：先取 Todo，再取對應的 User
+var todos = await context.Todos.AsNoTracking().ToListAsync(cancellationToken);
+var userIds = todos.Select(t => t.UserId).Distinct().ToList();
+
+var users = await context.Users
+    .AsNoTracking()
+    .Where(u => userIds.Contains(u.UserId))
+    .ToDictionaryAsync(u => u.UserId, u => u, cancellationToken);
+
+foreach (var todo in todos)
+{
+    todo.User = users.GetValueOrDefault(todo.UserId);
+}
+```
+
+4. Select 指定欄位
+
+```csharp
+❌ BAD: 使用 Select *
+var users = await context.User.ToListAsync();
+
+✅ 使用 Select 指定欄位
+var users = await context.User.Select(x => new UserDto{ UserId = x.UserId, UserName = x.UserName }).ToListAsync();
+
+✅ 建立 DTO 類別
+public class UserDto
+{
+    /// <summary>
+    /// 使用者 ID
+    /// </summary>
+    public int UserId { get; set; }
+
+    /// <summary>
+    /// 使用者名稱
+    /// </summary>
+    public string UserName { get; set; } = string.Empty;
+}
+```
+
+4. Transaction 交易管理
+
+**預設使用 SaveChangesAsync()**
+
+```csharp
+    context.Users.Add(newUser);
+    context.Roles.Add(newRole);
+
+    ✅ 使用 `SaveChangesAsync()` 保存變更
+    await context.SaveChangesAsync(cancellationToken);
+```
+
+**使用 `BeginTransactionAsync()` 明確管理交易**
+
+```csharp
+
+✅ 使用 `BeginTransactionAsync()` 明確管理交易
+using var transaction = await context.Database.BeginTransactionAsync(cancellationToken);
+
+try
+{
+    // EF Core 操作
+    context.User.Add(newUser);
+    await context.SaveChangesAsync(cancellationToken);
+
+    // Dapper 操作（自動參與同一個交易）
+    await context.Database.DapperExecuteAsync(
+        commandText: "UPDATE Role SET UserCount = UserCount + 1 WHERE RoleId = @RoleId",
+        param: new { RoleId = newUser.RoleId }
+    );
+
+    // 再次 EF Core 操作
+    context.ProcessLogs.Add(newProcessLog);
+    await context.SaveChangesAsync(cancellationToken);
+
+    ✅ 提交交易
+    await transaction.CommitAsync(cancellationToken);
+
+    return APIResponseHelper.Ok("操作成功");
+}
+catch (Exception ex)
+{
+    ✅ 發生錯誤時回滾
+    await transaction.RollbackAsync(cancellationToken);
+    return APIResponseHelper.InternalServerError(exceptionDetails: new ExceptionDetails(type: ex.GetType().Name, title: "資料庫操作失敗", detail: ex.ToString(), requestId: httpContext.TraceIdentifier));
+}
+```
+
+**多個 SaveChangesAsync 需要原子性**
+
+```csharp
+using var transaction = await context.Database.BeginTransactionAsync(cancellationToken);
+
+try
+{
+    // 第一個操作
+    context.Users.Add(newUser);
+    await context.SaveChangesAsync(cancellationToken);
+
+    // 第二個操作（如果失敗，第一個也要回滾）
+    context.Roles.Add(newRole);
+    await context.SaveChangesAsync(cancellationToken);
+
+    await transaction.CommitAsync(cancellationToken);
+    return APIResponseHelper.Ok("操作成功");
+}
+catch (Exception ex)
+{
+    await transaction.RollbackAsync(cancellationToken);
+    return APIResponseHelper.InternalServerError(exceptionDetails: new ExceptionDetails(type: ex.GetType().Name, title: "資料庫操作失敗", detail: ex.ToString(), requestId: httpContext.TraceIdentifier));
+}
 ```
 
 ## Endpoint Open API

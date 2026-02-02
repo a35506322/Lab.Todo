@@ -7,11 +7,13 @@ var builder = WebApplication.CreateBuilder(args);
 //     new WebApplicationOptions { ContentRootPath = contentRoot }
 // );
 
-builder.Services.AddOpenAPI();
-builder.Services.AddEFCore(builder.Configuration);
-builder.Services.AddJWT(builder.Configuration);
 builder.Services.AddDI();
+builder.Services.AddOpenAPI();
+builder.Services.AddDapper();
+builder.Services.AddRepositories();
+builder.Services.AddEFCore(builder.Configuration);
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddJWT(builder.Configuration);
 builder.Services.AddSecurity();
 builder.Services.AddExceptionHandlerConfig();
 
