@@ -1,3 +1,11 @@
+using Serilog.Events;
+using Serilog.Exceptions;
+using Serilog.Exceptions.Core;
+using Serilog.Exceptions.EntityFrameworkCore.Destructurers;
+using Serilog.Exceptions.MsSqlServer.Destructurers;
+using Serilog.Formatting.Compact;
+using Serilog.Sinks.SystemConsole.Themes;
+
 namespace TodoAPI.Infrastructures.Logging;
 
 public static class SerilogConfig

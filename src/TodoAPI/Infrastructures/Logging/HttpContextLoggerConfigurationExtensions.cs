@@ -1,3 +1,5 @@
+using Serilog.Configuration;
+
 namespace TodoAPI.Infrastructures.Logging;
 
 public static class HttpContextLoggerConfigurationExtensions

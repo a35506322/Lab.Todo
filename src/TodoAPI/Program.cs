@@ -51,6 +51,16 @@ try
             throw new Exception("測試錯誤");
         }
     );
+    app.MapGet(
+        "/test-log",
+        [EndpointSummary("測試 Log")]
+        (ILogger<Program> logger) =>
+        {
+            logger.LogOperationStart("測試 Log", new { UserId = "1234567890" });
+            logger.LogOperationEnd("測試 Log", new { UserId = "1234567890" });
+            logger.LogOperationFailed("測試 Log", new Exception("測試錯誤"));
+        }
+    );
     app.LogAppLifeTime();
     app.Run();
 }

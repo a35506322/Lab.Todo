@@ -1,3 +1,6 @@
+using Serilog.Core;
+using Serilog.Events;
+
 namespace TodoAPI.Infrastructures.Logging;
 
 public class CustomHttpContextEnricher : ILogEventEnricher
