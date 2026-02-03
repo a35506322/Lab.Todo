@@ -17,7 +17,7 @@ public class LoginEndpoint : IEndpoint
         typeof(LoginResEx_422_AccountOrPasswordIncorrect),
         "帳號或密碼不正確"
     )]
-    private static async Task<IResult> Handler(
+    public static async Task<IResult> Handler(
         LoginRequest request,
         LabContext context,
         IJWTHelper jwtHelper,

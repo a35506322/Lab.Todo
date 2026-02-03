@@ -11,7 +11,8 @@
 -   [x] JWT 驗證
 -   [x] Model 驗證 + 統一回傳驗證錯誤訊息
 -   [x] 資料存取工具 (Dapper+ Entity Framework Core)
--   [ ] 測試專案 (MSTest)
+-   [x] 單元測試專案 (MSTest)
+-   [ ] 整合測試專案 (MSTest)
 -   [x] Logging (Serilog)
 -   [x] Exception Handling (Middleware)
 -   [x] HttpClient 封裝最佳實踐

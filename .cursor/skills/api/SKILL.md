@@ -1,5 +1,5 @@
 ---
-name: api-patterns
+name: api
 description: 適用於 API 專案最佳實踐模式，裡面包含 API 垂直切割、DataBase Optimization、Log、ExceptionHandler、Endpoint Open API、Adapters (第三方 API 封裝) 等
 ---
 
@@ -66,7 +66,7 @@ public class LoginEndpoint : IEndpoint
         typeof(LoginResEx_422_AccountOrPasswordIncorrect),
         "帳號或密碼不正確"
     )]
-    private static async Task<IResult> Handler(
+    public static async Task<IResult> Handler(
         LoginRequest request,
         LabContext context,
         IJWTHelper jwtHelper,
