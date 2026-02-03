@@ -21,6 +21,7 @@ try
     builder.Services.AddSecurity();
     builder.Services.AddExceptionHandlerConfig();
     builder.Services.AddSerilog();
+    builder.Services.AddAdapters();
 
     var app = builder.Build();
 
@@ -59,6 +60,15 @@ try
             logger.LogOperationStart("測試 Log", new { UserId = "1234567890" });
             logger.LogOperationEnd("測試 Log", new { UserId = "1234567890" });
             logger.LogOperationFailed("測試 Log", new Exception("測試錯誤"));
+        }
+    );
+    app.MapGet(
+        "/test-youbike",
+        [EndpointSummary("測試 YouBike")]
+        async (IYouBikeAdapter youBikeAdapter) =>
+        {
+            var youBikeImmediate = await youBikeAdapter.GetYouBikeImmediateAsync();
+            return Results.Ok(youBikeImmediate);
         }
     );
     app.LogAppLifeTime();

@@ -99,6 +99,29 @@ public void ExampleFunction(int parameter)
 ExampleFunction(parameter: 1);
 ```
 
+-   使用 `HttpClient` 設定 BaseAddress 時務必結尾要加 "/"
+
+```csharp
+❌ BAD: 設定 BaseAddress 時務必結尾沒加 "/"
+
+httpClient.BaseAddress = new Uri("https://api.example.com");
+
+✅ GOOD: 設定 BaseAddress 時務必結尾要加 "/"
+httpClient.BaseAddress = new Uri("https://api.example.com/");
+```
+
+-   使用 `JsonHelper` 進行 JSON 序列化與反序列化
+
+```csharp
+❌ BAD: 使用 JsonSerializer 進行 JSON 序列化與反序列化
+var json = JsonSerializer.Serialize(obj);
+var result = JsonSerializer.Deserialize<T>(json);
+
+✅ GOOD: 使用 JsonHelper 進行 JSON 序列化與反序列化
+var json = JsonHelper.ToJson(obj);
+var result = JsonHelper.FromJson<T>(json);
+```
+
 ## 使用 MCP 情境
 
 -   如有套件相關不清楚的使用 `Context7` MCP 進行查詢最佳使用做法

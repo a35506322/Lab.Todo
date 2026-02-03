@@ -14,7 +14,7 @@
 -   [ ] 測試專案 (MSTest)
 -   [x] Logging (Serilog)
 -   [x] Exception Handling (Middleware)
--   [ ] HttpClient 最佳示範
+-   [x] HttpClient 最佳示範
 -   [ ] CORS 設定
 -   [x] RBAC 角色權限管理 (簡易)
 
@@ -31,3 +31,4 @@
 4. 如之後有共用專案如排程等，可以考慮將 Common 資料夾獨立成類別庫
 5. Log 收集器強烈推薦使用 Seq，如果要使用在 Serlog 設定即可
 6. 如需要格是化 Log 訊息，可以使用 `LoggerExtension` 類別繼續新增
+7. 可以考慮 appsettings.json 設定的設定使用 Options 模式進行強型別
