@@ -1,0 +1,8 @@
+.config
+.vs
+TestResults
+
+src/**/appsettings*.json
+src/**/bin
+src/**/obj
+src/**/Logs

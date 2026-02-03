@@ -14,7 +14,7 @@
 -   [ ] 測試專案 (MSTest)
 -   [x] Logging (Serilog)
 -   [x] Exception Handling (Middleware)
--   [x] HttpClient 最佳示範
+-   [x] HttpClient 封裝最佳實踐
 -   [ ] CORS 設定
 -   [x] RBAC 角色權限管理 (簡易)
 

@@ -1,0 +1,102 @@
+---
+globs: **/TodoAPI/**/*.cs
+alwaysApply: false
+description: TodoAPI 專案結構和架構指南
+---
+
+# TodoAPI 專案結構指南
+
+## 專案用途
+
+提供 Todo List API 給予使用者進行待辦事項管理。
+
+## 技術堆疊
+
+-   .NET 10.0 + Minimal API
+-   Entity Framework Core 10.0.2
+-   Scalar 2.12.25 (API 文件)
+-   JWT Bearer Authentication
+-   CORS 設定
+-   RBAC 角色權限管理 (簡易)
+
+## 架構模式
+
+-   **垂直切片架構** : 每個功能獨立資料夾，包含 Endpoint、Models、Examples
+
+## 資料夾結構
+
+```
+TodoAPI # Todo API 專案根目錄
+├── Common # 共用類別
+│   └── Constant
+│       ├── PolicyNames.cs # 權限政策名稱
+│       ├── RoleNames.cs # 角色名稱
+│   └── Enum
+│       ├── TodoStatus.cs # Todo 狀態
+│       └── UserStatus.cs # User 狀態
+├── Infrastructures # 基礎設施層
+│   ├── API # API 共用功能
+│   │   ├── APIExtension.cs # API 擴充方法
+│   │   ├── APIResponseHelper.cs # API 回應輔助類別
+│   │   └── IEndpoint.cs # Endpoint 介面
+│   ├── Data # 資料存取層
+│   │   ├── Entities # 資料庫實體類別
+│   │   │   ├── DapperConfig.cs # Dapper 設定
+│   │   │   ├── Todo.cs # Todo 實體
+│   │   │   └── User.cs # User 實體
+│   │   ├── DapperContext.cs # Dapper 連線工具
+│   │   ├── EFCoreConfig.cs # EF Core 設定
+│   │   ├── EFCoreExtensions.cs # EF Core 擴充方法
+│   │   ├── IDapperContext.cs # Dapper 連線介面
+│   │   └── LabContext.cs # EF Core 資料庫上下文
+│   ├── DI # 依賴注入設定
+│   │   └── DIConfig.cs # DI 設定
+│   ├── ExceptionHandler # 例外處理
+│   │   ├── CustomProblemDetailsService.cs # 自訂問題詳細資訊服務
+│   │   ├── ExceptionHandlerConfig.cs # 例外處理設定
+│   │   ├── InternalServerExceptionHandler.cs # 內部伺服器例外處理器
+│   │   └── ValidationMessage # 驗證訊息
+│   │       ├── ModelBindingMessage.Designer.cs
+│   │       ├── ModelBindingMessage.resx
+│   │       ├── ValidationErrorLocalizer.cs # 驗證錯誤本地化
+│   │       ├── ValidationMetadataMessage.Designer.cs
+│   │       └── ValidationMetadataMessage.resx
+│   ├── JWT # JWT 認證
+│   │   ├── IJWTHelper.cs # JWT 輔助介面
+│   │   ├── IJWTProfilerHelper.cs # JWT Profiler 輔助介面
+│   │   ├── JWTConfig.cs # JWT 設定
+│   │   ├── JWTHelper.cs # JWT 輔助類別
+│   │   └── JWTProfilerHelper.cs # JWT Profiler 輔助類別
+│   ├── OpenAPI # OpenAPI 設定
+│   │   ├── BearerSecuritySchemeTransformer.cs # Bearer 安全方案轉換器
+│   │   ├── ExampleOperationTransformer.cs # 範例操作轉換器
+│   │   ├── IExampleProvider.cs # 範例提供者介面
+│   │   ├── OpenAPIConfig.cs # OpenAPI 設定
+│   │   ├── RequestExampleAttribute.cs # Request 範例屬性
+│   │   └── ResponseExampleAttribute.cs # Response 範例屬性
+│   ├── Repositories # 儲存庫層
+│   │   └── RepositoriesConfig.cs # 儲存庫設定
+│   ├── Scalar # Scalar API 文件
+│   │   └── ScalarConfig.cs # Scalar 設定
+│   └── Security # 安全性設定
+│       ├── CustomAuthorizationMiddlewareResultHandler.cs # 自訂授權中介軟體結果處理器
+│       └── SecurityConfig.cs # 安全性設定
+├── Modules # 功能模組 (垂直切割架構)
+│   └── Auth # 認證模組
+│       └── User # 使用者
+│           ├── Login # 登入功能
+│           │   ├── Examples.cs # 範例
+│           │   ├── LoginEndpoint.cs # 登入端點
+│           │   └── Models.cs # 模型
+│           └── UserGroupEndpoints.cs # 使用者群組端點
+├── CodeTemplates # 程式碼範本
+│   └── EFCore
+│       ├── DbContext.t4
+│       └── EntityType.t4
+├── GlobalUsing.cs # 全域 using
+├── Program.cs # 程式進入點
+├── README.md # 專案說明
+├── TodoAPI.csproj # 專案檔
+├── appsettings.json # 應用程式設定
+├── appsettings.Development.json # 開發環境設定
+```
