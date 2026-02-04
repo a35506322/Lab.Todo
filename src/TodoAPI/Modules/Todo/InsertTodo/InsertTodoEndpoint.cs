@@ -16,7 +16,7 @@ public class InsertTodoEndpoint : IEndpoint
         typeof(InsertTodoResEx_Ok_Success),
         "新增待辦事項成功"
     )]
-    public static async Task<IResult> Handler(
+    private static async Task<IResult> Handler(
         InsertTodoRequest request,
         LabContext context,
         IJWTProfilerHelper jwtProfilerHelper,

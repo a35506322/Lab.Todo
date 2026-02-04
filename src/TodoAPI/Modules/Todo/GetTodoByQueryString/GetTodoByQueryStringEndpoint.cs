@@ -25,7 +25,7 @@ public class GetTodoByQueryStringEndpoint : IEndpoint
         typeof(GetTodoByQueryStringResEx_Ok_Success),
         "查詢待辦事項清單成功"
     )]
-    public static async Task<IResult> Handler(
+    private static async Task<IResult> Handler(
         [AsParameters] GetTodoByQueryStringRequest request,
         LabContext context,
         CancellationToken cancellationToken

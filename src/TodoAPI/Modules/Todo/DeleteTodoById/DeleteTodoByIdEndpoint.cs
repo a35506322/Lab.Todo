@@ -22,7 +22,7 @@ public class DeleteTodoByIdEndpoint : IEndpoint
         typeof(DeleteTodoByIdResEx_422_TodoNotFound),
         "找不到指定的待辦事項"
     )]
-    public static async Task<IResult> Handler(
+    private static async Task<IResult> Handler(
         long id,
         LabContext context,
         CancellationToken cancellationToken
