@@ -1,8 +1,6 @@
-using System.Text.Encodings.Web;
-
 namespace TodoAPI.Infrastructures.ExceptionHandler;
 
-public class InternalServerExceptionHandler(IWebHostEnvironment environment) : IExceptionHandler
+public class InternalServerExceptionHandler : IExceptionHandler
 {
     public async ValueTask<bool> TryHandleAsync(
         HttpContext httpContext,
@@ -27,19 +25,7 @@ public class InternalServerExceptionHandler(IWebHostEnvironment environment) : I
         );
 
         httpContext.Response.StatusCode = StatusCodes.Status500InternalServerError;
-        if (environment.IsDevelopment())
-        {
-            var jsonOptions = new JsonSerializerOptions
-            {
-                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-                WriteIndented = true,
-            };
-            await httpContext.Response.WriteAsJsonAsync(errorResponse, jsonOptions);
-        }
-        else
-        {
-            await httpContext.Response.WriteAsJsonAsync(errorResponse);
-        }
+        await httpContext.Response.WriteAsJsonAsync(errorResponse);
 
         return true;
     }
