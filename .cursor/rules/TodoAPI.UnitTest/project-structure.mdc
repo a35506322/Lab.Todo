@@ -19,17 +19,20 @@ description: TodoAPI.UnitTest 專案結構和架構指南
 ## 資料夾結構
 
 ```
-TodoAPI.UnitTest # TodoAPI 單元測試專案
-├── EndpointTests # 端點測試
-│   ├── DeleteTodoByIdEndpointTests.cs # 刪除 Todo 端點測試
-│   ├── GetTodoByIdEndpointTests.cs # 取得單一 Todo 端點測試
-│   ├── GetTodoByQueryStringEndpointTests.cs # 查詢 Todo 端點測試
-│   ├── InsertTodoEndpointTests.cs # 新增 Todo 端點測試
-│   ├── LoginEndpointTests.cs # 登入端點測試
-│   └── UpdateTodoByIdEndpointTests.cs # 更新 Todo 端點測試
-├── Helpers # 測試輔助工具
-│   └── DatabaseTestHelper.cs # 資料庫測試輔助類別（建立測試用 User）
+TodoAPI.IntegrationTest # 整合測試專案
 ├── GlobalUsing.cs # 全域 using 語句
-├── MSTestSettings.cs # MSTest 設定（並行測試設定）
-└── TodoAPI.UnitTest.csproj # 專案檔
+├── Helpers # 測試輔助類別
+│   ├── CustomWebApplicationFactory.cs # 自訂 WebApplicationFactory，用於建立測試用的 WebApplication
+│   └── TestAuthHelper.cs # 測試認證輔助類別，提供測試用的認證功能
+├── Tests # 測試檔案
+│   ├── Auth # 認證模組測試
+│   │   └── LoginEndpointTests.cs # 登入端點整合測試
+│   └── Todo # Todo 模組測試
+│       ├── DeleteTodoByIdEndpointTests.cs # 刪除 Todo 端點整合測試
+│       ├── GetTodoByIdEndpointTests.cs # 取得單一 Todo 端點整合測試
+│       ├── GetTodoByQueryStringEndpointTests.cs # 查詢 Todo 端點整合測試
+│       ├── InsertTodoEndpointTests.cs # 新增 Todo 端點整合測試
+│       ├── TodoCrudFlowTests.cs # Todo CRUD 流程整合測試
+│       └── UpdateTodoByIdEndpointTests.cs # 更新 Todo 端點整合測試
+└── TodoAPI.IntegrationTest.csproj # 整合測試專案檔
 ```

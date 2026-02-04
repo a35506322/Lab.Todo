@@ -7,6 +7,13 @@ description: 適用於 MSTest 單元測試最佳實踐模式，裡面包含 MSTe
 
 適用於 MSTest 單元測試最佳實踐模式，裡面包含`MSTest 單元測試`、`NSubstitute Mock`、`Entity Framework Core InMemory`等
 
+## 使用場景
+
+-   撰寫/修改輔助工具
+-   撰寫/修改純函數
+
+**note:Endpoint Handler 方法 不要寫單元測試，改寫整合測試**
+
 ## 測試工具
 
 -   MSTest
@@ -14,111 +21,9 @@ description: 適用於 MSTest 單元測試最佳實踐模式，裡面包含 MSTe
 -   Entity Framework Core InMemory (In-Memory 資料庫)
 -   UnitTesting.Assert (斷言工具)
 
-## Endpoint MSTest 單元測試
+## MSTest 單元測試
 
-主要測試 Endpoint 的 Handler 方法
-
-### 資料夾結構
-
-```
-├── EndpointTest # Endpoint 測試
-│   └── [XXX]EndpointTests.cs # [XXX] Endpoint 測試
-```
-
-### 命名規範
-
-| 類型     | 命名規範                   |
-| -------- | -------------------------- |
-| 測試檔名 | [XXX]EndpointTests.cs      |
-| 測試方法 | 方法名\_測試情境\_預期結果 |
-
-### 範例
-
-```csharp
-namespace TodoAPI.UnitTests.API.Modules.Auth.User;
-
-[TestClass]
-public class LoginEndpointTests
-{
-    private LabContext _context = null!;
-    private IJWTHelper _jwtHelper = null!;
-
-    [TestInitialize]
-    public void Setup()
-    {
-        ✅ 建立 In-Memory 資料庫
-        var options = new DbContextOptionsBuilder<LabContext>()
-            .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
-            .Options;
-        _context = new LabContext(options);
-
-        ✅ 使用 NSubstitute 建立 Mock JWT Helper
-        _jwtHelper = Substitute.For<IJWTHelper>();
-    }
-
-    [TestCleanup]
-    public void Cleanup()
-    {
-        _context?.Dispose();
-    }
-
-    [TestMethod]
-    public async Task Handler_ValidCredentials_ReturnsOk()
-    {
-        ✅ 3A測試 Arrange Act Assert
-        // Arrange
-        var userId = "admin";
-        var password = "p@ssw0rd";
-        var role = "Admin";
-        var token = "mock-jwt-token";
-        var expiresIn = 60;
-
-        // 準備測試資料
-        await DatabaseTestHelper.CreateTestUserAsync(_context, userId, password, role);
-
-        // Mock JWT Helper 行為
-        _jwtHelper
-            .GenerateToken(userId, Arg.Any<string>(), Arg.Any<IList<string>>())
-            .Returns(token);
-        _jwtHelper.GetExpiresIn().Returns(expiresIn);
-
-        var request = new LoginRequest { UserId = userId, Password = password };
-
-        // Act
-        var result = await LoginEndpoint.Handler(
-            request,
-            _context,
-            _jwtHelper,
-            CancellationToken.None
-        );
-
-        // Assert
-        Assert.IsInstanceOfType(result, typeof(Ok<APIResponse<LoginResponse>>));
-
-        var okResult = (Ok<APIResponse<LoginResponse>>)result;
-        Assert.IsNotNull(okResult.Value);
-        Assert.AreEqual(Code.成功, okResult.Value.Code);
-        Assert.AreEqual("登入成功", okResult.Value.Message);
-        Assert.AreEqual(token, okResult.Value.Data!.Token);
-        Assert.AreEqual(expiresIn, okResult.Value.Data!.ExpiresIn);
-
-        ✅ 驗證 JWT Helper 被正確呼叫
-        _jwtHelper
-            .Received(1)
-            .GenerateToken(
-                userId,
-                Arg.Any<string>(),
-                Arg.Is<IList<string>>(roles => roles.Contains(role))
-            );
-        _jwtHelper.Received(1).GetExpiresIn();
-    }
-}
-
-```
-
-## 常用工具 MSTest 單元測試
-
-主要測試引用專案的 Adapter、Helper、Service、Repository 等類別的方法
+主要測試引用專案的 Adapter、Helper、Repository 等類別的方法
 
 ### 資料夾結構
 

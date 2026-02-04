@@ -5,6 +5,7 @@
 ## 專業技能
 
 -   .NET Core API 後端開發
+-   MSTest 單元/整合測試
 -   MS SQL Server 資料庫開發
 -   Entity Framework Core / Dapper 資料存取
 -   VITE + VUE 3 前端開發
@@ -35,10 +36,12 @@
         └── SKILL.md # API 技能說明
     └── mstest-unit-test # 單元測試技能
         └── SKILL.md # 單元測試技能說明
-    └── tdd-workflow # 測試驅動開發技能
-        └── SKILL.md # 測試驅動開發技能說明
+    └── backend-tdd-workflow # 後端測試驅動開發技能
+        └── SKILL.md # 後端測試驅動開發技能說明
     └── backend-coverage-report # 後端覆蓋率測試報告技能
         └── SKILL.md # 後端覆蓋率測試報告技能說明
+    └── mstest-integration-test # 後端整合測試技能
+        └── SKILL.md # 後端整合測試技能說明
 ```
 
 ## 步驟 2：工作前確認 rules 及 skills 已正確閱讀
@@ -49,11 +52,13 @@
 
 2. **確認相關技能讀取完畢**：涉及以下工作時，**必須**在執行任務前先讀取對應 skill：
 
-| 工作領域                                                                         | 必須讀取的 skill                           |
-| -------------------------------------------------------------------------------- | ------------------------------------------ |
-| API 端點、資料庫操作、Middleware、EF/Dapper、Log、ExceptionHandler、CORS、Scalar | `.cursor/skills/api/SKILL.md`              |
-| 單元測試                                                                         | `.cursor/skills/mstest-unit-test/SKILL.md` |
-| 測試驅動開發                                                                     | `.cursor/skills/tdd-workflow/SKILL.md`     |
+| 工作領域                                                                         | 必須讀取的 skill                                  |
+| -------------------------------------------------------------------------------- | ------------------------------------------------- |
+| API 端點、資料庫操作、Middleware、EF/Dapper、Log、ExceptionHandler、CORS、Scalar | `.cursor/skills/api/SKILL.md`                     |
+| 後端單元測試                                                                     | `.cursor/skills/mstest-unit-test/SKILL.md`        |
+| 後端測試驅動開發                                                                 | `.cursor/skills/backend-tdd-workflow/SKILL.md`    |
+| 後端覆蓋率測試報告                                                               | `.cursor/skills/backend-coverage-report/SKILL.md` |
+| 後端整合測試                                                                     | `.cursor/skills/mstest-integration-test/SKILL.md` |
 
 不確定時，以涵蓋範圍較廣的 skill 為準（例如討論 API 就讀 api skill）。
 

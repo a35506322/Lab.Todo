@@ -1,5 +1,5 @@
 <Solution>
   <Project Path="src/TodoAPI/TodoAPI.csproj" />
+  <Project Path="test/TodoAPI.IntegrationTest/TodoAPI.IntegrationTest.csproj" Id="690dd5ef-69b7-4053-8e7f-e244c2954653" />
   <Project Path="test/TodoAPI.UnitTest/TodoAPI.UnitTest.csproj" Id="07b0a31f-fc4d-4a5a-ada5-60aaae794942" />
-  <Project Path="test/TodoAPI.UnitTests/TodoAPI.UnitTests.csproj" Id="80ad1ee5-2933-4df1-a0af-6c6cf3d07340" />
 </Solution>

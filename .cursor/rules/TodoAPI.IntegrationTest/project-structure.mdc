@@ -1,0 +1,27 @@
+---
+globs: **/TodoAPI.IntegrationTest/**/*.cs
+alwaysApply: false
+description: TodoAPI.IntegrationTest 專案結構和架構指南
+---
+
+# TodoAPI.IntegrationTest 專案結構指南
+
+## 專案用途
+
+提供 TodoAPI 整合測試。
+
+## 技術堆疊
+
+-   MSTest
+-   NSubstitute
+-   Entity Framework Core InMemory
+
+## 資料夾結構
+
+```
+TodoAPI.IntegrationTest # TodoAPI 整合測試專案
+├── HelperTests # 輔助工具測試
+├── GlobalUsing.cs # 全域 using 語句
+├── MSTestSettings.cs # MSTest 設定（並行測試設定）
+└── TodoAPI.IntegrationTest.csproj # 專案檔
+```

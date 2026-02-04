@@ -1,24 +1,23 @@
 ---
-name: tdd-workflow
-description: 在編寫新功能、修復錯誤或重構程式碼時運用此技能。強制執行測試驅動開發，包含單元測試。
+name: backend-tdd-workflow
+description: 在編寫後端專案新功能、修復錯誤或重構程式碼時運用此技能。強制執行測試驅動開發，包含單元測試與整合測試。
 ---
 
 # TDD 工作流程規範
 
-在編寫新功能、修復錯誤或重構程式碼時運用此技能。強制執行測試驅動開發，包含單元測試。
+在編寫後端新功能、修復錯誤或重構程式碼時運用此技能。強制執行測試驅動開發，包含單元測試與整合測試。
 
-## 使用場景
+## TDD 使用場景
 
--   撰寫新功能或新特性
+-   撰寫/修改新功能或新特性
 -   修復錯誤或問題
 -   重構現有程式碼
--   新增 API 端點
--   建立新元件
+-   新增/修改 API 端點
 
-## 核心原則
+## TDD 核心原則
 
 1.  先寫測試在寫程式碼
-2.  單元測試項目應該僅驗證單一行為
+2.  單元測試項目應該僅驗證單一行為，整合測試項目應該驗證完整流程
 3.  測試名稱應該描述性，說明測試內容
 4.  測試結構應該清晰，使用 Arrange-Act-Assert 模式
 5.  測試應該隔離外部依賴項，使用 Mock 模擬
@@ -29,9 +28,16 @@ description: 在編寫新功能、修復錯誤或重構程式碼時運用此技�
 
 **Unit Tests**
 
--   個別功能與輔助工具
+-   輔助工具
 -   純函數
--   個別 API 端點
+
+**Integration Tests**
+
+-   驗證完整流程
+-   驗證 API 端點
+-   驗證資料庫操作
+-   驗證服務互動
+-   驗證外部 API 呼叫
 
 ## TDD 工作流程步驟
 
@@ -107,11 +113,12 @@ dotnet test --filter "FullyQualifiedName=TodoAPI.UnitTest.EndpointTests.LoginEnd
 -   優化效能
 -   提升可讀性
 
-## 測試 Skill
+## 撰寫測試 Skill
 
 請查閱相關技能並學習
 
 -   [mstest-unit-test](../mstest-unit-test/SKILL.md)
+-   [integration-test](../integration-test/SKILL.md)
 
 ## 成功指標
 
