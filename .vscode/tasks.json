@@ -49,6 +49,22 @@
       }
     },
     {
+      "label": "test_coverage:todoapi_integration_test",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "test",
+        "${workspaceFolder}/test/TodoAPI.IntegrationTest/TodoAPI.IntegrationTest.csproj",
+        "--collect",
+        "XPlat Code Coverage"
+      ],
+      "problemMatcher": "$msCompile",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
       "label": "report:coverage",
       "command": "powershell",
       "type": "process",
@@ -66,7 +82,7 @@
     },
     {
       "label": "test:coverage:report",
-      "dependsOn": ["test_coverage:todoapi_unit_test", "report:coverage"],
+      "dependsOn": ["test_coverage:todoapi_unit_test", "test_coverage:todoapi_integration_test", "report:coverage"],
       "dependsOrder": "sequence",
       "problemMatcher": [],
       "presentation": {

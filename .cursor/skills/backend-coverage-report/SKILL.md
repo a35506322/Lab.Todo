@@ -14,7 +14,7 @@ description: 產生後端專案的覆蓋率測試報告。使用時機：使用�
 ## 方式一：在 VS Code 內執行（推薦）
 
 -   從 VS Code **終端機 → 執行工作** 或命令面板 **Tasks: Run Task** 選擇任務 `test:coverage:report`。
--   該任務會依序執行：`test_coverage:todoapi_unit_test`（收集覆蓋率）→ `report:coverage`（產生 HTML）。
+-   該任務會依序執行：`test_coverage:todoapi_unit_test`（收集覆蓋率）-> `test_coverage:todoapi_integration_test`（收集覆蓋率）-> `report:coverage`（產生 HTML）。
 -   報告產出於工作區根目錄 `coveragereport/index.html`，用瀏覽器開啟即可。
 
 ## 方式二：在終端機手動執行（PowerShell）
@@ -25,6 +25,7 @@ description: 產生後端專案的覆蓋率測試報告。使用時機：使用�
 
 ```powershell
 dotnet test test/TodoAPI.UnitTest/TodoAPI.UnitTest.csproj --collect "XPlat Code Coverage"
+dotnet test test/TodoAPI.IntegrationTest/TodoAPI.IntegrationTest.csproj --collect "XPlat Code Coverage"
 ```
 
 -   步驟 2：執行報告腳本：
