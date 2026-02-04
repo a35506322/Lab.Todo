@@ -1,3 +1,4 @@
+using TodoAPI.Infrastructures.Security.JWT;
 using TodoAPI.Modules.Auth.User.Login;
 
 namespace TodoAPI.UnitTest.EndpointTests;

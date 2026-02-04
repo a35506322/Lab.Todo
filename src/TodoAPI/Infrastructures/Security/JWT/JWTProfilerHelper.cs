@@ -1,4 +1,4 @@
-namespace TodoAPI.Infrastructures.JWT;
+namespace TodoAPI.Infrastructures.Security.JWT;
 
 public class JWTProfilerHelper(IHttpContextAccessor httpContextAccessor) : IJWTProfilerHelper
 {

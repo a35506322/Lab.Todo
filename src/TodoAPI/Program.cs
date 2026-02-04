@@ -1,3 +1,5 @@
+using TodoAPI.Infrastructures.Security.JWT;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Tips: 我使用 Cursor 開啟中斷點偵錯時，無法正確取得 ContentRootPath，所以需要手動設定
@@ -11,16 +13,24 @@ SerilogConfig.AddSerilLog(builder.Configuration, builder.Environment);
 
 try
 {
+    // 統一設定 JSON options
+    builder.Services.ConfigureHttpJsonOptions(options =>
+    {
+        options.SerializerOptions.WriteIndented = builder.Environment.IsDevelopment()
+            ? true
+            : false;
+        options.SerializerOptions.Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
+    });
+    builder.Services.AddSerilog();
+    builder.Services.AddValidation();
+    builder.Services.AddHttpContextAccessor();
     builder.Services.AddDI();
     builder.Services.AddOpenAPI();
     builder.Services.AddDapper();
     builder.Services.AddRepositories();
     builder.Services.AddEFCore(builder.Configuration);
-    builder.Services.AddHttpContextAccessor();
-    builder.Services.AddJWT(builder.Configuration);
-    builder.Services.AddSecurity();
-    builder.Services.AddExceptionHandlerConfig();
-    builder.Services.AddSerilog();
+    builder.Services.AddSecurity(builder.Configuration);
+    builder.Services.AddCustomExceptionHandle();
     builder.Services.AddAdapters();
 
     var app = builder.Build();

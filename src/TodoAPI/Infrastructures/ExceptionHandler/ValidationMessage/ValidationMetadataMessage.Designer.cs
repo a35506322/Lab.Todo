@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TodoAPI.Infrastructures.ValidationMessage {
+namespace TodoAPI.Infrastructures.ExceptionHandler.ValidationMessage {
     using System;
     
     
@@ -22,7 +22,7 @@ namespace TodoAPI.Infrastructures.ValidationMessage {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "18.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class ValidationMetadataMessage {
+    internal class ValidationMetadataMessage {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,10 +36,11 @@ namespace TodoAPI.Infrastructures.ValidationMessage {
         ///   傳回這個類別使用的快取的 ResourceManager 執行個體。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Resources.ResourceManager ResourceManager {
+        internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("TodoAPI.Infrastructures.ValidationMessage.ValidationMetadataMessage", typeof(ValidationMetadataMessage).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("TodoAPI.Infrastructures.ExceptionHandler.ValidationMessage.ValidationMetadataMess" +
+                            "age", typeof(ValidationMetadataMessage).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -51,7 +52,7 @@ namespace TodoAPI.Infrastructures.ValidationMessage {
         ///   使用這個強類型資源類別的資源查閱。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Globalization.CultureInfo Culture {
+        internal static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +64,7 @@ namespace TodoAPI.Infrastructures.ValidationMessage {
         /// <summary>
         ///   查詢類似 {0} 欄位 不是正確的信用卡卡號格式。 的當地語系化字串。
         /// </summary>
-        public static string CreditCardAttribute_Invalid {
+        internal static string CreditCardAttribute_Invalid {
             get {
                 return ResourceManager.GetString("CreditCardAttribute_Invalid", resourceCulture);
             }
@@ -72,7 +73,7 @@ namespace TodoAPI.Infrastructures.ValidationMessage {
         /// <summary>
         ///   查詢類似 {0} 欄位 的資料不正確。 的當地語系化字串。
         /// </summary>
-        public static string CustomValidationAttribute_ValidationError {
+        internal static string CustomValidationAttribute_ValidationError {
             get {
                 return ResourceManager.GetString("CustomValidationAttribute_ValidationError", resourceCulture);
             }
@@ -81,7 +82,7 @@ namespace TodoAPI.Infrastructures.ValidationMessage {
         /// <summary>
         ///   查詢類似 {0} 欄位 不是正確的Email格式。 的當地語系化字串。
         /// </summary>
-        public static string EmailAddressAttribute_Invalid {
+        internal static string EmailAddressAttribute_Invalid {
             get {
                 return ResourceManager.GetString("EmailAddressAttribute_Invalid", resourceCulture);
             }
@@ -90,7 +91,7 @@ namespace TodoAPI.Infrastructures.ValidationMessage {
         /// <summary>
         ///   查詢類似 {0} 欄位 只接受副檔名為: {1} 的檔案。 的當地語系化字串。
         /// </summary>
-        public static string FileExtensionsAttribute_Invalid {
+        internal static string FileExtensionsAttribute_Invalid {
             get {
                 return ResourceManager.GetString("FileExtensionsAttribute_Invalid", resourceCulture);
             }
@@ -99,7 +100,7 @@ namespace TodoAPI.Infrastructures.ValidationMessage {
         /// <summary>
         ///   查詢類似 {0} 欄位 字元長度最多為 {1} 個。 的當地語系化字串。
         /// </summary>
-        public static string MaxLengthAttribute_ValidationError {
+        internal static string MaxLengthAttribute_ValidationError {
             get {
                 return ResourceManager.GetString("MaxLengthAttribute_ValidationError", resourceCulture);
             }
@@ -108,7 +109,7 @@ namespace TodoAPI.Infrastructures.ValidationMessage {
         /// <summary>
         ///   查詢類似 {0} 欄位 字元長度最少為 {1} 個。 的當地語系化字串。
         /// </summary>
-        public static string MinLengthAttribute_ValidationError {
+        internal static string MinLengthAttribute_ValidationError {
             get {
                 return ResourceManager.GetString("MinLengthAttribute_ValidationError", resourceCulture);
             }
@@ -117,7 +118,7 @@ namespace TodoAPI.Infrastructures.ValidationMessage {
         /// <summary>
         ///   查詢類似 {0} 欄位 不是正確的電話號碼格式。 的當地語系化字串。
         /// </summary>
-        public static string PhoneAttribute_Invalid {
+        internal static string PhoneAttribute_Invalid {
             get {
                 return ResourceManager.GetString("PhoneAttribute_Invalid", resourceCulture);
             }
@@ -126,7 +127,7 @@ namespace TodoAPI.Infrastructures.ValidationMessage {
         /// <summary>
         ///   查詢類似 {0} 欄位 必須介在 {1} 跟 {2} 之間。 的當地語系化字串。
         /// </summary>
-        public static string RangeAttribute_ValidationError {
+        internal static string RangeAttribute_ValidationError {
             get {
                 return ResourceManager.GetString("RangeAttribute_ValidationError", resourceCulture);
             }
@@ -135,7 +136,7 @@ namespace TodoAPI.Infrastructures.ValidationMessage {
         /// <summary>
         ///   查詢類似 {0} 欄位 不符合正規表式 &apos;{1}&apos;。 的當地語系化字串。
         /// </summary>
-        public static string RegularExpressionAttribute_ValidationError {
+        internal static string RegularExpressionAttribute_ValidationError {
             get {
                 return ResourceManager.GetString("RegularExpressionAttribute_ValidationError", resourceCulture);
             }
@@ -144,7 +145,7 @@ namespace TodoAPI.Infrastructures.ValidationMessage {
         /// <summary>
         ///   查詢類似 {0} 欄位為必填。 的當地語系化字串。
         /// </summary>
-        public static string RequiredAttribute_ValidationError {
+        internal static string RequiredAttribute_ValidationError {
             get {
                 return ResourceManager.GetString("RequiredAttribute_ValidationError", resourceCulture);
             }
@@ -153,7 +154,7 @@ namespace TodoAPI.Infrastructures.ValidationMessage {
         /// <summary>
         ///   查詢類似 {0} 欄位 字元長度最多為 {1} 個。 的當地語系化字串。
         /// </summary>
-        public static string StringLengthAttribute_ValidationError {
+        internal static string StringLengthAttribute_ValidationError {
             get {
                 return ResourceManager.GetString("StringLengthAttribute_ValidationError", resourceCulture);
             }
@@ -162,7 +163,7 @@ namespace TodoAPI.Infrastructures.ValidationMessage {
         /// <summary>
         ///   查詢類似 {0} 欄位 字元長度必須在 {2} 跟 {1} 之間。 的當地語系化字串。
         /// </summary>
-        public static string StringLengthAttribute_ValidationErrorIncludingMinimum {
+        internal static string StringLengthAttribute_ValidationErrorIncludingMinimum {
             get {
                 return ResourceManager.GetString("StringLengthAttribute_ValidationErrorIncludingMinimum", resourceCulture);
             }
@@ -171,7 +172,7 @@ namespace TodoAPI.Infrastructures.ValidationMessage {
         /// <summary>
         ///   查詢類似 {0} 欄位 不是正確的 HTTP, HTTPS, 或 FTP 網址。 的當地語系化字串。
         /// </summary>
-        public static string UrlAttribute_Invalid {
+        internal static string UrlAttribute_Invalid {
             get {
                 return ResourceManager.GetString("UrlAttribute_Invalid", resourceCulture);
             }

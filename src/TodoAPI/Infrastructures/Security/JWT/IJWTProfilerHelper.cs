@@ -1,4 +1,4 @@
-namespace TodoAPI.Infrastructures.JWT;
+namespace TodoAPI.Infrastructures.Security.JWT;
 
 public interface IJWTProfilerHelper
 {

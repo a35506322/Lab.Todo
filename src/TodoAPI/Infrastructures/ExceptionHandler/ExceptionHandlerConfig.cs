@@ -2,9 +2,8 @@ namespace TodoAPI.Infrastructures.ExceptionHandler;
 
 public static class ExceptionHandlerConfig
 {
-    public static void AddExceptionHandlerConfig(this IServiceCollection services)
+    public static void AddCustomExceptionHandle(this IServiceCollection services)
     {
-        services.AddValidation();
         // Tips: AddExceptionHandler + AddProblemDetails 為一組，不能分開使用
         services.AddExceptionHandler<InternalServerExceptionHandler>();
         services.AddProblemDetails();

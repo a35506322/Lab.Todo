@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TodoAPI.Infrastructures.ValidationMessage {
+namespace TodoAPI.Infrastructures.ExceptionHandler.ValidationMessage {
     using System;
     
     
@@ -22,7 +22,7 @@ namespace TodoAPI.Infrastructures.ValidationMessage {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "18.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class ModelBindingMessage {
+    internal class ModelBindingMessage {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,10 +36,10 @@ namespace TodoAPI.Infrastructures.ValidationMessage {
         ///   傳回這個類別使用的快取的 ResourceManager 執行個體。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Resources.ResourceManager ResourceManager {
+        internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("TodoAPI.Infrastructures.ValidationMessage.ModelBindingMessage", typeof(ModelBindingMessage).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("TodoAPI.Infrastructures.ExceptionHandler.ValidationMessage.ModelBindingMessage", typeof(ModelBindingMessage).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -51,7 +51,7 @@ namespace TodoAPI.Infrastructures.ValidationMessage {
         ///   使用這個強類型資源類別的資源查閱。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Globalization.CultureInfo Culture {
+        internal static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace TodoAPI.Infrastructures.ValidationMessage {
         /// <summary>
         ///   查詢類似 值 {0} 對 {1} 無效。 的當地語系化字串。
         /// </summary>
-        public static string AttemptedValueIsInvalid {
+        internal static string AttemptedValueIsInvalid {
             get {
                 return ResourceManager.GetString("AttemptedValueIsInvalid", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace TodoAPI.Infrastructures.ValidationMessage {
         /// <summary>
         ///   查詢類似 未提供 {0} 屬性的值。 的當地語系化字串。
         /// </summary>
-        public static string MissingBindRequiredValue {
+        internal static string MissingBindRequiredValue {
             get {
                 return ResourceManager.GetString("MissingBindRequiredValue", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace TodoAPI.Infrastructures.ValidationMessage {
         /// <summary>
         ///   查詢類似 需要一個值。 的當地語系化字串。
         /// </summary>
-        public static string MissingKeyOrValue {
+        internal static string MissingKeyOrValue {
             get {
                 return ResourceManager.GetString("MissingKeyOrValue", resourceCulture);
             }
@@ -90,7 +90,7 @@ namespace TodoAPI.Infrastructures.ValidationMessage {
         /// <summary>
         ///   查詢類似 需要一個非空的請求正文。 的當地語系化字串。
         /// </summary>
-        public static string MissingRequestBodyRequiredValue {
+        internal static string MissingRequestBodyRequiredValue {
             get {
                 return ResourceManager.GetString("MissingRequestBodyRequiredValue", resourceCulture);
             }
@@ -99,7 +99,7 @@ namespace TodoAPI.Infrastructures.ValidationMessage {
         /// <summary>
         ///   查詢類似 值 {0} 無效。 的當地語系化字串。
         /// </summary>
-        public static string NonPropertyAttemptedValueIsInvalid {
+        internal static string NonPropertyAttemptedValueIsInvalid {
             get {
                 return ResourceManager.GetString("NonPropertyAttemptedValueIsInvalid", resourceCulture);
             }
@@ -108,7 +108,7 @@ namespace TodoAPI.Infrastructures.ValidationMessage {
         /// <summary>
         ///   查詢類似 提供的值無效。 的當地語系化字串。
         /// </summary>
-        public static string NonPropertyUnknownValueIsInvalid {
+        internal static string NonPropertyUnknownValueIsInvalid {
             get {
                 return ResourceManager.GetString("NonPropertyUnknownValueIsInvalid", resourceCulture);
             }
@@ -117,7 +117,7 @@ namespace TodoAPI.Infrastructures.ValidationMessage {
         /// <summary>
         ///   查詢類似 該字串必須為數字。 的當地語系化字串。
         /// </summary>
-        public static string NonPropertyValueMustBeANumber {
+        internal static string NonPropertyValueMustBeANumber {
             get {
                 return ResourceManager.GetString("NonPropertyValueMustBeANumber", resourceCulture);
             }
@@ -126,7 +126,7 @@ namespace TodoAPI.Infrastructures.ValidationMessage {
         /// <summary>
         ///   查詢類似 提供的值對於 {0} 無效。 的當地語系化字串。
         /// </summary>
-        public static string UnknownValueIsInvalid {
+        internal static string UnknownValueIsInvalid {
             get {
                 return ResourceManager.GetString("UnknownValueIsInvalid", resourceCulture);
             }
@@ -135,7 +135,7 @@ namespace TodoAPI.Infrastructures.ValidationMessage {
         /// <summary>
         ///   查詢類似 值 {0} 無效。 的當地語系化字串。
         /// </summary>
-        public static string ValueIsInvalid {
+        internal static string ValueIsInvalid {
             get {
                 return ResourceManager.GetString("ValueIsInvalid", resourceCulture);
             }
@@ -144,7 +144,7 @@ namespace TodoAPI.Infrastructures.ValidationMessage {
         /// <summary>
         ///   查詢類似 值 {0} 必需為數字。 的當地語系化字串。
         /// </summary>
-        public static string ValueMustBeANumber {
+        internal static string ValueMustBeANumber {
             get {
                 return ResourceManager.GetString("ValueMustBeANumber", resourceCulture);
             }
@@ -153,7 +153,7 @@ namespace TodoAPI.Infrastructures.ValidationMessage {
         /// <summary>
         ///   查詢類似 值 {0} 必需不為空值。 的當地語系化字串。
         /// </summary>
-        public static string ValueMustNotBeNull {
+        internal static string ValueMustNotBeNull {
             get {
                 return ResourceManager.GetString("ValueMustNotBeNull", resourceCulture);
             }

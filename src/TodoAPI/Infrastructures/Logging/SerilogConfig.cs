@@ -63,18 +63,16 @@ public static class SerilogConfig
     )
     {
         var request = httpContext.Request;
+        var isSkipLogging = _skipLoggingPaths.Any(path => request.Path.StartsWithSegments(path));
 
-        if (_skipLoggingPaths.Any(path => request.Path.StartsWithSegments(path)))
-        {
-            httpContext.Response.Body.Seek(0, SeekOrigin.Begin);
-            return;
-        }
-
-        var requestBody = httpContext.Items["RequestBody"]?.ToString() ?? string.Empty;
+        var requestBody = isSkipLogging
+            ? string.Empty
+            : httpContext.Items["RequestBody"]?.ToString() ?? string.Empty;
         diagnosticContext.Set("RequestBody", requestBody);
 
-        string responseBodyPayload = await ReadResponseBody(httpContext.Response);
-        diagnosticContext.Set("ResponseBody", responseBodyPayload);
+        var responseBody = await ReadResponseBody(httpContext.Response);
+        var responseBodyLog = isSkipLogging ? string.Empty : responseBody;
+        diagnosticContext.Set("ResponseBody", responseBodyLog);
 
         diagnosticContext.Set("Host", request.Host); // X-Forwarded-Host
         diagnosticContext.Set("Scheme", request.Scheme); // X-Forwarded-Proto

@@ -51,7 +51,6 @@ public sealed class CustomProblemDetailsService(
         );
 
         httpContext.Response.StatusCode = 400;
-        await httpContext.Response.WriteAsJsonAsync(apiResponse);
         if (environment.IsDevelopment())
         {
             var jsonOptions = new JsonSerializerOptions
