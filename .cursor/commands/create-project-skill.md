@@ -33,6 +33,8 @@ description: 創建專案 Skill 指令，方便 AGENT 重複使用
 
 **創建 Skill 指令格式**
 
+可以參考 Cursor 官網 [Skill 說明](https://cursor.com/zh-Hant/docs/context/skills)
+
 `````markdown
 ---
 name: skill-name
