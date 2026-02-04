@@ -26,77 +26,112 @@ description: TodoAPI 專案結構和架構指南
 ## 資料夾結構
 
 ```
-TodoAPI # Todo API 專案根目錄
-├── Common # 共用類別
-│   └── Constant
-│       ├── PolicyNames.cs # 權限政策名稱
-│       ├── RoleNames.cs # 角色名稱
-│   └── Enum
-│       ├── TodoStatus.cs # Todo 狀態
-│       └── UserStatus.cs # User 狀態
+TodoAPI # TodoAPI 專案根目錄
+├── CodeTemplates # EF Core 程式碼生成模板
+│   └── EFCore
+│       ├── DbContext.t4 # DbContext 模板
+│       └── EntityType.t4 # Entity 類型模板
+├── Common # 共用元件
+│   ├── Constant # 常數定義
+│   │   ├── PolicyNames.cs # 授權策略名稱
+│   │   └── RoleNames.cs # 角色名稱
+│   └── Helpers # 輔助工具類別
+│       └── JsonHelper.cs # JSON 處理輔助類別
 ├── Infrastructures # 基礎設施層
-│   ├── API # API 共用功能
+│   ├── Adapters # 第三方 API 適配器
+│   │   ├── AdapterConfig.cs # 適配器設定
+│   │   └── YouBike # YouBike API 適配器
+│   │       ├── IYouBikeAdapter.cs # YouBike 適配器介面
+│   │       ├── YouBikeAdapter.cs # YouBike 適配器實作
+│   │       ├── YouBikeImmediateDto.cs # YouBike 即時資料 DTO
+│   │       └── YouBikeInterceptor.cs # YouBike 攔截器
+│   ├── API # API 相關基礎設施
 │   │   ├── APIExtension.cs # API 擴充方法
 │   │   ├── APIResponseHelper.cs # API 回應輔助類別
-│   │   └── IEndpoint.cs # Endpoint 介面
+│   │   └── IEndpoint.cs # Endpoint 介面定義
 │   ├── Data # 資料存取層
-│   │   ├── Entities # 資料庫實體類別
+│   │   ├── DapperContext.cs # Dapper 資料庫連線
+│   │   ├── EFCoreConfig.cs # EF Core 設定
+│   │   ├── EFCoreExtensions.cs # EF Core 擴充方法
+│   │   ├── Entities # 實體類別
 │   │   │   ├── DapperConfig.cs # Dapper 設定
 │   │   │   ├── Todo.cs # Todo 實體
 │   │   │   └── User.cs # User 實體
-│   │   ├── DapperContext.cs # Dapper 連線工具
-│   │   ├── EFCoreConfig.cs # EF Core 設定
-│   │   ├── EFCoreExtensions.cs # EF Core 擴充方法
 │   │   ├── IDapperContext.cs # Dapper 連線介面
-│   │   └── LabContext.cs # EF Core 資料庫上下文
+│   │   └── LabContext.cs # EF Core DbContext
 │   ├── DI # 依賴注入設定
-│   │   └── DIConfig.cs # DI 設定
+│   │   └── DIConfig.cs # DI 組態
 │   ├── ExceptionHandler # 例外處理
-│   │   ├── CustomProblemDetailsService.cs # 自訂問題詳細資訊服務
+│   │   ├── CustomProblemDetailsService.cs # 自訂 ProblemDetails 服務
 │   │   ├── ExceptionHandlerConfig.cs # 例外處理設定
 │   │   ├── InternalServerExceptionHandler.cs # 內部伺服器例外處理器
-│   │   └── ValidationMessage # 驗證訊息
-│   │       ├── ModelBindingMessage.Designer.cs
-│   │       ├── ModelBindingMessage.resx
-│   │       ├── ValidationErrorLocalizer.cs # 驗證錯誤本地化
-│   │       ├── ValidationMetadataMessage.Designer.cs
-│   │       └── ValidationMetadataMessage.resx
-│   ├── JWT # JWT 認證
-│   │   ├── IJWTHelper.cs # JWT 輔助介面
-│   │   ├── IJWTProfilerHelper.cs # JWT Profiler 輔助介面
-│   │   ├── JWTConfig.cs # JWT 設定
-│   │   ├── JWTHelper.cs # JWT 輔助類別
-│   │   └── JWTProfilerHelper.cs # JWT Profiler 輔助類別
-│   ├── OpenAPI # OpenAPI 設定
+│   │   └── ValidationMessage # 驗證訊息本地化
+│   │       ├── ModelBindingMessage.Designer.cs # 模型繫結訊息設計檔
+│   │       ├── ModelBindingMessage.resx # 模型繫結訊息資源檔
+│   │       ├── ValidationErrorLocalizer.cs # 驗證錯誤本地化器
+│   │       ├── ValidationMetadataMessage.Designer.cs # 驗證中繼資料訊息設計檔
+│   │       └── ValidationMetadataMessage.resx # 驗證中繼資料訊息資源檔
+│   ├── Logging # 日誌記錄
+│   │   ├── AppLifeTimeLog.cs # 應用程式生命週期日誌
+│   │   ├── CustomHttpContextEnricher.cs # 自訂 HTTP 內容擴充器
+│   │   ├── HttpContextLoggerConfigurationExtensions.cs # HTTP 內容日誌設定擴充
+│   │   ├── LoggerExtension.cs # 日誌擴充方法
+│   │   ├── RequestResponseLoggingMiddleware.cs # 請求回應日誌中介軟體
+│   │   └── SerilogConfig.cs # Serilog 設定
+│   ├── OpenAPI # OpenAPI/Swagger 設定
 │   │   ├── BearerSecuritySchemeTransformer.cs # Bearer 安全方案轉換器
 │   │   ├── ExampleOperationTransformer.cs # 範例操作轉換器
 │   │   ├── IExampleProvider.cs # 範例提供者介面
 │   │   ├── OpenAPIConfig.cs # OpenAPI 設定
-│   │   ├── RequestExampleAttribute.cs # Request 範例屬性
-│   │   └── ResponseExampleAttribute.cs # Response 範例屬性
+│   │   ├── RequestExampleAttribute.cs # 請求範例屬性
+│   │   └── ResponseExampleAttribute.cs # 回應範例屬性
 │   ├── Repositories # 儲存庫層
 │   │   └── RepositoriesConfig.cs # 儲存庫設定
-│   ├── Scalar # Scalar API 文件
+│   ├── Scalar # Scalar API 文件工具設定
 │   │   └── ScalarConfig.cs # Scalar 設定
 │   └── Security # 安全性設定
 │       ├── CustomAuthorizationMiddlewareResultHandler.cs # 自訂授權中介軟體結果處理器
+│       ├── JWT # JWT 相關
+│       │   ├── IJWTHelper.cs # JWT 輔助類別介面
+│       │   ├── IJWTProfilerHelper.cs # JWT Profiler 輔助類別介面
+│       │   ├── JWTHelper.cs # JWT 輔助類別實作
+│       │   └── JWTProfilerHelper.cs # JWT Profiler 輔助類別實作
 │       └── SecurityConfig.cs # 安全性設定
-├── Modules # 功能模組 (垂直切割架構)
-│   └── Auth # 認證模組
-│       └── User # 使用者
-│           ├── Login # 登入功能
-│           │   ├── Examples.cs # 範例
-│           │   ├── LoginEndpoint.cs # 登入端點
-│           │   └── Models.cs # 模型
-│           └── UserGroupEndpoints.cs # 使用者群組端點
-├── CodeTemplates # 程式碼範本
-│   └── EFCore
-│       ├── DbContext.t4
-│       └── EntityType.t4
-├── GlobalUsing.cs # 全域 using
-├── Program.cs # 程式進入點
-├── README.md # 專案說明
-├── TodoAPI.csproj # 專案檔
-├── appsettings.json # 應用程式設定
-├── appsettings.Development.json # 開發環境設定
+├── Modules # 業務模組（垂直切割）
+│   ├── Auth # 認證模組
+│   │   └── User # 使用者相關
+│   │       ├── Login # 登入功能
+│   │       │   ├── Examples.cs # 範例資料
+│   │       │   ├── LoginEndpoint.cs # 登入端點
+│   │       │   └── Models.cs # 資料模型
+│   │       └── UserGroupEndpoints.cs # 使用者群組端點
+│   └── Todo # Todo 模組
+│       ├── DeleteTodoById # 刪除 Todo
+│       │   ├── DeleteTodoByIdEndpoint.cs # 刪除端點
+│       │   ├── Examples.cs # 範例資料
+│       │   └── Models.cs # 資料模型
+│       ├── GetTodoById # 取得單一 Todo
+│       │   ├── Examples.cs # 範例資料
+│       │   ├── GetTodoByIdEndpoint.cs # 取得端點
+│       │   └── Models.cs # 資料模型
+│       ├── GetTodoByQueryString # 查詢 Todo
+│       │   ├── Examples.cs # 範例資料
+│       │   ├── GetTodoByQueryStringEndpoint.cs # 查詢端點
+│       │   └── Models.cs # 資料模型
+│       ├── InsertTodo # 新增 Todo
+│       │   ├── Examples.cs # 範例資料
+│       │   ├── InsertTodoEndpoint.cs # 新增端點
+│       │   └── Models.cs # 資料模型
+│       ├── TodoGroupEndpoints.cs # Todo 群組端點
+│       └── UpdateTodoById # 更新 Todo
+│           ├── Examples.cs # 範例資料
+│           ├── Models.cs # 資料模型
+│           └── UpdateTodoByIdEndpoint.cs # 更新端點
+├── Properties # 專案屬性
+│   └── launchSettings.json # 啟動設定檔
+├── efpt.config.json # EF Core Power Tools 設定檔
+├── GlobalUsing.cs # 全域 using 語句
+├── Program.cs # 應用程式進入點
+├── README.md # 專案說明文件
+└── TodoAPI.csproj # 專案檔
 ```
