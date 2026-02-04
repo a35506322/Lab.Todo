@@ -2,7 +2,8 @@
 
 ## Framework
 
--   [x] ASP.NET Core 10
+-   [x] ASP.NET Core 10 Minimal API
+-   [x] MSTest Unit Test & Integration Test
 
 ## Features
 
@@ -12,12 +13,13 @@
 -   [x] Model 驗證 + 統一回傳驗證錯誤訊息
 -   [x] 資料存取工具 (Dapper+ Entity Framework Core)
 -   [x] 單元測試專案 (MSTest)
--   [ ] 整合測試專案 (MSTest)
+-   [x] 整合測試專案 (MSTest)
 -   [x] Logging (Serilog)
 -   [x] Exception Handling (Middleware)
 -   [x] HttpClient 封裝最佳實踐
 -   [ ] CORS 設定
 -   [x] RBAC 角色權限管理 (簡易)
+-   [x] 覆蓋率測試報告 (ReportGenerator)
 
 ## 建議
 
@@ -33,3 +35,4 @@
 5. Log 收集器強烈推薦使用 Seq，如果要使用在 Serlog 設定即可
 6. 如需要格是化 Log 訊息，可以使用 `LoggerExtension` 類別繼續新增
 7. 可以考慮 appsettings.json 設定的設定使用 Options 模式進行強型別
+8. 測試相關如單元測試、整合測試、覆蓋率測試報告等，可以斟酌自己情況要不要用，應有些人沒有寫測試習慣
