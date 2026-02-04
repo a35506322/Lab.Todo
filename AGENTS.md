@@ -26,22 +26,31 @@
 
 ```
 .cursor # Cursor 專案設定
+├── commands # 快捷指令
+│   ├── backend-coverage-report.md # 後端覆蓋率報告指令
+│   └── create-project-skill.md    # 建立專案技能指令
 ├── rules # 專案與編碼規則
-│   ├── api-development.mdc # API 開發規則
-│   ├── csharp-coding-standards.mdc # C# 編碼規範
-│   └── TodoAPI # TodoAPI 專案規則
-│       └── project-structure.mdc # 專案結構規範
+│   ├── api-development.mdc          # API 開發規則
+│   ├── csharp-coding-standards.mdc  # C# 編碼規範
+│   ├── TodoAPI\
+│   │   └── project-structure.mdc    # TodoAPI 專案結構規範
+│   ├── TodoAPI.IntegrationTest\
+│   │   └── project-structure.mdc    # 整合測試專案結構規範
+│   └── TodoAPI.UnitTest\
+│       └── project-structure.mdc    # 單元測試專案結構規範
 └── skills # Agent 技能
-    └── api # API 開發技能
-        └── SKILL.md # API 技能說明
-    └── mstest-unit-test # 單元測試技能
-        └── SKILL.md # 單元測試技能說明
-    └── backend-tdd-workflow # 後端測試驅動開發技能
-        └── SKILL.md # 後端測試驅動開發技能說明
-    └── backend-coverage-report # 後端覆蓋率測試報告技能
-        └── SKILL.md # 後端覆蓋率測試報告技能說明
-    └── mstest-integration-test # 後端整合測試技能
-        └── SKILL.md # 後端整合測試技能說明
+    ├── api\
+    │   └── SKILL.md                 # API 開發技能
+    ├── backend-coverage-report\
+    │   ├── scripts\
+    │   │   └── report-coverage.ps1  # 覆蓋率報告腳本
+    │   └── SKILL.md                 # 覆蓋率報告技能
+    ├── backend-tdd-workflow\
+    │   └── SKILL.md                 # 後端 TDD 工作流程技能
+    ├── mstest-integration-test\
+    │   └── SKILL.md                 # MSTest 整合測試技能
+    └── mstest-unit-test\
+        └── SKILL.md                 # MSTest 單元測試技能
 ```
 
 ## 步驟 2：工作前確認 rules 及 skills 已正確閱讀
