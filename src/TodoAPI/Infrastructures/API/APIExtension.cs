@@ -1,3 +1,5 @@
+using TodoAPI.Modules.Todo;
+
 namespace TodoAPI.Infrastructures.API;
 
 public static class APIExtension
@@ -6,6 +8,7 @@ public static class APIExtension
     {
         RouteGroupBuilder endpoints = app.MapGroup("/api");
         endpoints.MapUserGroupEndpoints();
+        endpoints.MapTodoGroupEndpoints();
     }
 
     public static IEndpointRouteBuilder MapEndpoint<TEndpoint>(this IEndpointRouteBuilder app)

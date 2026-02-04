@@ -24,6 +24,18 @@ Modules # 模組
 │       └── UserGroupEndpoints.cs # 使用者群組端點
 ```
 
+### MapGroupEndpoints
+
+註冊 GroupEndpoints 的擴充方法
+
+```csharp
+public static void MapGroupEndpoints(this WebApplication app)
+{
+    RouteGroupBuilder endpoints = app.MapGroup("/api");
+    endpoints.MapUserGroupEndpoints();
+}
+```
+
 ### GroupEndpoints
 
 -   命名規則 `[XXX]GroupEndpoints` (ex: `UserGroupEndpoints`)
@@ -46,7 +58,22 @@ public static class UserGroupEndpoints
 -   繼承 `IEndpoint` 介面並實作
 -   套用 Open API 相關 Attributes
 -   回傳 Response 使用 `APIResponseHelper` 統一回傳格式
--   檔案名稱 `[XXX]Endpoint` (ex: `LoginEndpoint`)
+
+命名規範說明：
+
+| 操作原則        | 命名規則                        |
+| --------------- | ------------------------------- |
+| 操作(除了 CRUD) | `[XXX]Endpoint`                 |
+| 查詢(單筆)      | `Get[XXX]ByIdEndpoint`          |
+| 新增            | `Insert[XXX]Endpoint`           |
+| 更新(單筆)      | `Update[XXX]ByIdEndpoint`       |
+| 刪除(單筆)      | `Delete[XXX]ByIdEndpoint`       |
+| 查詢(多筆)      | `Get[XXX]ByQueryStringEndpoint` |
+
+特別說明：
+
+-   `ResponseExample` 的 name 請名稱詳細說明，如：登入成功、登入成功空資料、新增待辦事項成功、新增待辦事項空資料、刪除待辦事項成功、刪除待辦事項空資料、更新待辦事項成功、更新待辦事項空資料、查詢待辦事項成功、查詢待辦事項空資料
+-   `RequestExample` 的 name 請名稱詳細說明，如：Admin、測試帳號、新增待辦事項 - 基本範例、新增待辦事項 - 僅標題、刪除待辦事項 - 基本範例、刪除待辦事項 - 僅標題、更新待辦事項 - 基本範例、更新待辦事項 - 僅標題、查詢待辦事項 - 基本範例、查詢待辦事項 - 僅標題
 
 ```csharp
 public class LoginEndpoint : IEndpoint
@@ -138,7 +165,7 @@ public class LoginResponse
 ### Examples
 
 -   繼承 `IExampleProvider` 介面並實作
--   檔案名稱 `[XXX]RequestEx_[說明]`、`[XXX]ResponseEx_[說明]`、`[XXX]DtoEx_[說明]` (ex: `LoginReqEx_Admin_Admin`、`LoginResEx_Ok_LoginSuccess_登入成功`、`LoginDtoEx_Ok_LoginSuccess_登入成功空資料`)
+-   檔案名稱 `[XXX]RequestEx_[說明]`、`[XXX]ResponseEx_[說明]`、`[XXX]DtoEx_[說明]` (ex: `LoginReqEx_Admin_Admin`、`LoginResEx_Ok_LoginSuccess`、`LoginDtoEx_Ok_LoginSuccess`)
 
 ```csharp
 
@@ -414,13 +441,13 @@ private static async Task<IResult> Handler(
 
 自定義 Attributes 對照表
 
-| Metadata            | Attribute           | 說明               |
-| ------------------- | ------------------- | ------------------ |
-| exampleProviderType | `[RequestExample]`  | 範例 Request 類型  |
-| name                | `[RequestExample]`  | 範例顯示名稱       |
-| statusCode          | `[ResponseExample]` | HTTP 狀態碼        |
-| exampleProviderType | `[ResponseExample]` | 範例 Response 類型 |
-| name                | `[ResponseExample]` | 範例顯示名稱       |
+| Metadata            | Attribute           | 說明                                                                       |
+| ------------------- | ------------------- | -------------------------------------------------------------------------- |
+| exampleProviderType | `[RequestExample]`  | 範例 Request 類型                                                          |
+| name                | `[RequestExample]`  | 範例顯示名稱，請名稱詳細說明，如：Admin、測試帳號、新增待辦事項 - 基本範例 |
+| statusCode          | `[ResponseExample]` | HTTP 狀態碼                                                                |
+| exampleProviderType | `[ResponseExample]` | 範例 Response 類型                                                         |
+| name                | `[ResponseExample]` | 範例顯示名稱，請名稱詳細說明，如：登入成功、登入成功空資料                 |
 
 ## Exception Handling
 
