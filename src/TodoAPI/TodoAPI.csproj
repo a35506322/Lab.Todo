@@ -25,4 +25,28 @@
     <PackageReference Include="Serilog.Sinks.Map" Version="2.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="Infrastructures\ExceptionHandler\ValidationMessage\ModelBindingMessage.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ModelBindingMessage.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Infrastructures\ExceptionHandler\ValidationMessage\ValidationMetadataMessage.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ValidationMetadataMessage.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Infrastructures\ExceptionHandler\ValidationMessage\ModelBindingMessage.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ModelBindingMessage.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Infrastructures\ExceptionHandler\ValidationMessage\ValidationMetadataMessage.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ValidationMetadataMessage.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
 </Project>
