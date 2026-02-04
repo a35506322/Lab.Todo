@@ -48,12 +48,14 @@ public static class SerilogConfig
             )
             .WriteTo.Console(
                 theme: AnsiConsoleTheme.Code,
-                outputTemplate: "[{Timestamp:yyyy/MM/dd HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{RequestBody}{NewLine}{ResponseBody}{NewLine}{Exception}"
+                outputTemplate: "[{Timestamp:yyyy/MM/dd HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{RequestBody}{ResponseBody}{Exception}"
             );
         //.WriteTo.Seq(seqUrl)
 
         Log.Logger = loggerConfiguration.CreateLogger();
     }
+
+    private static readonly HashSet<string> _skipLoggingPaths = new() { "/scalar", "/openapi" };
 
     public static async void EnrichFromRequest(
         IDiagnosticContext diagnosticContext,
@@ -61,6 +63,13 @@ public static class SerilogConfig
     )
     {
         var request = httpContext.Request;
+
+        if (_skipLoggingPaths.Any(path => request.Path.StartsWithSegments(path)))
+        {
+            httpContext.Response.Body.Seek(0, SeekOrigin.Begin);
+            return;
+        }
+
         var requestBody = httpContext.Items["RequestBody"]?.ToString() ?? string.Empty;
         diagnosticContext.Set("RequestBody", requestBody);
 
