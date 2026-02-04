@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<RunSettings>
+  <DataCollectionRunSettings>
+    <DataCollectors>
+      <DataCollector friendlyName="XPlat code coverage">
+        <Configuration>
+          <Format>cobertura</Format>
+          <!-- 排除 Example 類別：所有包含 ReqEx 或 ResEx 的類別 -->
+          <Exclude>[*]*ReqEx*,[*]*ResEx*</Exclude>
+          <!-- 排除測試專案 -->
+          <Exclude>[*.UnitTest]*,[*.IntegrationTest]*</Exclude>
+          <!-- 排除編譯器生成的程式碼 -->
+          <ExcludeByAttribute>Obsolete,GeneratedCodeAttribute,CompilerGeneratedAttribute</ExcludeByAttribute>
+          <!-- 排除測試組件（如果需要的話） -->
+          <IncludeTestAssembly>false</IncludeTestAssembly>
+          <!-- 跳過自動屬性 -->
+          <SkipAutoProps>true</SkipAutoProps>
+        </Configuration>
+      </DataCollector>
+    </DataCollectors>
+  </DataCollectionRunSettings>
+</RunSettings>
