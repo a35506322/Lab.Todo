@@ -1,3 +1,4 @@
+using System.Text.Encodings.Web;
 using Microsoft.Extensions.Options;
 using TodoAPI.Infrastructures.ExceptionHandler.ValidationMessage;
 
@@ -8,7 +9,8 @@ namespace TodoAPI.Infrastructures.ExceptionHandler;
 /// </summary>
 public sealed class CustomProblemDetailsService(
     IOptions<ProblemDetailsOptions> options,
-    IEnumerable<IProblemDetailsWriter> writers
+    IEnumerable<IProblemDetailsWriter> writers,
+    IWebHostEnvironment environment
 ) : IProblemDetailsService
 {
     /// <inheritdoc />
@@ -16,15 +18,20 @@ public sealed class CustomProblemDetailsService(
     {
         if (context.ProblemDetails is HttpValidationProblemDetails validationDetails)
         {
-            return WriteValidationErrorResponse(context.HttpContext, validationDetails);
+            return WriteValidationErrorResponse(
+                context.HttpContext,
+                validationDetails,
+                environment
+            );
         }
 
         return WriteDefaultProblemDetails(context);
     }
 
-    private static async ValueTask WriteValidationErrorResponse(
+    private async ValueTask WriteValidationErrorResponse(
         HttpContext httpContext,
-        HttpValidationProblemDetails validationDetails
+        HttpValidationProblemDetails validationDetails,
+        IWebHostEnvironment environment
     )
     {
         var errors = new Dictionary<string, string[]>();
@@ -45,6 +52,19 @@ public sealed class CustomProblemDetailsService(
 
         httpContext.Response.StatusCode = 400;
         await httpContext.Response.WriteAsJsonAsync(apiResponse);
+        if (environment.IsDevelopment())
+        {
+            var jsonOptions = new JsonSerializerOptions
+            {
+                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                WriteIndented = true,
+            };
+            await httpContext.Response.WriteAsJsonAsync(apiResponse, jsonOptions);
+        }
+        else
+        {
+            await httpContext.Response.WriteAsJsonAsync(apiResponse);
+        }
     }
 
     private async ValueTask WriteDefaultProblemDetails(ProblemDetailsContext context)

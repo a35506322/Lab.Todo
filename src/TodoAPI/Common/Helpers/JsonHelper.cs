@@ -25,6 +25,12 @@ public static class JsonHelper
         Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
     };
 
+    private static readonly JsonSerializerOptions IndentedSerializeOptions = new()
+    {
+        Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+        WriteIndented = true,
+    };
+
     /// <summary>
     /// 將 JSON 字串反序列化為物件（屬性名稱不分大小寫）
     /// </summary>
@@ -39,8 +45,12 @@ public static class JsonHelper
     /// 將物件序列化為 JSON 字串（中文不編碼）
     /// </summary>
     /// <param name="obj">要序列化的物件</param>
+    /// <param name="isIndented">是否為縮排格式</param>
     /// <param name="options">額外的 JSON 設定（可選）</param>
     /// <returns>JSON 字串</returns>
-    public static string ToJson(object obj) =>
-        JsonSerializer.Serialize(obj, DefaultSerializeOptions);
+    public static string ToJson(object obj, bool isIndented = false) =>
+        JsonSerializer.Serialize(
+            obj,
+            isIndented ? IndentedSerializeOptions : DefaultSerializeOptions
+        );
 }
