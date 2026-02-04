@@ -1,37 +1,64 @@
-using System.Text.Encodings.Web;
-using Microsoft.Extensions.Options;
-using TodoAPI.Infrastructures.ExceptionHandler.ValidationMessage;
-
 namespace TodoAPI.Infrastructures.ExceptionHandler;
 
 /// <summary>
-/// 自訂 IProblemDetailsService，將 400 驗證錯誤改為回傳 APIResponse 格式。
+/// 自訂 IProblemDetailsService
 /// </summary>
-public sealed class CustomProblemDetailsService(
-    IOptions<ProblemDetailsOptions> options,
-    IEnumerable<IProblemDetailsWriter> writers,
-    IWebHostEnvironment environment
-) : IProblemDetailsService
+public sealed class CustomProblemDetailsService : IProblemDetailsService
 {
-    /// <inheritdoc />
-    public ValueTask WriteAsync(ProblemDetailsContext context)
+    private readonly IProblemDetailsWriter[] _writers;
+
+    public CustomProblemDetailsService(IEnumerable<IProblemDetailsWriter> writers)
     {
-        if (context.ProblemDetails is HttpValidationProblemDetails validationDetails)
+        _writers = writers.ToArray();
+    }
+
+    public async ValueTask WriteAsync(ProblemDetailsContext context)
+    {
+        if (!await TryWriteAsync(context))
         {
-            return WriteValidationErrorResponse(
-                context.HttpContext,
-                validationDetails,
-                environment
+            throw new InvalidOperationException(
+                "Unable to find a registered `IProblemDetailsWriter` that can write to the given context."
             );
         }
+    }
 
-        return WriteDefaultProblemDetails(context);
+    public async ValueTask<bool> TryWriteAsync(ProblemDetailsContext context)
+    {
+        ArgumentNullException.ThrowIfNull(context);
+        ArgumentNullException.ThrowIfNull(context.ProblemDetails);
+        ArgumentNullException.ThrowIfNull(context.HttpContext);
+
+        // 處理 400 驗證錯誤，回傳自訂的 APIResponse 格式
+        // 檢查是否為 HttpValidationProblemDetails 且有 Errors
+        if (
+            context.ProblemDetails is HttpValidationProblemDetails validationDetails
+            && validationDetails.Errors.Count > 0
+        )
+        {
+            await WriteValidationErrorResponse(context.HttpContext, validationDetails);
+            return true;
+        }
+
+        // 其他錯誤使用預設的 writers 處理
+        // Try to write using all registered writers
+        // sequentially and stop at the first one that
+        // `canWrite`.
+        for (var i = 0; i < _writers.Length; i++)
+        {
+            var selectedWriter = _writers[i];
+            if (selectedWriter.CanWrite(context))
+            {
+                await selectedWriter.WriteAsync(context);
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private async ValueTask WriteValidationErrorResponse(
         HttpContext httpContext,
-        HttpValidationProblemDetails validationDetails,
-        IWebHostEnvironment environment
+        HttpValidationProblemDetails validationDetails
     )
     {
         var errors = new Dictionary<string, string[]>();
@@ -51,36 +78,6 @@ public sealed class CustomProblemDetailsService(
         );
 
         httpContext.Response.StatusCode = 400;
-        if (environment.IsDevelopment())
-        {
-            var jsonOptions = new JsonSerializerOptions
-            {
-                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-                WriteIndented = true,
-            };
-            await httpContext.Response.WriteAsJsonAsync(apiResponse, jsonOptions);
-        }
-        else
-        {
-            await httpContext.Response.WriteAsJsonAsync(apiResponse);
-        }
-    }
-
-    private async ValueTask WriteDefaultProblemDetails(ProblemDetailsContext context)
-    {
-        options.Value.CustomizeProblemDetails?.Invoke(context);
-
-        foreach (var writer in writers)
-        {
-            if (writer.CanWrite(context))
-            {
-                await writer.WriteAsync(context);
-                return;
-            }
-        }
-
-        throw new InvalidOperationException(
-            "No registered IProblemDetailsWriter can write the response."
-        );
+        await httpContext.Response.WriteAsJsonAsync(apiResponse);
     }
 }

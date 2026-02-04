@@ -27,6 +27,7 @@ global using TodoAPI.Infrastructures.Data;
 global using TodoAPI.Infrastructures.Data.Entities;
 global using TodoAPI.Infrastructures.DI;
 global using TodoAPI.Infrastructures.ExceptionHandler;
+global using TodoAPI.Infrastructures.ExceptionHandler.ValidationMessage;
 global using TodoAPI.Infrastructures.Logging;
 global using TodoAPI.Infrastructures.OpenAPI;
 global using TodoAPI.Infrastructures.Repositories;
