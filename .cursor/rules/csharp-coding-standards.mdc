@@ -122,6 +122,11 @@ var json = JsonHelper.ToJson(obj);
 var result = JsonHelper.FromJson<T>(json);
 ```
 
+## Comments
+
+-   避免不必要的註解：程式碼應具有自明性
+-   解釋「為什麼」而非「如何做」：註解應描述背後的邏輯或意圖，而非程式碼的執行內容
+
 ## 使用 MCP 情境
 
 -   如有套件相關不清楚的使用 `Context7` MCP 進行查詢最佳使用做法
