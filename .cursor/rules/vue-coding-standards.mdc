@@ -8,8 +8,8 @@ description: Vue 編碼規範和最佳實踐
 ## 命名規範
 
 1. 變數/函數：小駝峰（如 userProfile、handleClick）
-2. 元件檔：PascalCase，[XXX]t.vue（如 MyButton.vue）
-3. 頁面檔：PascalCase，[XXX]View.vue（如 HomeView.vue）
+2. 元件檔：PascalCase，[XXX].vue（如 MyButton.vue）
+3. 頁面檔：PascalCase，[XXX].vue（如 Home.vue）
 4. 一般 JS 檔: 使用 kebab-case：format-date.js
 5. 常數：全大寫 + 底線：API_BASE_URL
 6. 資料夾：使用 kebab-case：api/、todo-api/、user-profile/
