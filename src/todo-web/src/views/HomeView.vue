@@ -1,5 +1,7 @@
 <script setup></script>
 
 <template>
-  <h1>Home</h1>
+  <div>
+    <h1 class="text-3xl font-bold underline">Hello world!</h1>
+  </div>
 </template>
