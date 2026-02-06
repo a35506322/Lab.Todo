@@ -1,5 +1,3 @@
-using TodoAPI.Infrastructures.Security.JWT;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Tips: 我使用 Cursor 開啟中斷點偵錯時，無法正確取得 ContentRootPath，所以需要手動設定

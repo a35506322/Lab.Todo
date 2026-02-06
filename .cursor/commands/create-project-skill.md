@@ -1,7 +1,6 @@
----
-name: create-project-skill
-description: 創建專案 Skill 指令，方便 AGENT 重複使用
----
+# 創建專案 Skill 指令
+
+創建專案 Skill 指令，方便 AGENT 重複使用。
 
 ## 創建步驟
 
