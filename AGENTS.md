@@ -10,6 +10,7 @@
 -   Entity Framework Core / Dapper 資料存取
 -   VITE + VUE 3 前端開發
 -   Tailwind CSS 樣式
+-   PrimeVue 元件庫
 
 ## 基本原則
 
@@ -19,6 +20,7 @@
 4. 不要因為我的語氣去揣測我的想法，請直接說出你的想法
 5. 當我需要函式庫/API 文件、程式碼生成、設定或組態步驟時，請始終使用 Context7 MCP，無需我主動提出要求。
 6. 您可使用名為 `microsoft_docs_search`、`microsoft_docs_fetch` 及 `microsoft_code_sample_search` 的 MCP 工具——這些工具能讓您搜尋並擷取微軟最新的官方文件與程式碼範例，其中資訊可能比您的訓練資料集更詳盡或更新。在處理如何運用原生 Microsoft 技術（例如 C#、F#、ASP.NET Core、Microsoft.Extensions、NuGet、Entity Framework 及 `dotnet` 執行階段）相關問題時，請於處理可能出現的具體／狹義定義問題時，將這些工具用於研究目的。
+7. 您可使用名為 `primevue` 的 MCP 工具——這些工具能讓您搜尋並擷取 PrimeVue 的官方文件與程式碼範例，其中資訊可能比您的訓練資料集更詳盡或更新。在處理如何運用 PrimeVue 相關問題時，請於處理可能出現的具體／狹義定義問題時，將這些工具用於研究目的。
 
 # Agent 工作規則
 
@@ -26,31 +28,39 @@
 
 ```
 .cursor # Cursor 專案設定
-├── commands # 快捷指令
-│   ├── backend-coverage-report.md # 後端覆蓋率報告指令
-│   └── create-project-skill.md    # 建立專案技能指令
 ├── rules # 專案與編碼規則
-│   ├── api-development.mdc          # API 開發規則
-│   ├── csharp-coding-standards.mdc  # C# 編碼規範
-│   ├── TodoAPI\
-│   │   └── project-structure.mdc    # TodoAPI 專案結構規範
-│   ├── TodoAPI.IntegrationTest\
-│   │   └── project-structure.mdc    # 整合測試專案結構規範
-│   └── TodoAPI.UnitTest\
-│       └── project-structure.mdc    # 單元測試專案結構規範
+│   ├── api-development.mdc # API 開發規則
+│   ├── csharp-coding-standards.mdc # C# 編碼規範
+│   ├── vue-coding-standards.mdc # Vue 編碼規範
+│   ├── TodoAPI # TodoAPI 專案規則
+│   │   └── project-structure.mdc # 專案結構規範
+│   ├── TodoAPI.IntegrationTest # 整合測試專案規則
+│   │   └── project-structure.mdc # 專案結構規範
+│   └── TodoAPI.UnitTest # 單元測試專案規則
+│       └── project-structure.mdc # 專案結構規範
 └── skills # Agent 技能
-    ├── api\
-    │   └── SKILL.md                 # API 開發技能
-    ├── backend-coverage-report\
-    │   ├── scripts\
-    │   │   └── report-coverage.ps1  # 覆蓋率報告腳本
-    │   └── SKILL.md                 # 覆蓋率報告技能
-    ├── backend-tdd-workflow\
-    │   └── SKILL.md                 # 後端 TDD 工作流程技能
-    ├── mstest-integration-test\
-    │   └── SKILL.md                 # MSTest 整合測試技能
-    └── mstest-unit-test\
-        └── SKILL.md                 # MSTest 單元測試技能
+    ├── api # API 開發技能
+    │   └── SKILL.md
+    ├── axios # Axios 技能
+    │   └── SKILL.md
+    ├── backend-coverage-report # 覆蓋率報告技能
+    │   ├── scripts
+    │   │   └── report-coverage.ps1 # 覆蓋率報告腳本
+    │   └── SKILL.md
+    ├── backend-tdd-workflow # 後端 TDD 工作流程技能
+    │   └── SKILL.md
+    ├── mstest-integration-test # MSTest 整合測試技能
+    │   └── SKILL.md
+    ├── mstest-unit-test # MSTest 單元測試技能
+    │   └── SKILL.md
+    ├── pinia # Pinia 技能
+    │   └── SKILL.md
+    ├── primevue # PrimeVue 技能
+    │   └── SKILL.md
+    ├── vue # Vue 技能
+    │   └── SKILL.md
+    └── vue-router # Vue Router 技能
+        └── SKILL.md
 ```
 
 ## 步驟 2：工作前確認 rules 及 skills 已正確閱讀
@@ -68,6 +78,11 @@
 | 後端測試驅動開發                                                                 | `.cursor/skills/backend-tdd-workflow/SKILL.md`    |
 | 後端覆蓋率測試報告                                                               | `.cursor/skills/backend-coverage-report/SKILL.md` |
 | 後端整合測試                                                                     | `.cursor/skills/mstest-integration-test/SKILL.md` |
+| Vue 3 前端開發                                                                   | `.cursor/skills/vue/SKILL.md`                     |
+| PrimeVue 元件庫                                                                  | `.cursor/skills/primevue/SKILL.md`                |
+| axios                                                                            | `.cursor/skills/axios/SKILL.md`                   |
+| pinia                                                                            | `.cursor/skills/pinia/SKILL.md`                   |
+| vue-router                                                                       | `.cursor/skills/vue-router/SKILL.md`              |
 
 不確定時，以涵蓋範圍較廣的 skill 為準（例如討論 API 就讀 api skill）。
 

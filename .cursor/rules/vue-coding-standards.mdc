@@ -74,6 +74,8 @@ const sanitizedContent = computed(() => DOMPurify.sanitize(props.trustedHtml));
 </template>
 ```
 
+9. 元件庫一律使用 `primevue v4.0+`，樣式一律使用 `tailwindcss v4.0+`
+
 ## 禁止事項
 
 1. 不在 `<script setup>` 中使用 `await`
