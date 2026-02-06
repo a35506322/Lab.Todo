@@ -6,6 +6,7 @@
 
 -   .NET 10.0
 -   Cursor 2.4+
+-   Node.js 22.21.1+
 
 ---
 
@@ -100,6 +101,10 @@ Agent 可搭配 TDD 模式 **（可選）**
             "type": "http",
             "url": "https://learn.microsoft.com/api/mcp",
             "headers": {}
+        },
+        "primevue": {
+            "command": "npx",
+            "args": ["-y", "@primevue/mcp"]
         }
     }
 }
