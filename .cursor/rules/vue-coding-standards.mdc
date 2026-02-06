@@ -3,17 +3,25 @@ globs: *.vue
 description: Vue 編碼規範和最佳實踐
 ---
 
-# Vue 開發規範
+# Vue 編碼規範和最佳實踐
 
-適用於編寫 Vue SFC 撰寫 Vue 3 Composition API,、script setup、reactivity system、component。
+## 命名規範
 
-## 核心原則
+1. 變數/函數：小駝峰（如 userProfile、handleClick）
+2. 元件檔：PascalCase，[XXX]t.vue（如 MyButton.vue）
+3. 頁面檔：PascalCase，[XXX]View.vue（如 HomeView.vue）
+4. 一般 JS 檔: 使用 kebab-case：format-date.js
+5. 常數：全大寫 + 底線：API_BASE_URL
+6. 資料夾：使用 kebab-case：api/、todo-api/、user-profile/
+7. API 封裝檔：api-instance.js（axios instance）、services/todo-api.js（todo 相關 API 函數）
+
+## Vue 關鍵寫作規範
 
 1. 基於 Vue3 請始終使用 `Composition API` 與 `<script setup>`
 2. 使用 JS 不使用 TS
 3. 若無需深度反應性，為提升效能，請優先選用 `shallowRef` 而非 `ref`
-4. 當您需要從 `ref` 推導值時，請優先使用 `computed` 而非 `function`，以實現自動快取與優化的重新渲染。
-5. 在 `onMounted` 中使用取得資料時，並請使用 `try catch` 包裹，避免程式崩潰
+4. 當您需要從 `ref` 推導值時，請優先使用 `computed` 而非 `function`或者 `watch`，以實現自動快取與優化的重新渲染。
+5. 請在 `onMounted` 中初始化資料，並請使用 `try catch` 包裹，避免程式崩潰
 
 ```vue
 <script setup>
@@ -29,238 +37,40 @@ onMounted(async () => {
 </script>
 ```
 
-## 偏好設定
-
-1. 小駝峰命名 如：`userProfile`、`articleComponent` 等
-2. 函數使用 const 宣告 如：`const handleClick = () => { ... }`
-
-## Comments
-
--   避免不必要的註解：程式碼應具有自明性
--   解釋「為什麼」而非「如何做」：註解應描述背後的邏輯或意圖，而非程式碼的執行內容
-
-## Script Setup
-
-`<script setup>` 是採用組合式 API 的 Vue 單文件組件推薦的語法。此語法能提供更佳的執行時效能與 IDE 類型推斷功能
-
-```vue
-<!-- Component.vue - Single-File Component -->
-<script setup>
-import { ref } from "vue";
-
-const title = ref("Hello");
-
-const handleClick = () => {
-    // ...
-};
-</script>
-
-<template>
-    <div class="container">
-        <h1>{{ title }}</h1>
-        <button @click="handleClick">Click me</button>
-    </div>
-</template>
-
-<style scoped>
-/* Styles only apply to this component */
-.container {
-    padding: 1rem;
-}
-
-h1 {
-    color: #42b883;
-}
-</style>
-```
-
-## ref 與 shallowRef
-
-```vue
-<script setup>
-import { ref, shallowRef } from "vue";
-
-// ref - deep reactivity (tracks nested changes)
-const user = ref({ name: "John", profile: { age: 30 } });
-user.value.profile.age = 31; // Triggers reactivity
-
-// shallowRef - only .value assignment triggers reactivity (better performance)
-const data = shallowRef({ items: [] });
-data.value.items.push("new"); // Does NOT trigger reactivity
-data.value = { items: ["new"] }; // Triggers reactivity
-</script>
-
-<template>
-    <p>{{ user.name }}</p>
-    <p>{{ user.profile.age }}</p>
-    <!-- `ref` 在 template 中不需要使用 `.value`，Vue 會自動展開 -->
-    <button @click="user.profile.age++">Increment</button>>
-</template>
-```
-
-## computed
-
-**基本示範**
-
-```vue
-<script setup>
-import { ref, computed } from "vue";
-
-const count = ref(0);
-
-// Read-only computed
-const doubled = computed(() => count.value * 2);
-
-// Writable computed
-const plusOne = computed({
-    get: () => count.value + 1,
-    set: (val) => {
-        count.value = val - 1;
-    },
-});
-</script>
-```
-
-**樣式結合示範**
+6. 請勿一開始撰寫時就切分 Component 與 Composables，請先撰寫完整功能，再進行切分。
+7. 小心 `v-html` 的 XSS 攻擊，使用以下方式避免：
 
 ```vue
 <script setup>
 import { computed } from "vue";
+import DOMPurify from "dompurify";
 
-const props = defineProps({
-    color: String,
-    fontSize: Number,
-    isHighlighted: Boolean,
-});
+const props = defineProps(["comment", "trustedHtml"]);
 
-const textStyles = computed(() => ({
-    color: props.color,
-    fontSize: `${props.fontSize}px`,
-    backgroundColor: props.isHighlighted ? "yellow" : "transparent",
-    fontWeight: props.isHighlighted ? "bold" : "normal",
-}));
+// Option 1: Use text interpolation (recommended)
+const userComment = computed(() => props.comment);
+
+// Option 2: Sanitize if raw HTML is truly needed
+const sanitizedContent = computed(() => DOMPurify.sanitize(props.trustedHtml));
 </script>
 
 <template>
-    <span :style="textStyles">Styled text</span>
+    <!-- SAFE: Text interpolation escapes HTML -->
+    <div>{{ userComment }}</div>
+
+    <!-- SAFE: Use components for rich content -->
+    <CommentRenderer :content="userComment" />
+
+    <!-- SAFE: Only use v-html with trusted, sanitized content -->
+    <div v-html="sanitizedContent"></div>
 </template>
 ```
 
-## Watch
+8. 使用 camelCase 進行 style binding 的屬性
 
 ```vue
-<script setup>
-import { ref, watch } from "vue";
-
-const count = ref(0);
-
-// Watch single ref
-watch(count, (newVal, oldVal) => {
-    console.log(`Changed from ${oldVal} to ${newVal}`);
-});
-
-const state = ref({ count: 0, name: "Vue" });
-
-// Watch getter
-watch(
-    () => state.count,
-    (newCount, oldCount) => {
-        console.log(`Count changed from ${oldCount} to ${newCount}`);
-    }
-);
-
-const state = reactive({ firstName: "John", lastName: "Doe" });
-
-// Watch multiple sources
-watch(
-    [() => state.firstName, () => state.lastName],
-    ([newFirst, newLast], [oldFirst, oldLast]) => {
-        console.log(
-            `Name changed from ${oldFirst} ${oldLast} to ${newFirst} ${newLast}`
-        );
-    }
-);
-</script>
-```
-
-## Lifecycle Hooks
-
-多數情況下，只使用 `onMounted`
-
-```vue
-<script setup>
-import { onMounted } from "vue";
-
-onMounted(() => {
-    console.log("DOM is ready");
-});
-</script>
-```
-
-## Composables
-
-‼️ Composables 一律使用 `VueUse` 套件，如需尋找適合的請使用 mcp context7 進行查詢，除非真的沒有才使用自定義 composable
-
-使用時機：當`商業邏輯`需要重複使用某些邏輯時，可以將其封裝為 composable 函數
-命名規則：`use[XXX]`，useMouse 、 useFetch 、 useCounter 等
-範例
-
-```vue
-<script setup>
-// composables/useMouse.ts
-import { ref, onMounted, onUnmounted } from "vue";
-
-export function useMouse() {
-    const x = ref(0);
-    const y = ref(0);
-
-    const update = (e: MouseEvent) => {
-        x.value = e.pageX;
-        y.value = e.pageY;
-    };
-
-    onMounted(() => window.addEventListener("mousemove", update));
-    onUnmounted(() => window.removeEventListener("mousemove", update));
-
-    return { x, y };
-}
-</script>
-```
-
-## Component
-
-命名規則：`[XXX].vue`，UserComponent.vue 、 ArticleComponent.vue 等
-
-```vue
-<script setup>
-// components/UserComponent.vue
-import { computed, watch, onMounted } from "vue";
-
-const props = defineProps({
-    title: String,
-    count: Number,
-});
-const emit = defineEmits(["update"]);
-const model = defineModel({
-    type: String,
-    required: true,
-});
-const doubled = computed(() => (props.count ?? 0) * 2);
-
-watch(
-    () => props.title,
-    (newVal) => {
-        console.log("Title changed:", newVal);
-    }
-);
-
-onMounted(() => {
-    console.log("Component mounted");
-});
-</script>
-
 <template>
-    <div>{{ title }} - {{ doubled }}</div>
+    <div :style="{ fontSize: '16px' }"></div>
 </template>
 ```
 
@@ -317,10 +127,77 @@ const doubledCount = computed(() => {
 </script>
 ```
 
+5. css 不要針對 DOM 元素進行操作，請使用 class 進行操作。
+
+```vue
+<template>
+    <article class="article">
+        <header>
+            <h1>{{ title }}</h1>
+            <p>{{ subtitle }}</p>
+        </header>
+        <section>
+            <p>{{ content }}</p>
+            <ul>
+                <li v-for="item in items" :key="item">{{ item }}</li>
+            </ul>
+        </section>
+    </article>
+</template>
+
+<style scoped>
+❌ Element selectors are slower when scoped article {
+    max-width: 800px;
+}
+✅ Class selectors are faster when scoped .article {
+    max-width: 800px;
+}
+</style>
+```
+
+6. Tailwind 的建置流程無法偵測動態產生的 class 名稱
+
+```vue
+<script setup>
+const props = defineProps({
+    color: String, // 'red', 'blue', 'green'
+    size: String, // 'sm', 'md', 'lg'
+});
+</script>
+
+<template>
+    ❌ Tailwind cannot detect these classes
+    <div :class="`bg-${color}-500 text-${size}`">Content</div>
+</template>
+```
+
+8. pinia 的 state 不要隨意修改應使用 actions 進行修改
+
+```vue
+<script setup>
+import { useCounterStore } from "@/stores/counter";
+
+const store = useCounterStore();
+
+❌ Mutates state directly
+store.count++;
+
+✅ Use actions to modify state
+store.increment();
+</script>
+```
+
+## Comments
+
+-   避免不必要的註解：程式碼應具有自明性
+-   解釋「為什麼」而非「如何做」：註解應描述背後的邏輯或意圖，而非程式碼的執行內容
+
 ## 外部資源參考
 
 如果有任何疑問可以參考以下資源：
-正常來說使用 `mcp context7` 進行查詢最佳使用做法
-但發生如果有些異常情況無法解決優顯使用以下資源
 
-1. [Vue 最佳實踐規則](https://github.com/antfu/skills/blob/main/skills/vue-best-practices/SKILL.md)
+1. mcp context7
+2. [Vue 最佳實踐規則](https://github.com/antfu/skills/blob/main/skills/vue-best-practices/SKILL.md)
+
+正常來說使用 `mcp context7` 進行查詢最佳使用做法
+但發生如果有些異常情況無法解決優先查詢 Vue 最佳實踐規則
