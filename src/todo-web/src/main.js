@@ -5,7 +5,9 @@ import { createApp } from 'vue';
 import { createPinia } from 'pinia';
 import PrimeVue from 'primevue/config';
 import Material from '@primeuix/themes/material';
+import { Form } from '@primevue/forms';
 import { definePreset, palette } from '@primeuix/themes';
+import ToastService from 'primevue/toastservice';
 
 import App from './App.vue';
 import router from './router';
@@ -46,5 +48,8 @@ app.use(PrimeVue, {
     },
   },
 });
+app.use(ToastService);
+
+app.component('Form', Form);
 
 app.mount('#app');

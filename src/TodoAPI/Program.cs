@@ -11,7 +11,7 @@ SerilogConfig.AddSerilLog(builder.Configuration, builder.Environment);
 
 try
 {
-    // 統一設定 JSON options
+    const string DevelopmentCorsPolicy = "DevelopmentCorsPolicy";
     builder.Services.ConfigureHttpJsonOptions(options =>
     {
         options.SerializerOptions.WriteIndented = builder.Environment.IsDevelopment()
@@ -30,6 +30,20 @@ try
     builder.Services.AddSecurity(builder.Configuration);
     builder.Services.AddCustomExceptionHandle();
     builder.Services.AddAdapters();
+    builder.Services.AddCors(options =>
+    {
+        options.AddPolicy(
+            name: DevelopmentCorsPolicy,
+            policy =>
+            {
+                policy
+                    .WithOrigins("http://localhost:5173")
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials();
+            }
+        );
+    });
 
     var app = builder.Build();
 
@@ -41,12 +55,12 @@ try
     }
 
     app.UseHttpsRedirection();
+    app.UseCors(DevelopmentCorsPolicy);
     app.UseMiddleware<RequestResponseLoggingMiddleware>();
     app.UseSerilogRequestLogging(opts =>
         opts.EnrichDiagnosticContext = SerilogConfig.EnrichFromRequest
     );
     app.UseExceptionHandler();
-    // app.UseCors();
     app.UseAuthentication();
     app.UseAuthorization();
     app.MapGroupEndpoints();

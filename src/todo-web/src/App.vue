@@ -1,7 +1,10 @@
 <script setup></script>
 
 <template>
-  <RouterView />
+  <div>
+    <Toast />
+    <RouterView />
+  </div>
 </template>
 
 <style scoped></style>

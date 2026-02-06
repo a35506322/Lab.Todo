@@ -1,9 +1,60 @@
 <script setup>
-import { ref } from 'vue';
+import { reactive, ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { useToast } from 'primevue/usetoast';
+import { login } from '@/services/auth-api';
 
-const email = ref('');
-const password = ref('');
+const router = useRouter();
+const toast = useToast();
+
+const initialValues = reactive({
+  userId: '',
+  password: '',
+});
+
 const checked = ref(false);
+
+const resolver = ({ values }) => {
+  const errors = {};
+  if (!values.userId?.trim()) {
+    errors.userId = [{ message: '帳號為必填' }];
+  }
+  if (!values.password?.trim()) {
+    errors.password = [{ message: '密碼為必填' }];
+  }
+  return { values, errors };
+};
+
+const onFormSubmit = async ({ valid, values }) => {
+  if (!valid) return;
+
+  try {
+    const { data } = await login({
+      UserId: values.userId,
+      Password: values.password,
+    });
+
+    if (data?.code === 2000 && data?.data?.Token) {
+      localStorage.setItem('token', data.data.Token);
+      router.push('/');
+    } else {
+      toast.add({
+        severity: 'error',
+        summary: '登入失敗',
+        detail: data?.message || '發生未知錯誤',
+        life: 3000,
+      });
+    }
+  } catch (error) {
+    const message = error.response?.data?.message || '帳號或密碼不正確';
+    toast.add({
+      severity: 'error',
+      summary: '登入失敗',
+      detail: message,
+      life: 3000,
+    });
+  }
+};
 </script>
 
 <template>
@@ -62,46 +113,72 @@ const checked = ref(false);
             <span class="text-muted-color font-medium">Sign in to continue</span>
           </div>
 
-          <div>
-            <label
-              for="email1"
-              class="block text-surface-900 dark:text-surface-0 text-xl font-medium mb-2"
-              >Email</label
-            >
-            <InputText
-              id="email1"
-              type="text"
-              placeholder="Email address"
-              class="w-full md:w-[30rem] mb-8"
-              v-model="email"
-            />
+          <Form
+            v-slot="$form"
+            :initial-values="initialValues"
+            :resolver="resolver"
+            @submit="onFormSubmit"
+          >
+            <div class="flex flex-col gap-1 mb-4">
+              <label
+                for="userId1"
+                class="block text-surface-900 dark:text-surface-0 text-xl font-medium mb-2"
+              >
+                帳號
+              </label>
+              <InputText
+                id="userId1"
+                name="userId"
+                type="text"
+                placeholder="帳號"
+                class="w-full md:w-[30rem]"
+                fluid
+                :invalid="$form.userId?.invalid"
+              />
+              <Message v-if="$form.userId?.invalid" severity="error" size="small" variant="simple">
+                {{ $form.userId?.error?.message }}
+              </Message>
+            </div>
 
-            <label
-              for="password1"
-              class="block text-surface-900 dark:text-surface-0 font-medium text-xl mb-2"
-              >Password</label
-            >
-            <Password
-              id="password1"
-              v-model="password"
-              placeholder="Password"
-              :toggleMask="true"
-              class="mb-4"
-              fluid
-              :feedback="false"
-            ></Password>
+            <div class="flex flex-col gap-1 mb-4">
+              <label
+                for="password1"
+                class="block text-surface-900 dark:text-surface-0 font-medium text-xl mb-2"
+              >
+                密碼
+              </label>
+              <Password
+                id="password1"
+                name="password"
+                placeholder="密碼"
+                :toggle-mask="true"
+                class="w-full md:w-[30rem]"
+                fluid
+                :feedback="false"
+                :invalid="$form.password?.invalid"
+              />
+              <Message
+                v-if="$form.password?.invalid"
+                severity="error"
+                size="small"
+                variant="simple"
+              >
+                {{ $form.password?.error?.message }}
+              </Message>
+            </div>
 
             <div class="flex items-center justify-between mt-2 mb-8 gap-8">
               <div class="flex items-center">
-                <Checkbox v-model="checked" id="rememberme1" binary class="mr-2"></Checkbox>
+                <Checkbox v-model="checked" id="rememberme1" binary class="mr-2" />
                 <label for="rememberme1">Remember me</label>
               </div>
-              <span class="font-medium no-underline ml-2 text-right cursor-pointer text-primary"
-                >Forgot password?</span
-              >
+              <span class="font-medium no-underline ml-2 text-right cursor-pointer text-primary">
+                Forgot password?
+              </span>
             </div>
-            <Button label="Sign In" class="w-full" as="router-link" to="/"></Button>
-          </div>
+
+            <Button type="submit" label="Sign In" class="w-full" />
+          </Form>
         </div>
       </div>
     </div>
