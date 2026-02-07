@@ -34,7 +34,7 @@
               >You do not have the necessary permisions. Please contact admins.</span
             >
             <img
-              src="/demo/images/access/asset-access.svg"
+              src="/images/access/asset-access.svg"
               alt="Access denied"
               class="mb-8"
               width="80%"
