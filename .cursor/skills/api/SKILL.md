@@ -17,7 +17,7 @@ description: 適用於 API 專案最佳實踐模式，裡面包含 API 垂直切
 Modules # 模組
 ├── Auth # 認證模組
 │   └── User # 使用者
-│       ├── Login # 登入
+│       ├── Login # 登入/API 端點名稱
 │       │   ├── Examples.cs # 範例
 │       │   ├── LoginEndpoint.cs # 登入端點
 │       │   └── Models.cs # 模型
@@ -38,8 +38,8 @@ public static void MapGroupEndpoints(this WebApplication app)
 
 ### GroupEndpoints
 
--   命名規則 `[XXX]GroupEndpoints` (ex: `UserGroupEndpoints`)
--   使用 `MapEndpoint<TEndpoint>` 擴充方法應設端點
+- 命名規則 `[XXX]GroupEndpoints` (ex: `UserGroupEndpoints`)
+- 使用 `MapEndpoint<TEndpoint>` 擴充方法應設端點
 
 ```csharp
 public static class UserGroupEndpoints
@@ -55,9 +55,9 @@ public static class UserGroupEndpoints
 
 ### Endpoint
 
--   繼承 `IEndpoint` 介面並實作
--   套用 Open API 相關 Attributes
--   回傳 Response 使用 `APIResponseHelper` 統一回傳格式
+- 繼承 `IEndpoint` 介面並實作
+- 套用 Open API 相關 Attributes
+- 回傳 Response 使用 `APIResponseHelper` 統一回傳格式
 
 命名規範說明：
 
@@ -72,12 +72,14 @@ public static class UserGroupEndpoints
 
 特別說明：
 
--   `ResponseExample` 的 name 請名稱詳細說明，如：登入成功、登入成功空資料、新增待辦事項成功、新增待辦事項空資料、刪除待辦事項成功、刪除待辦事項空資料、更新待辦事項成功、更新待辦事項空資料、查詢待辦事項成功、查詢待辦事項空資料
--   `RequestExample` 的 name 請名稱詳細說明，如：Admin、測試帳號、新增待辦事項 - 基本範例、新增待辦事項 - 僅標題、刪除待辦事項 - 基本範例、刪除待辦事項 - 僅標題、更新待辦事項 - 基本範例、更新待辦事項 - 僅標題、查詢待辦事項 - 基本範例、查詢待辦事項 - 僅標題
+- `ResponseExample` 的 name 請名稱詳細說明，如：登入成功、登入成功空資料、新增待辦事項成功、新增待辦事項空資料、刪除待辦事項成功、刪除待辦事項空資料、更新待辦事項成功、更新待辦事項空資料、查詢待辦事項成功、查詢待辦事項空資料
+- `RequestExample` 的 name 請名稱詳細說明，如：Admin、測試帳號、新增待辦事項 - 基本範例、新增待辦事項 - 僅標題、刪除待辦事項 - 基本範例、刪除待辦事項 - 僅標題、更新待辦事項 - 基本範例、更新待辦事項 - 僅標題、查詢待辦事項 - 基本範例、查詢待辦事項 - 僅標題
+- `MapEndpoint` 的 url 請使用 `/[XXX]` 格式，如：`/login`、`/insertTodo`、`/getTodoById`、`/updateTodoById`、`/deleteTodoById`、`/getTodoByQueryString`，對應到 Folder 資料夾名稱，如果是 InsertTodo 則 url 為 "/insertTodo"
 
 ```csharp
 public class LoginEndpoint : IEndpoint
 {
+    // "/login" -> 端點路徑對應到 Folder 資料夾名稱，如果是 InsertTodo 則 url 為 "/insertTodo"
     public static void MapEndpoint(IEndpointRouteBuilder app) => app.MapPost("/login", Handler);
 
     [EndpointName("Login")]
@@ -127,10 +129,10 @@ public class LoginEndpoint : IEndpoint
 
 ### Models
 
--   使用 `DataAnnotations` 驗證 Request Body
--   使用 `Display` 設定 Display Name
--   撰寫 XML 註解
--   檔案名稱 `[XXX]Request`、`[XXX]Response`、`[XXX]Dto` (ex: `LoginRequest`、`LoginResponse`、`LoginDto`)
+- 使用 `DataAnnotations` 驗證 Request Body
+- 使用 `Display` 設定 Display Name
+- 撰寫 XML 註解
+- 檔案名稱 `[XXX]Request`、`[XXX]Response`、`[XXX]Dto` (ex: `LoginRequest`、`LoginResponse`、`LoginDto`)
 
 ```csharp
 public class LoginRequest
@@ -164,8 +166,8 @@ public class LoginResponse
 
 ### Examples
 
--   繼承 `IExampleProvider` 介面並實作
--   檔案名稱 `[XXX]RequestEx_[說明]`、`[XXX]ResponseEx_[說明]`、`[XXX]DtoEx_[說明]` (ex: `LoginReqEx_Admin_Admin`、`LoginResEx_Ok_LoginSuccess`、`LoginDtoEx_Ok_LoginSuccess`)
+- 繼承 `IExampleProvider` 介面並實作
+- 檔案名稱 `[XXX]RequestEx_[說明]`、`[XXX]ResponseEx_[說明]`、`[XXX]DtoEx_[說明]` (ex: `LoginReqEx_Admin_Admin`、`LoginResEx_Ok_LoginSuccess`、`LoginDtoEx_Ok_LoginSuccess`)
 
 ```csharp
 
@@ -229,9 +231,9 @@ app.MapPost("/login", Handler).DisableValidation();
 
 ### 資料夾結構
 
--   Entities 資料庫實體類別，**如需知道資料欄位定義可參考此資料夾**
--   XXXContext EF Core 資料庫上下文
--   XXDapperContext 資料庫 Dapper 連線工具
+- Entities 資料庫實體類別，**如需知道資料欄位定義可參考此資料夾**
+- XXXContext EF Core 資料庫上下文
+- XXDapperContext 資料庫 Dapper 連線工具
 
 ```text
 ├── Infrastructures/
@@ -491,8 +493,8 @@ Infrastructures/
 
 ### 介面定義 (I[XXX]Adapter.cs)
 
--   定義第三方 API 的所有方法
--   撰寫 XML 註解說明用途
+- 定義第三方 API 的所有方法
+- 撰寫 XML 註解說明用途
 
 ```csharp
 namespace TodoAPI.Infrastructures.Adapters.[XXX];
@@ -509,11 +511,11 @@ public interface I[XXX]Adapter
 
 ### 實作類別 ([XXX]Adapter.cs)
 
--   注入 `HttpClient` 和 `IConfiguration`
--   從設定檔讀取 BaseUrl
--   **BaseAddress 結尾必須加 `/`**
--   使用 `GetFromJsonAsync` 或 `PostAsJsonAsync` 進行 API 調用
--   使用 `JsonHelper` 進行 JSON 序列化與反序列化
+- 注入 `HttpClient` 和 `IConfiguration`
+- 從設定檔讀取 BaseUrl
+- **BaseAddress 結尾必須加 `/`**
+- 使用 `GetFromJsonAsync` 或 `PostAsJsonAsync` 進行 API 調用
+- 使用 `JsonHelper` 進行 JSON 序列化與反序列化
 
 ```csharp
 namespace TodoAPI.Infrastructures.Adapters.[XXX];
@@ -544,9 +546,9 @@ public class [XXX]Adapter : I[XXX]Adapter
 
 ### DTO 類別 ([XXX]Dto.cs)
 
--   使用 `JsonPropertyName` 對應 API 回傳的 JSON 欄位
--   撰寫 XML 註解說明每個欄位用途
--   設定預設值避免 null
+- 使用 `JsonPropertyName` 對應 API 回傳的 JSON 欄位
+- 撰寫 XML 註解說明每個欄位用途
+- 設定預設值避免 null
 
 ```csharp
 using System.Text.Json.Serialization;
@@ -573,9 +575,9 @@ public class [XXX]Dto
 
 用於處理 SSL 憑證驗證和 HTTP 請求/回應 Log 記錄
 
--   繼承 `DelegatingHandler`
--   設定 `HttpClientHandler` 處理 SSL 憑證
--   記錄結構化 Log（包含 Request/Response 資訊）
+- 繼承 `DelegatingHandler`
+- 設定 `HttpClientHandler` 處理 SSL 憑證
+- 記錄結構化 Log（包含 Request/Response 資訊）
 
 ```csharp
 namespace TodoAPI.Infrastructures.Adapters.[XXX];
@@ -671,10 +673,10 @@ public class [XXX]Interceptor : DelegatingHandler
 
 在 `AdapterConfig.cs` 統一註冊所有 Adapter
 
--   註冊 Interceptor 為 `Scoped`
--   使用 `AddHttpClient<TInterface, TImplementation>` 註冊 HttpClient
--   使用 `ConfigurePrimaryHttpMessageHandler` 設定攔截器
--   使用 `AddStandardResilienceHandler` 加入重試機制 (需安裝 `Microsoft.Extensions.Http.Resilience`)
+- 註冊 Interceptor 為 `Scoped`
+- 使用 `AddHttpClient<TInterface, TImplementation>` 註冊 HttpClient
+- 使用 `ConfigurePrimaryHttpMessageHandler` 設定攔截器
+- 使用 `AddStandardResilienceHandler` 加入重試機制 (需安裝 `Microsoft.Extensions.Http.Resilience`)
 
 ```csharp
 namespace TodoAPI.Infrastructures.Adapters;

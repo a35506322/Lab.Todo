@@ -2,7 +2,8 @@ namespace TodoAPI.Modules.Todo.GetTodoByQueryString;
 
 public class GetTodoByQueryStringEndpoint : IEndpoint
 {
-    public static void MapEndpoint(IEndpointRouteBuilder app) => app.MapGet("/todo", Handler);
+    public static void MapEndpoint(IEndpointRouteBuilder app) =>
+        app.MapGet("/getTodoByQueryString", Handler);
 
     [EndpointName("GetTodoByQueryString")]
     [EndpointSummary("查詢待辦事項清單")]

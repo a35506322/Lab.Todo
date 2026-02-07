@@ -3,7 +3,7 @@ namespace TodoAPI.Modules.Todo.UpdateTodoById;
 public class UpdateTodoByIdEndpoint : IEndpoint
 {
     public static void MapEndpoint(IEndpointRouteBuilder app) =>
-        app.MapPut("/todo/{id:long}", Handler);
+        app.MapPut("/updateTodoById/{id:long}", Handler);
 
     [EndpointName("UpdateTodoById")]
     [EndpointSummary("更新待辦事項")]

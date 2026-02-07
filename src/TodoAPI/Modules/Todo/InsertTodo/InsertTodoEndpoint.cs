@@ -2,7 +2,8 @@ namespace TodoAPI.Modules.Todo.InsertTodo;
 
 public class InsertTodoEndpoint : IEndpoint
 {
-    public static void MapEndpoint(IEndpointRouteBuilder app) => app.MapPost("/todo", Handler);
+    public static void MapEndpoint(IEndpointRouteBuilder app) =>
+        app.MapPost("/insertTodo", Handler);
 
     [EndpointName("InsertTodo")]
     [EndpointSummary("新增待辦事項")]

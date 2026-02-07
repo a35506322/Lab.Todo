@@ -3,7 +3,7 @@ namespace TodoAPI.Modules.Todo.DeleteTodoById;
 public class DeleteTodoByIdEndpoint : IEndpoint
 {
     public static void MapEndpoint(IEndpointRouteBuilder app) =>
-        app.MapDelete("/todo/{id:long}", Handler);
+        app.MapDelete("/deleteTodoById/{id:long}", Handler);
 
     [EndpointName("DeleteTodoById")]
     [EndpointSummary("刪除待辦事項")]

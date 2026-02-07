@@ -3,7 +3,7 @@ namespace TodoAPI.Modules.Todo.GetTodoById;
 public class GetTodoByIdEndpoint : IEndpoint
 {
     public static void MapEndpoint(IEndpointRouteBuilder app) =>
-        app.MapGet("/todo/{id:long}", Handler);
+        app.MapGet("/getTodoById/{id:long}", Handler);
 
     [EndpointName("GetTodoById")]
     [EndpointSummary("查詢待辦事項")]
