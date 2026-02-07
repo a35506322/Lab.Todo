@@ -118,7 +118,7 @@ dotnet test --filter "FullyQualifiedName=TodoAPI.UnitTest.EndpointTests.LoginEnd
 請查閱相關技能並學習
 
 - [mstest-unit-test](../mstest-unit-test/SKILL.md)
-- [integration-test](../integration-test/SKILL.md)
+- [mstest-integration-test](../mstest-integration-test/SKILL.md)
 
 ## 成功指標
 
