@@ -24,6 +24,7 @@ watch(
 <template>
   <div>
     <Toast position="top-center" />
+    <ConfirmDialog />
     <RouterView />
   </div>
 </template>

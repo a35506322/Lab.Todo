@@ -8,6 +8,7 @@ import Material from '@primeuix/themes/material';
 import { Form } from '@primevue/forms';
 import { definePreset, palette } from '@primeuix/themes';
 import ToastService from 'primevue/toastservice';
+import ConfirmationService from 'primevue/confirmationservice';
 import App from './App.vue';
 import router from './router';
 import { z } from 'zod';
@@ -34,6 +35,19 @@ const CustomPreset = definePreset(Material, {
       950: customPrimaryPalette[950],
     },
   },
+  components: {
+    datatable: {
+      header: {
+        background: '{primary.500}',
+        color: '{primary.contrast.color}',
+      },
+      headerCell: {
+        background: '{primary.500}',
+        color: '{primary.contrast.color}',
+        hoverBackground: '{primary.600}',
+      },
+    },
+  },
 });
 
 app.use(createPinia());
@@ -51,6 +65,7 @@ app.use(PrimeVue, {
   },
 });
 app.use(ToastService);
+app.use(ConfirmationService);
 
 app.component('Form', Form);
 
