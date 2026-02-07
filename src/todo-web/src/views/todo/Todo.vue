@@ -6,6 +6,8 @@ import { zodResolver } from '@primevue/forms/resolvers/zod';
 import { z } from 'zod';
 import { getTodos, createTodo, updateTodo, deleteTodo } from '@/services/todo-api';
 import { API_CODE } from '@/constants/api-response-code';
+import { formatTWDateTime } from '@/utils/format';
+import FormFieldError from '@/components/FormFieldError.vue';
 
 const confirm = useConfirm();
 const toast = useAppToast();
@@ -252,17 +254,6 @@ const handleBatchDelete = () => {
   });
 };
 
-// 格式化日期
-const formatDate = (dateString) => {
-  if (!dateString) return '-';
-  const date = new Date(dateString);
-  return date.toLocaleDateString('zh-TW', {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-  });
-};
-
 // 初始化載入
 onMounted(async () => {
   await loadTodos();
@@ -360,7 +351,7 @@ onMounted(async () => {
       </Column>
       <Column field="addTime" header="新增時間" sortable style="min-width: 10rem">
         <template #body="{ data }">
-          {{ formatDate(data.addTime) }}
+          {{ formatTWDateTime(data.addTime) }}
         </template>
       </Column>
       <Column field="addUserId" header="新增者" sortable style="min-width: 8rem" />
@@ -396,9 +387,7 @@ onMounted(async () => {
             fluid
             :invalid="$form.todoTitle?.invalid"
           />
-          <Message v-if="$form.todoTitle?.invalid" severity="error" size="small" variant="simple">
-            {{ $form.todoTitle?.error?.message }}
-          </Message>
+          <FormFieldError :field="$form.todoTitle" />
         </div>
 
         <!-- 待辦內容 -->
@@ -417,9 +406,7 @@ onMounted(async () => {
             fluid
             :invalid="$form.todoContent?.invalid"
           />
-          <Message v-if="$form.todoContent?.invalid" severity="error" size="small" variant="simple">
-            {{ $form.todoContent?.error?.message }}
-          </Message>
+          <FormFieldError :field="$form.todoContent" />
         </div>
 
         <!-- 是否完成（僅編輯模式顯示） -->
@@ -440,9 +427,7 @@ onMounted(async () => {
             fluid
             :invalid="$form.isComplete?.invalid"
           />
-          <Message v-if="$form.isComplete?.invalid" severity="error" size="small" variant="simple">
-            {{ $form.isComplete?.error?.message }}
-          </Message>
+          <FormFieldError :field="$form.isComplete" />
         </div>
 
         <!-- 按鈕 -->
