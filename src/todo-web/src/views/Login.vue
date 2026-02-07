@@ -2,6 +2,8 @@
 import { reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useToast } from 'primevue/usetoast';
+import { zodResolver } from '@primevue/forms/resolvers/zod';
+import { z } from 'zod';
 import { login } from '@/services/auth-api';
 
 const router = useRouter();
@@ -14,16 +16,12 @@ const initialValues = reactive({
 
 const checked = ref(false);
 
-const resolver = ({ values }) => {
-  const errors = {};
-  if (!values.userId?.trim()) {
-    errors.userId = [{ message: '帳號為必填' }];
-  }
-  if (!values.password?.trim()) {
-    errors.password = [{ message: '密碼為必填' }];
-  }
-  return { values, errors };
-};
+const resolver = zodResolver(
+  z.object({
+    userId: z.string().trim().min(1, { message: '帳號為必填' }),
+    password: z.string().trim().min(1, { message: '密碼為必填' }),
+  }),
+);
 
 const onFormSubmit = async ({ valid, values }) => {
   if (!valid) return;
