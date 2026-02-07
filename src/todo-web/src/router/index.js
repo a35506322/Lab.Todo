@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import HomeView from '../views/HomeView.vue';
 import AppLayout from '@/layout/AppLayout.vue';
 import { getToken } from '@/composables/useAuth';
+import { useNotificationStore } from '@/stores/useNotificationStore';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -53,10 +54,15 @@ const router = createRouter({
 router.beforeEach((to) => {
   const hasToken = !!getToken();
   const requiresAuth = to.meta.requiresAuth !== false; // 預設需要 auth
-
+  const notificationStore = useNotificationStore();
   // 需要認證但沒有 token，導向登入頁並記錄 redirect
   // redirect 是為了在登入成功後，將使用者導回原本想訪問的頁面
   if (requiresAuth && !hasToken) {
+    notificationStore.add({
+      severity: 'error',
+      summary: '登入失敗',
+      detail: '帳號或密碼不正確，或者登入已過期',
+    });
     return {
       name: 'login',
       query: { redirect: to.fullPath },

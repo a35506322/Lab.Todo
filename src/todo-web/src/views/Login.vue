@@ -1,7 +1,7 @@
 <script setup>
 import { reactive, ref } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
-import { useToast } from 'primevue/usetoast';
+import { useAppToast } from '@/composables/useAppToast';
 import { zodResolver } from '@primevue/forms/resolvers/zod';
 import { z } from 'zod';
 import { login } from '@/services/auth-api';
@@ -9,7 +9,7 @@ import { setToken } from '@/composables/useAuth';
 
 const router = useRouter();
 const route = useRoute();
-const toast = useToast();
+const toast = useAppToast();
 
 const initialValues = reactive({
   userId: '',
@@ -46,7 +46,6 @@ const onFormSubmit = async ({ valid, values }) => {
         severity: 'error',
         summary: '登入失敗',
         detail: data?.message || '發生未知錯誤',
-        life: 3000,
       });
     }
   } catch (error) {
@@ -55,7 +54,6 @@ const onFormSubmit = async ({ valid, values }) => {
       severity: 'error',
       summary: '登入失敗',
       detail: message,
-      life: 3000,
     });
   }
 };
