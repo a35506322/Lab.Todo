@@ -1,44 +1,24 @@
-# todo-web
+# Lab.TodoWeb
 
-This template should help get you started developing with Vue 3 in Vite.
+## Framework
 
-## Recommended IDE Setup
+- [x] Vue 3
+- [x] Vite
+- [x] TailwindCSS
+- [x] PrimeVue UI
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+## Features
 
-## Recommended Browser Setup
+- [x] 使用 Sakai 官方 Dashboard Template
+- [x] PrimeVue UI 組件
+- [x] TailwindCSS 樣式
+- [x] Axios 串接 API
+- [ ] Axios 攔截器
+- [ ] PrimeVue Form 驗證
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+## 建議
 
-## Customize configuration
+以下功能因每個系統的需求不同，如需要在自行實作
 
-See [Vite Configuration Reference](https://vite.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+1. 目前使用 PrimeVue Form 驗證，可按照自己習慣變更表單驗證工具
+2. 目前使用官方 Dashboard Template，可按照自己習慣變更模板
