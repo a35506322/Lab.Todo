@@ -12,16 +12,16 @@ description: TodoAPI 專案結構和架構指南
 
 ## 技術堆疊
 
--   .NET 10.0 + Minimal API
--   Entity Framework Core 10.0.2
--   Scalar 2.12.25 (API 文件)
--   JWT Bearer Authentication
--   CORS 設定
--   RBAC 角色權限管理 (簡易)
+- .NET 10.0 + Minimal API
+- Entity Framework Core 10.0.2
+- Scalar 2.12.25 (API 文件)
+- JWT Bearer Authentication
+- CORS 設定
+- RBAC 角色權限管理 (簡易)
 
 ## 架構模式
 
--   **垂直切片架構** : 每個功能獨立資料夾，包含 Endpoint、Models、Examples
+- **垂直切片架構** : 每個功能獨立資料夾，包含 Endpoint、Models、Examples
 
 ## 資料夾結構
 

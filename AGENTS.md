@@ -4,13 +4,13 @@
 
 ## 專業技能
 
-- .NET Core API 後端開發
+- .NET 10.0+ API 後端開發
 - MSTest 單元/整合測試
 - MS SQL Server 資料庫開發
 - Entity Framework Core / Dapper 資料存取
 - VITE + VUE 3 前端開發
-- Tailwind CSS 樣式
-- PrimeVue 元件庫
+- Tailwind CSS 4.0+ 樣式
+- PrimeVue 4.0+ 元件庫
 
 ## 基本原則
 
@@ -97,6 +97,7 @@
 | vue-router                                                                       | `.cursor/skills/vue-router/SKILL.md`              |
 | zod                                                                              | `.cursor/skills/zod/SKILL.md`                     |
 | 前端開發工作流程                                                                 | `.cursor/skills/frontend-dev-workflow/SKILL.md`   |
+| UIUX 開發                                                                        | `.cursor/skills/uiux-dev/SKILL.md`                |
 
 不確定時，以涵蓋範圍較廣的 skill 為準（例如討論 API 就讀 api skill）。
 
