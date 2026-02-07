@@ -4,13 +4,13 @@
 
 ## 專業技能
 
--   .NET Core API 後端開發
--   MSTest 單元/整合測試
--   MS SQL Server 資料庫開發
--   Entity Framework Core / Dapper 資料存取
--   VITE + VUE 3 前端開發
--   Tailwind CSS 樣式
--   PrimeVue 元件庫
+- .NET Core API 後端開發
+- MSTest 單元/整合測試
+- MS SQL Server 資料庫開發
+- Entity Framework Core / Dapper 資料存取
+- VITE + VUE 3 前端開發
+- Tailwind CSS 樣式
+- PrimeVue 元件庫
 
 ## 基本原則
 
@@ -28,16 +28,24 @@
 
 ```
 .cursor # Cursor 專案設定
+├── commands # 自訂指令
+│   ├── backend-coverage-report.md # 後端覆蓋率報告
+│   ├── create-mcp-skill.md
+│   ├── create-project-skill.md
+│   ├── folder-structure.md # 產生資料夾結構
+│   └── question.md
 ├── rules # 專案與編碼規則
 │   ├── api-development.mdc # API 開發規則
 │   ├── csharp-coding-standards.mdc # C# 編碼規範
-│   ├── vue-coding-standards.mdc # Vue 編碼規範
+│   ├── vue-js-coding-standards.mdc # Vue 跟 JS 編碼規範
 │   ├── TodoAPI # TodoAPI 專案規則
 │   │   └── project-structure.mdc # 專案結構規範
 │   ├── TodoAPI.IntegrationTest # 整合測試專案規則
-│   │   └── project-structure.mdc # 專案結構規範
-│   └── TodoAPI.UnitTest # 單元測試專案規則
-│       └── project-structure.mdc # 專案結構規範
+│   │   └── project-structure.mdc
+│   ├── TodoAPI.UnitTest # 單元測試專案規則
+│   │   └── project-structure.mdc
+│   └── TodoWeb # 前端專案規則
+│       └── project-structure.mdc
 └── skills # Agent 技能
     ├── api # API 開發技能
     │   └── SKILL.md
@@ -47,11 +55,11 @@
     │   ├── scripts
     │   │   └── report-coverage.ps1 # 覆蓋率報告腳本
     │   └── SKILL.md
-    ├── backend-tdd-workflow # 後端 TDD 工作流程技能
+    ├── backend-tdd-workflow # 後端 TDD 工作流程
     │   └── SKILL.md
-    ├── mstest-integration-test # MSTest 整合測試技能
+    ├── mstest-integration-test # MSTest 整合測試
     │   └── SKILL.md
-    ├── mstest-unit-test # MSTest 單元測試技能
+    ├── mstest-unit-test # MSTest 單元測試
     │   └── SKILL.md
     ├── pinia # Pinia 技能
     │   └── SKILL.md
@@ -59,7 +67,11 @@
     │   └── SKILL.md
     ├── vue # Vue 技能
     │   └── SKILL.md
-    └── vue-router # Vue Router 技能
+    ├── vue-router # Vue Router 技能
+    │   └── SKILL.md
+    ├── zod # Zod 技能
+    │   └── SKILL.md
+    └── frontend-dev-workflow # 前端開發工作流程
         └── SKILL.md
 ```
 
@@ -83,6 +95,8 @@
 | axios                                                                            | `.cursor/skills/axios/SKILL.md`                   |
 | pinia                                                                            | `.cursor/skills/pinia/SKILL.md`                   |
 | vue-router                                                                       | `.cursor/skills/vue-router/SKILL.md`              |
+| zod                                                                              | `.cursor/skills/zod/SKILL.md`                     |
+| 前端開發工作流程                                                                 | `.cursor/skills/frontend-dev-workflow/SKILL.md`   |
 
 不確定時，以涵蓋範圍較廣的 skill 為準（例如討論 API 就讀 api skill）。
 

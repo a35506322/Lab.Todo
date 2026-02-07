@@ -7,6 +7,11 @@ description: 適用於編寫 PrimeVue 時最佳實踐，包含 PrimeVue 使用�
 
 使用 PrimeVue 作為 Vue 3 的 UI 元件庫，提供了一系列高品質的 UI 元件，適用於各種前端專案。
 
+## 使用場景
+
+- 當使用 PrimeVue 時
+- 當需要使用 PrimeVue 的 Form 表單驗證時
+
 ## PrimeVue 使用方式
 
 使用 `mcp primevue` 查詢 PrimeVue 的用法。
@@ -23,12 +28,6 @@ description: 適用於編寫 PrimeVue 時最佳實踐，包含 PrimeVue 使用�
 ## Form 表單驗證
 
 PrimeVue Forms (`@primevue/forms`) 提供表單狀態管理與驗證功能。本專案統一使用 [zod](../zod/SKILL.md) 作為驗證 schema。
-
-### 何時使用
-
-- 需要表單欄位驗證（必填、格式、長度限制等）
-- 需要統一管理表單提交狀態
-- 需要顯示欄位級別的錯誤訊息
 
 ### 核心概念
 

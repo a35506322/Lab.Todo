@@ -1,5 +1,6 @@
 ---
 globs: *.cs
+alwaysApply: false
 description: C# 編碼規範和最佳實踐
 ---
 
@@ -7,16 +8,16 @@ description: C# 編碼規範和最佳實踐
 
 ## 命名規範
 
--   類別、方法、公開成員：PascalCase (例如：`IsUserSignedIn`, `CalculateTotal`)
--   局部變數、私有欄位：camelCase
--   常數：大寫字母 (例如：`MAX_RETRY_COUNT`)
--   介面：以 "I" 為前綴 (例如：`IUserService`)
--   使用描述性變數和方法名稱：例如：'IsUserSignedIn'、'CalculateTotal'
+- 類別、方法、公開成員：PascalCase (例如：`IsUserSignedIn`, `CalculateTotal`)
+- 局部變數、私有欄位：camelCase
+- 常數：大寫字母 (例如：`MAX_RETRY_COUNT`)
+- 介面：以 "I" 為前綴 (例如：`IUserService`)
+- 使用描述性變數和方法名稱：例如：'IsUserSignedIn'、'CalculateTotal'
 
 ## C# 關鍵寫作規範
 
--   針對`更改的檔案`使用 `csharpier` 格式化程式碼 (如有語法錯誤請修正並告知)
--   使用 **GlobalUsing.cs** 進行全域 using 管理
+- 針對`更改的檔案`使用 `csharpier` 格式化程式碼 (如有語法錯誤請修正並告知)
+- 使用 **GlobalUsing.cs** 進行全域 using 管理
 
 ```csharp
 ❌ BAD: 使用全域 using
@@ -26,7 +27,7 @@ using System;
 global using System;
 ```
 
--   使用 **primary constructor** 語法（C# 12）進行建構子注入
+- 使用 **primary constructor** 語法（C# 12）進行建構子注入
 
 ```csharp
 ❌ BAD: 使用傳統建構子注入
@@ -43,7 +44,7 @@ public class ExampleService
 public class ExampleService(ILogger<ExampleService> logger) { }
 ```
 
--   使用 pattern matching 取代 switch 語句，如：
+- 使用 pattern matching 取代 switch 語句，如：
 
 ```csharp
 ❌ BAD: 使用 switch 語句
@@ -67,7 +68,7 @@ var result = value switch
 ``
 ```
 
--   所有 class 都要有註解說明 (如：類別、方法、公開成員、局部變數、私有欄位、常數、介面)
+- 所有 class 都要有註解說明 (如：類別、方法、公開成員、局部變數、私有欄位、常數、介面)
 
 ```csharp
 /// <summary>
@@ -83,7 +84,7 @@ public class ExampleClass
 }
 ```
 
--   函數使用 named arguments 傳遞參數
+- 函數使用 named arguments 傳遞參數
 
 ```csharp
 /// <summary>
@@ -99,7 +100,7 @@ public void ExampleFunction(int parameter)
 ExampleFunction(parameter: 1);
 ```
 
--   使用 `HttpClient` 設定 BaseAddress 時務必結尾要加 "/"
+- 使用 `HttpClient` 設定 BaseAddress 時務必結尾要加 "/"
 
 ```csharp
 ❌ BAD: 設定 BaseAddress 時務必結尾沒加 "/"
@@ -110,7 +111,7 @@ httpClient.BaseAddress = new Uri("https://api.example.com");
 httpClient.BaseAddress = new Uri("https://api.example.com/");
 ```
 
--   使用 `JsonHelper` 進行 JSON 序列化與反序列化
+- 使用 `JsonHelper` 進行 JSON 序列化與反序列化
 
 ```csharp
 ❌ BAD: 使用 JsonSerializer 進行 JSON 序列化與反序列化
@@ -124,10 +125,10 @@ var result = JsonHelper.FromJson<T>(json);
 
 ## Comments
 
--   避免不必要的註解：程式碼應具有自明性
--   解釋「為什麼」而非「如何做」：註解應描述背後的邏輯或意圖，而非程式碼的執行內容
+- 避免不必要的註解：程式碼應具有自明性
+- 解釋「為什麼」而非「如何做」：註解應描述背後的邏輯或意圖，而非程式碼的執行內容
 
 ## 使用 MCP 情境
 
--   如有套件相關不清楚的使用 `Context7` MCP 進行查詢最佳使用做法
--   如針對 C# 或者 .Net Core 框架尋找最佳實踐請使用 `microsoft-learn` MCP 進行查詢
+- 如有套件相關不清楚的使用 `Context7` MCP 進行查詢最佳使用做法
+- 如針對 C# 或者 .Net Core 框架尋找最佳實踐請使用 `microsoft-learn` MCP 進行查詢

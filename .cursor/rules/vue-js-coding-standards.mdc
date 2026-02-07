@@ -1,9 +1,10 @@
 ---
-globs: *.vue
-description: Vue 編碼規範和最佳實踐
+globs: *.vue, *.js
+alwaysApply: false
+description: Vue 跟 JS 編碼規範和最佳實踐
 ---
 
-# Vue 編碼規範和最佳實踐
+# Vue 跟 JS 編碼規範和最佳實踐
 
 ## 命名規範
 
@@ -19,7 +20,7 @@ description: Vue 編碼規範和最佳實踐
 
 1. 基於 Vue3 請始終使用 `Composition API` 與 `<script setup>`
 2. 使用 JS 不使用 TS
-3. 若無需深度反應性，為提升效能，請優先選用 `shallowRef` 而非 `ref`
+3. 若無需響應式，為提升效能，請優先選用 `shallowRef` 而非 `ref`
 4. 當您需要從 `ref` 推導值時，請優先使用 `computed` 而非 `function`或者 `watch`，以實現自動快取與優化的重新渲染。
 5. 請在 `onMounted` 中初始化資料，並請使用 `try catch` 包裹，避免程式崩潰
 
@@ -75,14 +76,21 @@ const sanitizedContent = computed(() => DOMPurify.sanitize(props.trustedHtml));
 ```
 
 9. 元件庫一律使用 `primevue v4.0+`，樣式一律使用 `tailwindcss v4.0+`
+10. 如果需要工具類功能，請一慮先看 VueUse 套件，可使用 `mcp context7` 查詢`VueUse`套件，除非真的沒有才使用自定義 composable
 
 ## 禁止事項
 
-1. 不在 `<script setup>` 中使用 `await`
+1. 不在 `<script setup>` 中使用 `await`但可以在 onMounted 中使用
 
 ```vue
 <script setup>
+❌ 不在 `<script setup>` 中使用 `await`
 const data = await fetch("/api/data").then((r) => r.json());
+
+✅ 在 onMounted 中使用 `await`
+onMounted(async () => {
+    const data = await fetch("/api/data").then((r) => r.json());
+});
 </script>
 ```
 
@@ -189,10 +197,82 @@ store.increment();
 </script>
 ```
 
+9. 撰寫 api 時對應 request 與 response 的屬性命名一律以小駝峰命名
+
+```vue
+<script setup>
+import { login } from "@/services/auth-api";
+
+❌ 大寫命名 request
+const request = {
+    UserId: "test",
+    Password: "123456",
+};
+
+✅ 小駝峰命名 request
+const request = {
+    userId: "test",
+    password: "123456",
+};
+const { data } = await login(request);
+
+❌ 大寫命名 response
+const { Token, ExpiresIn } = data;
+
+✅ 小駝峰命名 response
+const { token, expiresIn } = data;
+</script>
+```
+
+## JS 關鍵寫作規範
+
+1. 函數使用 const = function () {} 代替 function () {}
+
+```js
+❌ function () {}
+function handleClick() {
+    console.log("Click");
+}
+
+✅ const = function () {}
+const handleClick = () => {
+console.log("Click");
+};
+
+```
+
+## 專案規範
+
+1. 在 `.vue` 檔案中使用 `useAppToast` 時，在其餘檔案請使用 `useNotificationStore` 統一管理 toast 訊息
+
+```vue
+<script setup>
+// src/views/Login.vue
+import { useAppToast } from "@/composables/useAppToast";
+
+const toast = useAppToast();
+</script>
+```
+
+```js
+// src/services/axios-instance.js
+import { useNotificationStore } from "@/stores/useNotificationStore";
+
+const notificationStore = useNotificationStore();
+notificationStore.add({
+    severity: "error",
+    summary: "登入失敗",
+    detail: "帳號或密碼不正確，或者登入已過期",
+});
+```
+
+2. 使用 `<Dialog>` 時，請使用 `position="top-center"` 代替 `position="top"`
+3. 驗證表單時錯誤訊息請使用 `FormFieldError` 元件顯示
+
 ## Comments
 
--   避免不必要的註解：程式碼應具有自明性
--   解釋「為什麼」而非「如何做」：註解應描述背後的邏輯或意圖，而非程式碼的執行內容
+- 避免不必要的註解：程式碼應具有自明性
+- 解釋「為什麼」而非「如何做」：註解應描述背後的邏輯或意圖，而非程式碼的執行內容
 
 ## 外部資源參考
 
@@ -203,3 +283,7 @@ store.increment();
 
 正常來說使用 `mcp context7` 進行查詢最佳使用做法
 但發生如果有些異常情況無法解決優先查詢 Vue 最佳實踐規則
+
+```
+
+```

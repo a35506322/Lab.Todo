@@ -9,7 +9,7 @@ description: 當使用 PrimeVue Form 時適用於編寫 Zod 時最佳實踐，�
 
 ## 使用場景
 
-- 當使用 PrimeVue Form 時
+- 當使用 PrimeVue Form 驗證表單時
 
 ## 基本範例
 
@@ -58,11 +58,12 @@ Zod v4 引入統一的 `error` 參數取代 v3 的多種 API（`message`、`erro
 
 ### 錯誤優先順序（高 → 低）
 
-| 優先順序  | 層級        | 說明                                         |
-| --------- | ----------- | -------------------------------------------- |
-| 1（最高） | Schema 層級 | 直接寫在 schema 定義或方法上的 `error`       |
-| 2         | Parse 層級  | 傳入 `.parse()` / `.safeParse()` 的 `error`  |
-| 3（最低） | 全域        | `z.config({ customError })` 設定的全域 error |
+| 優先順序   | 層級        | 說明                                         |
+| ---------- | ----------- | -------------------------------------------- |
+| 1（最高）  | Schema 層級 | 直接寫在 schema 定義或方法上的 `error`       |
+| 2          | Parse 層級  | 傳入 `.parse()` / `.safeParse()` 的 `error`  |
+| 3          | 全域        | `z.config({ customError })` 設定的全域 error |
+| 4 （最低） | i18n        | `z.config(z.locales.zhTW())` 設定的 i18n     |
 
 ### 方法層級：字串直接傳入
 
