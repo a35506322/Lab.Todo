@@ -6,6 +6,6 @@ import axiosInstance from './axios-instance';
  */
 export const login = (payload) =>
   axiosInstance.post('/user/login', {
-    UserId: payload.UserId,
-    Password: payload.Password,
+    userId: payload.userId,
+    password: payload.password,
   });

@@ -1,12 +1,14 @@
 <script setup>
 import { reactive, ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 import { useToast } from 'primevue/usetoast';
 import { zodResolver } from '@primevue/forms/resolvers/zod';
 import { z } from 'zod';
 import { login } from '@/services/auth-api';
+import { setToken } from '@/composables/useAuth';
 
 const router = useRouter();
+const route = useRoute();
 const toast = useToast();
 
 const initialValues = reactive({
@@ -28,13 +30,17 @@ const onFormSubmit = async ({ valid, values }) => {
 
   try {
     const { data } = await login({
-      UserId: values.userId,
-      Password: values.password,
+      userId: values.userId,
+      password: values.password,
     });
 
-    if (data?.code === 2000 && data?.data?.Token) {
-      localStorage.setItem('token', data.data.Token);
-      router.push('/');
+    if (data?.code === 2000 && data?.data?.token) {
+      setToken(data.data.token, data.data.expiresIn);
+      router.push(
+        route.query.redirect && typeof route.query.redirect === 'string'
+          ? route.query.redirect
+          : '/',
+      );
     } else {
       toast.add({
         severity: 'error',
