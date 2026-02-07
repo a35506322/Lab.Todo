@@ -13,7 +13,7 @@
 - [x] PrimeVue UI 組件
 - [x] TailwindCSS 樣式
 - [x] Axios 串接 API
-- [ ] Axios 攔截器
+- [x] Axios 攔截器
 - [x] PrimeVue Form 驗證 (使用 Zod)
 
 ## 建議

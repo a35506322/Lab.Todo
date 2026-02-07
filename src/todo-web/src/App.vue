@@ -2,6 +2,7 @@
 import { watch } from 'vue';
 import { useToast } from 'primevue/usetoast';
 import { useNotificationStore } from '@/stores/useNotificationStore';
+import AppLoading from '@/components/AppLoading.vue';
 
 const toast = useToast();
 const notificationStore = useNotificationStore();
@@ -25,6 +26,7 @@ watch(
   <div>
     <Toast position="top-center" />
     <ConfirmDialog />
+    <AppLoading />
     <RouterView />
   </div>
 </template>

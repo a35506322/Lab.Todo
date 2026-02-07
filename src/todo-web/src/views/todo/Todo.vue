@@ -1,7 +1,9 @@
 <script setup>
 import { ref, reactive, onMounted, computed } from 'vue';
+import { storeToRefs } from 'pinia';
 import { useConfirm } from 'primevue/useconfirm';
 import { useAppToast } from '@/composables/useAppToast';
+import { useLoadingStore } from '@/stores/useLoadingStore';
 import { zodResolver } from '@primevue/forms/resolvers/zod';
 import { z } from 'zod';
 import { getTodos, createTodo, updateTodo, deleteTodo } from '@/services/todo-api';
@@ -11,11 +13,11 @@ import FormFieldError from '@/components/FormFieldError.vue';
 
 const confirm = useConfirm();
 const toast = useAppToast();
+const loadingStore = useLoadingStore();
 
 // 列表資料
 const todos = ref([]);
 const selectedTodos = ref([]);
-const loading = ref(false);
 
 // 搜尋篩選
 const searchTitle = ref('');
@@ -74,7 +76,7 @@ const filterOptions = [
 
 // 載入待辦清單
 const loadTodos = async () => {
-  loading.value = true;
+  loadingStore.show();
   try {
     const params = {};
     if (searchTitle.value.trim()) {
@@ -94,7 +96,7 @@ const loadTodos = async () => {
     // 錯誤由 axios interceptor 統一處理
     todos.value = [];
   } finally {
-    loading.value = false;
+    loadingStore.hide();
   }
 };
 
@@ -136,6 +138,7 @@ const closeDialog = () => {
 const onFormSubmit = async ({ valid, values, reset }) => {
   if (!valid) return;
 
+  loadingStore.show();
   try {
     if (isEditMode.value) {
       // 更新
@@ -175,6 +178,8 @@ const onFormSubmit = async ({ valid, values, reset }) => {
     }
   } catch {
     // 錯誤由 axios interceptor 統一處理
+  } finally {
+    loadingStore.hide();
   }
 };
 
@@ -194,6 +199,7 @@ const handleDelete = (todo) => {
       severity: 'danger',
     },
     accept: async () => {
+      loadingStore.show();
       try {
         const { data } = await deleteTodo(todo.todoId);
         if (data?.code === API_CODE.SUCCESS) {
@@ -206,6 +212,8 @@ const handleDelete = (todo) => {
         }
       } catch {
         // 錯誤由 axios interceptor 統一處理
+      } finally {
+        loadingStore.hide();
       }
     },
   });
@@ -236,6 +244,7 @@ const handleBatchDelete = () => {
       severity: 'danger',
     },
     accept: async () => {
+      loadingStore.show();
       try {
         const deletePromises = selectedTodos.value.map((todo) => deleteTodo(todo.todoId));
         await Promise.all(deletePromises);
@@ -249,6 +258,8 @@ const handleBatchDelete = () => {
         await loadTodos();
       } catch {
         // 錯誤由 axios interceptor 統一處理
+      } finally {
+        loadingStore.hide();
       }
     },
   });
@@ -303,7 +314,6 @@ onMounted(async () => {
     <DataTable
       v-model:selection="selectedTodos"
       :value="todos"
-      :loading="loading"
       dataKey="todoId"
       paginator
       :rows="10"
