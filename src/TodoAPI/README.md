@@ -2,24 +2,24 @@
 
 ## Framework
 
--   [x] ASP.NET Core 10 Minimal API
--   [x] MSTest Unit Test & Integration Test
+- [x] ASP.NET Core 10 Minimal API
+- [x] MSTest Unit Test & Integration Test
 
 ## Features
 
--   [x] Minimal API + 垂直切割
--   [x] <del>Swagger UI</del> -> Scalar UI (含 Request/Response 範例)
--   [x] JWT 驗證
--   [x] Model 驗證 + 統一回傳驗證錯誤訊息
--   [x] 資料存取工具 (Dapper+ Entity Framework Core)
--   [x] 單元測試專案 (MSTest)
--   [x] 整合測試專案 (MSTest)
--   [x] Logging (Serilog)
--   [x] Exception Handling (Middleware)
--   [x] HttpClient 封裝最佳實踐
--   [ ] CORS 設定
--   [x] RBAC 角色權限管理 (簡易)
--   [x] 覆蓋率測試報告 (ReportGenerator)
+- [x] Minimal API + 垂直切割
+- [x] <del>Swagger UI</del> -> Scalar UI (含 Request/Response 範例)
+- [x] JWT 驗證
+- [x] Model 驗證 + 統一回傳驗證錯誤訊息
+- [x] 資料存取工具 (Dapper+ Entity Framework Core)
+- [x] 單元測試專案 (MSTest)
+- [x] 整合測試專案 (MSTest)
+- [x] Logging (Serilog)
+- [x] Exception Handling (Middleware)
+- [x] HttpClient 封裝最佳實踐
+- [x] CORS 設定
+- [x] RBAC 角色權限管理 (簡易)
+- [x] 覆蓋率測試報告 (ReportGenerator)
 
 ## 建議
 
@@ -27,12 +27,11 @@
 
 1. RBAC 角色權限管理 (可因應需求而更改)
 2. 使用 FusionCache 做快取
-3. 驗證錯誤訊息本地化
+3. 驗證錯誤訊息本地化 (日後如果有更好做法可以取代)
     - Minimal API 需透過 註冊 `CustomProblemDetailsService` 取代預設 `IProblemDetailsService`，在 `WriteAsync` 內對 `HttpValidationProblemDetails` 呼叫 `ValidationErrorLocalizer.Localize()` 轉成中文
     - Controller API 可用 [參考文章](https://cloudywing.github.io/backend/%E5%A6%82%E4%BD%95%E5%AE%A2%E8%A3%BD%E5%8C%96%20ASP.NET%20Core%20%E7%9A%84%20Model%20Validation%20%E9%A0%90%E8%A8%AD%E9%8C%AF%E8%AA%A4%E8%A8%8A%E6%81%AF) 比較正規作法。
-    - 日後如果有更好做法可以取代
-4. 如之後有共用專案如排程等，可以考慮將 Common 資料夾獨立成類別庫
-5. Log 收集器強烈推薦使用 Seq，如果要使用在 Serlog 設定即可
-6. 如需要格是化 Log 訊息，可以使用 `LoggerExtension` 類別繼續新增
-7. 可以考慮 appsettings.json 設定的設定使用 Options 模式進行強型別
-8. 測試相關如單元測試、整合測試、覆蓋率測試報告等，可以斟酌自己情況要不要用，應有些人沒有寫測試習慣
+4. 如有共用專案如排程等，可以考慮將 `Common` 資料夾獨立成類別庫
+5. Log 收集器強烈推薦使用 `Seq`，如果要使用在 `Serlog` 設定即可
+6. 如需要格式化 Log 訊息，可以使用 `LoggerExtension` 繼續新增
+7. 可以考慮 `appsettings.json` 設定的設定使用 `Options 模式`進行強型別
+8. 測試相關如單元測試、整合測試、覆蓋率測試報告等，可以斟酌情況按需使用

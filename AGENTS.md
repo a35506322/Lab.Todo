@@ -71,8 +71,10 @@
     │   └── SKILL.md
     ├── zod # Zod 技能
     │   └── SKILL.md
-    └── frontend-dev-workflow # 前端開發工作流程
-        └── SKILL.md
+    ├── frontend-dev-workflow # 前端開發工作流程
+    │   └── SKILL.md
+    ├── uiux-dev # UIUX 開發技能
+    │   └── SKILL.md
 ```
 
 ## 步驟 2：工作前確認 rules 及 skills 已正確閱讀
