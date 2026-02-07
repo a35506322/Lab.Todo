@@ -8,9 +8,11 @@ import Material from '@primeuix/themes/material';
 import { Form } from '@primevue/forms';
 import { definePreset, palette } from '@primeuix/themes';
 import ToastService from 'primevue/toastservice';
-
 import App from './App.vue';
 import router from './router';
+import { z } from 'zod';
+
+z.config(z.locales.zhTW());
 
 const app = createApp(App);
 

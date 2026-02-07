@@ -106,7 +106,7 @@ const onFormSubmit = async ({ valid, values }) => {
               </g>
             </svg>
             <div class="text-surface-900 dark:text-surface-0 text-3xl font-medium mb-4">
-              Welcome to PrimeLand!
+              Welcome to Todo Dashboard!
             </div>
             <span class="text-muted-color font-medium">Sign in to continue</span>
           </div>
