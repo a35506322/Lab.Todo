@@ -36,25 +36,19 @@ const onFormSubmit = async ({ valid, values }) => {
 
     if (data?.code === 2000 && data?.data?.token) {
       setToken(data.data.token, data.data.expiresIn);
+      toast.add({
+        severity: 'success',
+        summary: '登入成功',
+        detail: '登入成功',
+      });
       router.push(
         route.query.redirect && typeof route.query.redirect === 'string'
           ? route.query.redirect
           : '/',
       );
-    } else {
-      toast.add({
-        severity: 'error',
-        summary: '登入失敗',
-        detail: data?.message || '發生未知錯誤',
-      });
     }
-  } catch (error) {
-    const message = error.response?.data?.message || '帳號或密碼不正確';
-    toast.add({
-      severity: 'error',
-      summary: '登入失敗',
-      detail: message,
-    });
+  } catch {
+    // 錯誤由 axios interceptor 統一處理並顯示 toast
   }
 };
 </script>
