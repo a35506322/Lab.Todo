@@ -61,6 +61,8 @@ todo-web # Vue 3 前端專案
 │   ├── services # API 服務層
 │   │   ├── auth-api.js # 驗證 API
 │   │   └── axios-instance.js # Axios 實例
+│   ├── utils # 工具函式
+│   │   └── validators.js # 驗證工具函式
 │   ├── views # 頁面元件
 │   │   ├── Access.vue # 403 頁面
 │   │   ├── Error.vue # 錯誤頁面

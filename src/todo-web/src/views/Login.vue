@@ -18,8 +18,8 @@ const checked = ref(false);
 
 const resolver = zodResolver(
   z.object({
-    userId: z.string().trim().min(1, { message: '帳號為必填' }),
-    password: z.string().trim().min(1, { message: '密碼為必填' }),
+    userId: z.string().trim().min(1, { error: '帳號為必填' }),
+    password: z.string().trim().min(1, { error: '密碼為必填' }),
   }),
 );
 

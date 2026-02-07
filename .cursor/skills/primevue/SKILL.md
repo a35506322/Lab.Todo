@@ -22,7 +22,7 @@ description: 適用於編寫 PrimeVue 時最佳實踐，包含 PrimeVue 使用�
 
 ## Form 表單驗證
 
-PrimeVue Forms (`@primevue/forms`) 提供表單狀態管理與驗證功能。本專案統一使用 **Zod** 作為驗證 schema。
+PrimeVue Forms (`@primevue/forms`) 提供表單狀態管理與驗證功能。本專案統一使用 [zod](../zod/SKILL.md) 作為驗證 schema。
 
 ### 何時使用
 
@@ -212,41 +212,9 @@ const resolver = ({ values }) => {
 };
 ```
 
-### 常見 Zod Schema 範例
+### 使用 Zod 進行驗證
 
-```javascript
-import { z } from "zod";
-
-// 必填文字
-z.string().trim().min(1, { message: "此欄位為必填" });
-
-// Email
-z.string().email({ message: "請輸入有效的 Email" });
-
-// 密碼（複合規則）
-z.string()
-    .min(6, { message: "密碼至少 6 個字元" })
-    .max(20, { message: "密碼最多 20 個字元" })
-    .refine((v) => /[A-Z]/.test(v), { message: "需包含大寫字母" })
-    .refine((v) => /[a-z]/.test(v), { message: "需包含小寫字母" })
-    .refine((v) => /\d/.test(v), { message: "需包含數字" });
-
-// 數字範圍
-z.number().min(1).max(100);
-
-// 可選欄位
-z.string().optional();
-
-// 下拉選單（非 null）
-z.string().min(1, { message: "請選擇一個選項" });
-
-// 整個表單 schema
-const formSchema = z.object({
-    username: z.string().trim().min(1, { message: "帳號為必填" }),
-    email: z.string().email({ message: "請輸入有效的 Email" }),
-    password: z.string().min(6, { message: "密碼至少 6 個字元" }),
-});
-```
+文件使用 [zod](../zod/SKILL.md) 進行驗證。
 
 ### invalid 屬性綁定
 
@@ -264,6 +232,6 @@ PrimeVue 表單元件支援 `:invalid` prop 來顯示錯誤狀態的紅色邊框
 
 1. **Form 元件已全域註冊**，不需要 import，直接在 template 使用 `<Form>`
 2. **使用 `name` 而非 `v-model`**：Form 內的元件透過 `name` 綁定，不要同時使用 `v-model`
-3. **Zod 已設定 zhTW locale**：`z.config(z.locales.zhTW())`，使用 Zod 內建規則時會自動顯示中文訊息，自訂 `message` 會覆蓋內建中文
+3. **Zod 已設定 zhTW locale**：`z.config(z.locales.zhTW())`，使用 Zod 內建規則時會自動顯示中文訊息，自訂 `error`（或 `message`）會覆蓋內建中文。Zod v4 建議用 `error` 取代 `message`
 4. **`initialValues` 使用 `reactive`**：確保表單初始值是響應式的
 5. **resolver 是靜態的**：`zodResolver(schema)` 在宣告時就會建立，不會每次驗證重新建立
