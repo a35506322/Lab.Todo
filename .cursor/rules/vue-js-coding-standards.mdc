@@ -266,7 +266,7 @@ notificationStore.add({
 });
 ```
 
-2. 使用 `<Dialog>` 時，請使用 `position="top-center"` 代替 `position="top"`
+2. 使用 `<Dialog>` 等彈窗元件時，請使用 `position="top"`，一率都置中往上顯示
 3. 驗證表單時錯誤訊息請使用 `FormFieldError` 元件顯示
 
 ## Comments

@@ -189,6 +189,7 @@ const handleDelete = (todo) => {
     message: `確定要刪除「${todo.todoTitle}」嗎？`,
     header: '確認刪除',
     icon: 'pi pi-exclamation-triangle',
+    position: 'top',
     rejectProps: {
       label: '取消',
       severity: 'secondary',
@@ -234,6 +235,7 @@ const handleBatchDelete = () => {
     message: `確定要刪除選取的 ${selectedTodos.value.length} 筆待辦事項嗎？`,
     header: '確認批量刪除',
     icon: 'pi pi-exclamation-triangle',
+    position: 'top',
     rejectProps: {
       label: '取消',
       severity: 'secondary',
@@ -374,7 +376,7 @@ onMounted(async () => {
       :modal="true"
       :style="{ width: '30rem' }"
       @hide="closeDialog"
-      position="top-center"
+      position="top"
     >
       <Form
         v-slot="$form"
