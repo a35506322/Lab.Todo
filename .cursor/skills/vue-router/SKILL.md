@@ -1,6 +1,6 @@
 ---
 name: vue-router
-description:當使用 Vue Router 時運用此技能，裡面包含 Vue Router 最佳實踐規則、Navigation Guard 最佳實踐規則、Error Handling 最佳實踐規則等
+description: 當使用 Vue Router 時運用此技能，裡面包含 Vue Router 最佳實踐規則、Navigation Guard 最佳實踐規則、Error Handling 最佳實踐規則等
 ---
 
 # Vue Router
