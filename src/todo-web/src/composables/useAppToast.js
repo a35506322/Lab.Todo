@@ -3,7 +3,7 @@ import { useToast } from 'primevue/usetoast';
 /**
  * 應用程式統一的 Toast composable
  */
-export function useAppToast() {
+export const useAppToast = () => {
   const toast = useToast();
 
   /**
@@ -41,4 +41,4 @@ export function useAppToast() {
     removeAllGroups,
     removeGroup,
   };
-}
+};

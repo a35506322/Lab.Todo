@@ -9,12 +9,12 @@ description: 適用於編寫 Vue SFC 撰寫 Vue 3 Composition API,、script setu
 
 ## 使用場景
 
-- 當使用 Vue 3 Composition API 時
-- 當使用 script setup 時
-- 當使用 reactivity system 時
-- 當使用 component 時
-- 當使用 composable 時 （VueUse）
-- 當使用 Vue 的 lifecycle hooks 時
+-   當使用 Vue 3 Composition API 時
+-   當使用 script setup 時
+-   當使用 reactivity system 時
+-   當使用 component 時
+-   當使用 composable 時 （VueUse）
+-   當使用 Vue 的 lifecycle hooks 時
 
 ## Script Setup
 
@@ -53,7 +53,7 @@ h1 {
 
 ## ref 與 shallowRef
 
-- 多數情況使用 `ref`
+-   多數情況使用 `ref`
 
 ```vue
 <script setup>
@@ -70,7 +70,7 @@ user.value.profile.age = 31; // Triggers reactivity
 </template>
 ```
 
-- 大量且不會被修改的資料使用 `shallowRef`
+-   大量且不會被修改的資料使用 `shallowRef`
 
 ```vue
 <script setup>
@@ -94,7 +94,7 @@ const loadPage = async (page) => {
 
 ## computed
 
-- 基本示範
+-   基本示範
 
 ```vue
 <script setup>
@@ -115,7 +115,7 @@ const plusOne = computed({
 </script>
 ```
 
-- 樣式結合示範
+-   樣式結合示範
 
 ```vue
 <script setup>
@@ -140,7 +140,7 @@ const textStyles = computed(() => ({
 </template>
 ```
 
-- 先讀依賴、再分支，避免首次執行時漏追蹤
+-   先讀依賴、再分支，避免首次執行時漏追蹤
 
 ```vue
 <script setup>
@@ -171,7 +171,7 @@ const result = computed(() => {
 </script>
 ```
 
-- 會改變原陣列的方法（sort、reverse 等）在 computed 內先複製再呼叫
+-   會改變原陣列的方法（sort、reverse 等）在 computed 內先複製再呼叫
 
 ```vue
 <script setup>
@@ -190,7 +190,7 @@ const reversedBooks = computed(() => {
 </script>
 ```
 
-- 非用於執行操作或修改狀態
+-   非用於執行操作或修改狀態
 
 ```vue
 <script setup>
@@ -255,7 +255,7 @@ function increment() {
 
 ## Watch
 
-- 基本示範
+-   基本示範
 
 ```vue
 <script setup>
@@ -292,7 +292,7 @@ watch(
 </script>
 ```
 
-- 不要 watch 整包資料，而是監聽特定屬性
+-   不要 watch 整包資料，而是監聽特定屬性
 
 ```vue
 <script setup>
@@ -317,7 +317,7 @@ watch(
 </script>
 ```
 
-- 立即執行監聽
+-   立即執行監聽
 
 ```vue
 <script setup>
@@ -333,7 +333,7 @@ watch(
         const response = await fetch(`/api/users/${newId}`);
         userData.value = await response.json();
     },
-    { immediate: true },
+    { immediate: true }
 );
 </script>
 ```
@@ -358,14 +358,14 @@ onMounted(() => {
 
 命名規則：`use[XXX]`，useMouse 、 useFetch 、 useCounter 等
 
-- 基本示範
+-   基本示範
 
 ```vue
 <script setup>
 // composables/useMouse.ts
 import { ref, onMounted, onUnmounted } from "vue";
 
-export function useMouse() {
+export const useMouse = () => {
     const x = ref(0);
     const y = ref(0);
 
@@ -378,7 +378,7 @@ export function useMouse() {
     onUnmounted(() => window.removeEventListener("mousemove", update));
 
     return { x, y };
-}
+};
 </script>
 ```
 
@@ -386,7 +386,7 @@ export function useMouse() {
 
 －　命名規則：PascalCase，[XXX]t.vue（如 MyButton.vue）
 
-- 基本示範
+-   基本示範
 
 ````vue
 <script setup>
@@ -447,7 +447,7 @@ const updatedTitle = computed(() => {
 </script>
 ````
 
-- props 傳遞始終保持響應式
+-   props 傳遞始終保持響應式
 
 ```vue
 <script setup>
@@ -488,7 +488,7 @@ const { form, isValid } = useUserForm({
 
 ## 效能
 
-- 避免傳遞所有子元素都用來比較的父級狀態
+-   避免傳遞所有子元素都用來比較的父級狀態
 
 錯誤示範：
 
@@ -578,7 +578,7 @@ defineProps({
 </script>
 ```
 
-- 使用 v-once 跟 v-memo 避免不必要的重新渲染
+-   使用 v-once 跟 v-memo 避免不必要的重新渲染
 
 ```vue
 <template>
@@ -621,7 +621,7 @@ const selectedId = ref(null);
 
 ## 常見 css 撰寫
 
-- 靜態與動態樣式的結合
+-   靜態與動態樣式的結合
 
 ```vue
 <template>
@@ -635,7 +635,7 @@ const selectedId = ref(null);
 </template>
 ```
 
-- 合併多個樣式
+-   合併多個樣式
 
 ```vue
 <script setup>
@@ -656,7 +656,7 @@ const themeStyles = computed(() => ({
 </template>
 ```
 
-- Tailwind 動態產生 class 名稱
+-   Tailwind 動態產生 class 名稱
 
 ```vue
 <script setup>
@@ -690,7 +690,7 @@ const colorClasses = {
 
 ## 常見錯誤
 
-- 在 scoped css 中使用 :deep() 來選擇 v-html 的內容
+-   在 scoped css 中使用 :deep() 來選擇 v-html 的內容
 
 ```vue
 <script setup>
