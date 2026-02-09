@@ -175,8 +175,6 @@ router.beforeEach(async (to, from) => {
 
 ## 外部資源參考
 
-如果有任何疑問可以參考以下資源：
-正常來說使用 `mcp context7` 進行查詢最佳使用做法
-但發生如果有些異常情況無法解決優顯使用以下資源
+正常來說使用 `mcp context7` 進行查詢最佳使用做法，但發生如果有些異常情況無法解決優先使用以下資源
 
 1. [Vue Router 最佳實踐規則](https://github.com/antfu/skills/blob/main/skills/vue-router-best-practices/SKILL.md)

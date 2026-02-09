@@ -283,7 +283,3 @@ notificationStore.add({
 
 正常來說使用 `mcp context7` 進行查詢最佳使用做法
 但發生如果有些異常情況無法解決優先查詢 Vue 最佳實踐規則
-
-```
-
-```

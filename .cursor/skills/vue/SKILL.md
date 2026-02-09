@@ -694,22 +694,22 @@ const colorClasses = {
 
 ```vue
 <script setup>
-import { ref } from 'vue'
+import { ref } from "vue";
 
-const htmlContent = ref('<p class="dynamic">This is dynamic content</p>')
+const htmlContent = ref('<p class="dynamic">This is dynamic content</p>');
 </script>
 
 <template>
-  <div class="container">
-    <div v-html="htmlContent"></div>
-  </div>
+    <div class="container">
+        <div v-html="htmlContent"></div>
+    </div>
 </template>
 
 <style scoped>
 /* GOOD: Use :deep() for v-html content */
 .container :deep(.dynamic) {
-  color: red;
-  font-weight: bold;
+    color: red;
+    font-weight: bold;
 }
-</style
+</style>
 ```
