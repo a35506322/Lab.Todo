@@ -16,14 +16,9 @@ description:當使用 Vue Router 時運用此技能，裡面包含 Vue Router �
 
 ## 基本範例
 
-````vue
-<script setup>
-import { useRouter } from "vue-router";
-
-## 最佳實踐
-
 ```js
 // router/index.js
+<script setup>
 import { createRouter, createWebHistory } from "vue-router";
 const baseUrl = import.meta.env.BASE_URL;
 
@@ -76,7 +71,7 @@ router.beforeEach((to, from) => {
 });
 
 export default router;
-````
+```
 
 ```js
 // main.js
@@ -91,15 +86,15 @@ createApp(App).use(router).mount("#app");
 <!-- App.vue -->
 <template>
     <nav>
-        <router-link to="/">Home</router-link>
-        <router-link to="/dashboard">Dashboard</router-link>
+        <RouterLink to="/">Home</RouterLink>
+        <RouterLink to="/dashboard">Dashboard</RouterLink>
     </nav>
 
-    <router-view v-slot="{ Component }">
+    <RouterView v-slot="{ Component }">
         <transition name="fade" mode="out-in">
             <component :is="Component" />
         </transition>
-    </router-view>
+    </RouterView>
 </template>
 ```
 
@@ -128,7 +123,7 @@ router.beforeEach(async (to, from) => {
 });
 ```
 
-## 4.2 版本 Navigation Guard 禁止使用 next()
+## Vue Router V4.2 版本後 Navigation Guard 禁止使用 next()
 
 ```js
 // router/index.js
