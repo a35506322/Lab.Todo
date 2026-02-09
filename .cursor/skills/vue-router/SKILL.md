@@ -18,7 +18,6 @@ description:當使用 Vue Router 時運用此技能，裡面包含 Vue Router �
 
 ```js
 // router/index.js
-<script setup>
 import { createRouter, createWebHistory } from "vue-router";
 const baseUrl = import.meta.env.BASE_URL;
 
