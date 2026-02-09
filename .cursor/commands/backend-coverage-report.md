@@ -4,4 +4,4 @@
 
 ## 使用方式
 
-1：讀取 backend-coverage-report skill
+1. 讀取 backend-coverage-report skill

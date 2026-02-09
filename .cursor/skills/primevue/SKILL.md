@@ -9,8 +9,8 @@ description: 適用於編寫 PrimeVue 時最佳實踐，包含 PrimeVue 使用�
 
 ## 使用場景
 
-- 當使用 PrimeVue 時
-- 當需要使用 PrimeVue 的 Form 表單驗證時
+-   當使用 PrimeVue 時
+-   當需要使用 PrimeVue 的 Form 表單驗證時
 
 ## PrimeVue 使用方式
 
@@ -61,7 +61,7 @@ const initialValues = reactive({
 const resolver = zodResolver(
     z.object({
         username: z.string().trim().min(1, { message: "帳號為必填" }),
-    }),
+    })
 );
 
 // 3. 處理提交

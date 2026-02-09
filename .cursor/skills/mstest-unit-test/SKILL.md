@@ -9,17 +9,17 @@ description: 適用於 MSTest 單元測試最佳實踐模式，裡面包含 MSTe
 
 ## 使用場景
 
-- 撰寫/修改輔助工具
-- 撰寫/修改純函數
+-   撰寫/修改輔助工具
+-   撰寫/修改純函數
 
 **note:Endpoint Handler 方法 不要寫單元測試，改寫整合測試**
 
 ## 測試工具
 
-- MSTest
-- NSubstitute (Mock 工具)
-- Entity Framework Core InMemory (In-Memory 資料庫)
-- UnitTesting.Assert (斷言工具)
+-   MSTest
+-   NSubstitute (Mock 工具)
+-   Entity Framework Core InMemory (In-Memory 資料庫)
+-   UnitTesting.Assert (斷言工具)
 
 ## MSTest 單元測試
 

@@ -6,7 +6,7 @@ description: API 開發規範
 
 # API 開發規範
 
-- 使用 `APIResponseHelper` 統一回傳格式
+-   使用 `APIResponseHelper` 統一回傳格式
 
 ```csharp
 return APIResponseHelper.Ok<LoginResponse>(data: new LoginResponse());

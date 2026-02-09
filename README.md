@@ -1,12 +1,13 @@
 # Lab 專案
 
-此專案為演示前後端分離範本專案 + Cursor Rule 及 Skill 使用
+此專案為演示前後端分離範本專案 + Cursor Rule 及 Skill 使用<br>
+目前所有的 AI 工具基本都大同小異，應都已實裝 MCP、Rule、Skill、AGENTS.md 等規範與工具，在自行按照工具調整即可
 
 ## 環境
 
-- .NET 10.0
-- Cursor 2.4+
-- Node.js 22.21.1+
+-   .NET 10.0
+-   Cursor 2.4+
+-   Node.js 22.21.1+
 
 ---
 
@@ -38,7 +39,7 @@
 4. 後端開發 API
 5. 前端開發 UIUX
 
-> ⚠️ 關鍵是在於整理文件，以及一開始的專案開發架構，只要架構完整，文件寫得自己能夠理解那麼 AI 才能夠幫助你更快完成開發
+> ⚠️ 關鍵是在於整理文件，以及一開始的專案開發架構，**雛形最為重要**，只要架構完整，文件寫得自己能夠理解那麼 AI 才能夠幫助你更快完成開發
 
 ## AI 輔助開發 (Ask - Plan - Agent 模式)
 
@@ -47,14 +48,14 @@
 3. 切換到 `Agent` 模式，讓 AI 開始開發
 4. 當成品滿意 80 趴左右，就可以自己接受完成後續，記得需要 Review 跟手動測試
 5. 如需重構一些程式碼可以繼續 `Ask` -> `Plan` -> `Agent` 這個循環
-6. 建議如果發現 AI 程式碼產生的都是錯的，直接 `Rollback` 重新開始，調整文件跟 `Prompt` 繼續，或者可以選擇高等模型如 `Opus4.6` 討論，實作建議直接使用 `Auto` 或著 `Composer` 模型進行實作
+6. 建議如果發現 AI 程式碼產生的都是錯的，直接 `Rollback` 重新開始，調整`AI 規則`跟 `Prompt` 繼續，或者可以選擇高等模型如 `Opus4.6` 討論，實作建議模型直接使用 `Auto` 或著 `Composer` 模型進行實作
 
 🤖 哪些可以交給 Agent？
 
 | 工作項目     | 可否 Agent 開發  |
 | ------------ | :--------------: |
-| 整理文件     | 🟡 半自動化/手動 |
-| 定義 DB 規格 | 🟡 半自動化/手動 |
+| 整理文件     |     ‼️ 手動      |
+| 定義 DB 規格 |     ‼️ 手動      |
 | API 開發     |     ✅ Agent     |
 | UIUX 設計    | 🟡 半自動化/手動 |
 | 前端開發     |     ✅ Agent     |
@@ -74,9 +75,25 @@
 
 **想要啟用 TDD？** → 讓 Agent 讀取 `backend-tdd-workflow/SKILL.md`
 
-**不想用 TDD？** → 從 `AGENTS.md` 中移除相關 `skill` 即可
+**不想用 TDD？** → 從 `AGENTS.md` 跟 `.cursor/skills/backend-tdd-workflow` 中移除相關 `skill` 即可
 
 > ⚠️ 以上開發流程僅供參考，可以依據個人喜好調整，但其實會建議在開發時候最重要的是文件以及設定 Agent 的規則跟技能，要讓 Agent 知道什麼是什麼，這樣才能讓 Agent 幫助你更快完成開發。
+
+開發前端時 Agent 可搭配 Dev Workflow **（可選）**
+
+```
+.cursor/skills/
+├── frontend-dev-workflow/     # 前端開發流程
+└── SKILL.md
+└── uiux-dev/     # UIUX 開發流程
+    └── SKILL.md
+```
+
+**前端 dev workflow** → 讓 Agent 讀取 `frontend-dev-workflow/SKILL.md`
+
+**不想用 dev workflow？** → 從 `AGENTS.md` 跟 `.cursor/skills/frontend-dev-workflow` 中移除相關 `skill` 即可
+
+> ⚠️ 前端我就沒有使用 TDD 之類的主要是因為他只有串接 API，至於 E2E 測試目前還很消耗 AI Tokne，所以我的設定指示採取手動測試為主，裡面寫的 workflow 是平常開發人員的習慣。
 
 ---
 
@@ -92,6 +109,8 @@
 6. 有寫一些常用 `slash command` 可以參考，產生專案技能檔案如 `create-project-skill`，自己可以按自己需求調整或增加
 
 ### MCP 工具
+
+**強烈建議** 一定要安裝針對文件用途查詢的 MCP，只要確保 AI 每次讀取都是官網維護的資料基本都不會有什麼太大問題
 
 ```json
 {

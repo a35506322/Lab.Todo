@@ -9,8 +9,8 @@ description: 適用於編寫 Pinia 時最佳實踐。
 
 ## 使用場景
 
-- 當使用 Pinia 時
-- 當更改 src/stores 底下 store 檔案時
+-   當使用 Pinia 時
+-   當更改 src/stores 底下 store 檔案時
 
 ## Setup Stores
 

@@ -12,9 +12,9 @@ description: TodoAPI.UnitTest 專案結構和架構指南
 
 ## 技術堆疊
 
-- MSTest
-- NSubstitute
-- Entity Framework Core InMemory
+-   MSTest
+-   NSubstitute
+-   Entity Framework Core InMemory
 
 ## 資料夾結構
 

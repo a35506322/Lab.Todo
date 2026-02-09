@@ -9,7 +9,7 @@ description: 在編寫前端專案新功能、修復錯誤或重構程式碼時�
 
 ## 使用場景
 
-- 當需要編寫/修改前端功能
+-   當需要編寫/修改前端功能
 
 ## 前端開發核心原則
 
@@ -25,11 +25,11 @@ description: 在編寫前端專案新功能、修復錯誤或重構程式碼時�
 
 重點如下:
 
-- Endpoint URL : 如 /todo/getTodoById
-- Endpoint 描述 : 知道此 API 的用途與功能
-- Request 規格 : 了解 API 的 Request 參數與格式
-- Response 規格 : 了解 API 的 Response 格式與內容
-- Example 範例 : 了解 API 回傳各種情況
+-   Endpoint URL : 如 /todo/getTodoById
+-   Endpoint 描述 : 知道此 API 的用途與功能
+-   Request 規格 : 了解 API 的 Request 參數與格式
+-   Response 規格 : 了解 API 的 Response 格式與內容
+-   Example 範例 : 了解 API 回傳各種情況
 
 **步驟二：撰寫 UI 設計**
 

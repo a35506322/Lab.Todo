@@ -9,15 +9,15 @@ description: 適用於 MSTest 整合測試最佳實踐模式，裡面包含 MSTe
 
 ## 使用場景
 
-- 新增/修改 API 端點
-- 測試完整流程
+-   新增/修改 API 端點
+-   測試完整流程
 
 ## 測試工具
 
-- MSTest
-- NSubstitute (Mock 工具)
-- Entity Framework Core InMemory (In-Memory 資料庫)
-- UnitTesting.Assert (斷言工具)
+-   MSTest
+-   NSubstitute (Mock 工具)
+-   Entity Framework Core InMemory (In-Memory 資料庫)
+-   UnitTesting.Assert (斷言工具)
 
 ## MSTest 整合測試
 

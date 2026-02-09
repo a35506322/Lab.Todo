@@ -9,10 +9,10 @@ description:當使用 Vue Router 時運用此技能，裡面包含 Vue Router �
 
 ## 使用場景
 
-- 當使用 Vue Router 時
-- 當更改 src/router/index.js 時
-- 當需要使用 Navigation Guard 時
-- 當需要使用 Vue Router 的 Error Handling 時
+-   當使用 Vue Router 時
+-   當更改 src/router/index.js 時
+-   當需要使用 Navigation Guard 時
+-   當需要使用 Vue Router 的 Error Handling 時
 
 ## 基本範例
 

@@ -9,7 +9,7 @@ description: 當使用 PrimeVue Form 時適用於編寫 Zod 時最佳實踐，�
 
 ## 使用場景
 
-- 當使用 PrimeVue Form 驗證表單時
+-   當使用 PrimeVue Form 驗證表單時
 
 ## 基本範例
 
@@ -269,7 +269,7 @@ const schema = z.object({
                 const response = await api.get(`/users/check?username=${val}`);
                 return response.data.available;
             },
-            { error: "此帳號已被使用" },
+            { error: "此帳號已被使用" }
         ),
 });
 ```

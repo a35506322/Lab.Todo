@@ -24,11 +24,11 @@ description: 在編寫 UIUX 設計時運用此技能。
 
 重點如下:
 
-- Endpoint URL : 如 /todo/getTodoById
-- Endpoint 描述 : 知道此 API 的用途與功能
-- Request 規格 : 了解 API 的 Request 參數與格式
-- Response 規格 : 了解 API 的 Response 格式與內容
-- Example 範例 : 了解 API 回傳各種情況
+-   Endpoint URL : 如 /todo/getTodoById
+-   Endpoint 描述 : 知道此 API 的用途與功能
+-   Request 規格 : 了解 API 的 Request 參數與格式
+-   Response 規格 : 了解 API 的 Response 格式與內容
+-   Example 範例 : 了解 API 回傳各種情況
 
 **步驟二：撰寫文字線稿圖**
 
@@ -151,13 +151,13 @@ CRUD Dialog Template
 
 常用的 PrimeVue 的元件:
 
-- Button
-- InputText
-- Select
-- DataTable
-- Card
-- Toast
-- ConfirmDialog
-- Dialog
+-   Button
+-   InputText
+-   Select
+-   DataTable
+-   Card
+-   Toast
+-   ConfirmDialog
+-   Dialog
 
 如需更多元件，可查看 PrimeVue 的元件庫
