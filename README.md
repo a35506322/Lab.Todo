@@ -93,7 +93,7 @@
 
 **不想用 dev workflow？** → 從 `AGENTS.md` 跟 `.cursor/skills/frontend-dev-workflow` 中移除相關 `skill` 即可
 
-> ⚠️ 前端我就沒有使用 TDD 之類的主要是因為他只有串接 API，至於 E2E 測試目前還很消耗 AI Tokne，所以我的設定指示採取手動測試為主，裡面寫的 workflow 是平常開發人員的習慣。
+> ⚠️ 前端我沒有使用 TDD 之類的 Workflow ，主要因為只有串接 API，至於 E2E 測試目前很消耗 AI Token，所以我採取手動測試為主，裡面寫的 workflow 是平常開發人員的習慣。
 
 ---
 
