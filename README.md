@@ -38,6 +38,7 @@
 3. 設計 API 規格
 4. 後端開發 API
 5. 前端開發 UIUX
+6. 前端串接 API
 
 > ⚠️ 關鍵是在於整理文件，以及一開始的專案開發架構，**雛形最為重要**，只要架構完整，文件寫得自己能夠理解那麼 AI 才能夠幫助你更快完成開發
 
@@ -84,9 +85,7 @@
 ```
 .cursor/skills/
 ├── frontend-dev-workflow/     # 前端開發流程
-└── SKILL.md
 └── uiux-dev/     # UIUX 開發流程
-    └── SKILL.md
 ```
 
 **前端 dev workflow** → 讓 Agent 讀取 `frontend-dev-workflow/SKILL.md`
