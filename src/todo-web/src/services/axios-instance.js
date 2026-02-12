@@ -62,10 +62,6 @@ axiosInstance.interceptors.response.use(
       if (router.currentRoute.value.name !== 'login') {
         router.push({ name: 'login' });
       }
-    } else if (status === 403) {
-      router.push({ name: 'accessDenied' });
-    } else if (status === 500) {
-      router.push({ name: 'error' });
     }
 
     return Promise.reject(error);
