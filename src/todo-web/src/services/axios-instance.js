@@ -55,6 +55,20 @@ axiosInstance.interceptors.response.use(
         toastConfig.detail = error.response.data.message;
       }
       notificationStore.add(toastConfig);
+    } else if (error.code === 'ECONNABORTED' || error.code === 'ERR_CANCELED') {
+      // 請求超時或被取消
+      notificationStore.add({
+        severity: 'error',
+        summary: '請求逾時',
+        detail: '伺服器回應時間過長，請稍後再試',
+      });
+    } else if (!error.response) {
+      // 完全沒收到回應：伺服器掛了、斷網、DNS 失敗等
+      notificationStore.add({
+        severity: 'error',
+        summary: '網路連線異常',
+        detail: '無法連線至伺服器，請確認網路狀態或稍後再試',
+      });
     }
 
     if (status === 401) {
