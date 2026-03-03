@@ -6,6 +6,8 @@ import { zodResolver } from '@primevue/forms/resolvers/zod';
 import { z } from 'zod';
 import { login } from '@/services/auth-api';
 import { setToken } from '@/composables/useAuth';
+import InteractiveHoverButton from '@/components/InteractiveHoverButton.vue';
+import RadiantText from '@/components/RadiantText.vue';
 
 const router = useRouter();
 const route = useRoute();
@@ -55,7 +57,7 @@ const onFormSubmit = async ({ valid, values }) => {
 
 <template>
   <div
-    class="bg-surface-50 dark:bg-surface-950 flex items-center justify-center min-h-screen min-w-[100vw] overflow-hidden"
+    class="bg-surface-50 dark:bg-surface-950 flex min-h-screen min-w-[100vw] items-center justify-center overflow-hidden"
   >
     <div class="flex flex-col items-center justify-center">
       <div
@@ -66,15 +68,15 @@ const onFormSubmit = async ({ valid, values }) => {
         "
       >
         <div
-          class="w-full bg-surface-0 dark:bg-surface-900 py-20 px-8 sm:px-20"
+          class="bg-surface-0 dark:bg-surface-900 w-full px-8 py-20 sm:px-20"
           style="border-radius: 53px"
         >
-          <div class="text-center mb-8">
+          <div class="mb-8 flex flex-col items-center text-center">
             <svg
               viewBox="0 0 54 40"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
-              class="mb-8 w-16 shrink-0 mx-auto"
+              class="mx-auto mb-8 w-16 shrink-0"
             >
               <path
                 fill-rule="evenodd"
@@ -103,10 +105,12 @@ const onFormSubmit = async ({ valid, values }) => {
                 />
               </g>
             </svg>
-            <div class="text-surface-900 dark:text-surface-0 text-3xl font-medium mb-4">
-              Welcome to Todo Dashboard!
-            </div>
-            <span class="text-muted-color font-medium">Sign in to continue</span>
+            <RadiantText class="text-3xl font-medium">
+              <span class="text-center text-3xl font-semibold tracking-wide"
+                >Todo 管理後台</span
+              ></RadiantText
+            >
+            <span class="text-muted-color font-medium">登入以繼續</span>
           </div>
 
           <Form
@@ -115,10 +119,10 @@ const onFormSubmit = async ({ valid, values }) => {
             :resolver="resolver"
             @submit="onFormSubmit"
           >
-            <div class="flex flex-col gap-1 mb-4">
+            <div class="mb-4 flex flex-col gap-1">
               <label
                 for="userId1"
-                class="block text-surface-900 dark:text-surface-0 text-xl font-medium mb-2"
+                class="text-surface-900 dark:text-surface-0 mb-2 block text-xl font-medium"
               >
                 帳號
               </label>
@@ -136,10 +140,10 @@ const onFormSubmit = async ({ valid, values }) => {
               </Message>
             </div>
 
-            <div class="flex flex-col gap-1 mb-4">
+            <div class="mb-4 flex flex-col gap-1">
               <label
                 for="password1"
-                class="block text-surface-900 dark:text-surface-0 font-medium text-xl mb-2"
+                class="text-surface-900 dark:text-surface-0 mb-2 block text-xl font-medium"
               >
                 密碼
               </label>
@@ -163,17 +167,17 @@ const onFormSubmit = async ({ valid, values }) => {
               </Message>
             </div>
 
-            <div class="flex items-center justify-between mt-2 mb-8 gap-8">
+            <div class="mt-2 mb-8 flex items-center justify-between gap-8">
               <div class="flex items-center">
                 <Checkbox v-model="checked" id="rememberme1" binary class="mr-2" />
                 <label for="rememberme1">Remember me</label>
               </div>
-              <span class="font-medium no-underline ml-2 text-right cursor-pointer text-primary">
+              <span class="text-primary ml-2 cursor-pointer text-right font-medium no-underline">
                 Forgot password?
               </span>
             </div>
 
-            <Button type="submit" label="Sign In" class="w-full" />
+            <InteractiveHoverButton text="Sign In" class="w-full" type="submit" />
           </Form>
         </div>
       </div>
