@@ -51,7 +51,7 @@ try
     if (app.Environment.IsDevelopment())
     {
         app.MapOpenApi();
-        app.UseScalar();
+        app.MapScalarApiReference();
     }
 
     app.UseHttpsRedirection();
