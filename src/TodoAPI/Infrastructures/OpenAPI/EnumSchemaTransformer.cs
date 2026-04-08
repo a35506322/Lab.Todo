@@ -1,3 +1,6 @@
+using System.ComponentModel;
+using System.Reflection;
+using System.Text.Json.Nodes;
 using Microsoft.AspNetCore.OpenApi;
 using Microsoft.OpenApi;
 
@@ -20,19 +23,20 @@ public class EnumSchemaTransformer : IOpenApiSchemaTransformer
         var targetType =
             Nullable.GetUnderlyingType(context.JsonTypeInfo.Type) ?? context.JsonTypeInfo.Type;
         if (!targetType.IsEnum)
+        {
             return Task.CompletedTask;
+        }
 
-        var enumDescriptions = Enum.GetValues(enumType: targetType)
-            .Cast<object>()
-            .Select(value => $"{Enum.GetName(targetType, value)} = {Convert.ToInt64(value)}")
-            .ToList();
-        if (enumDescriptions.Count == 0)
-            return Task.CompletedTask;
-
-        var enumDescriptionBlock = $"可用列舉值：<br/>{string.Join("<br/>", enumDescriptions)}";
-        schema.Description = string.IsNullOrWhiteSpace(value: schema.Description)
-            ? enumDescriptionBlock
-            : $"{schema.Description}<br/>{enumDescriptionBlock}";
+        var valueNodes = new List<JsonNode?>();
+        foreach (var name in Enum.GetNames(targetType))
+        {
+            var field = targetType.GetField(name, BindingFlags.Public | BindingFlags.Static);
+            var desc = field?.GetCustomAttribute<DescriptionAttribute>()?.Description;
+            var intVal = Convert.ToInt32(Enum.Parse(targetType, name));
+            var part = string.IsNullOrWhiteSpace(desc) ? $"{intVal} = {name}" : $"{intVal} = {name}（{desc}）";
+            valueNodes.Add(JsonValue.Create(part));
+        }
+        schema.Enum = valueNodes;
 
         return Task.CompletedTask;
     }
