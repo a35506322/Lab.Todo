@@ -32,7 +32,7 @@ public class GetTodoByQueryStringResponse
     /// <summary>
     /// 待辦標題
     /// </summary>
-    public string TodoTitle { get; set; } = string.Empty;
+    public string TodoTitle { get; set; } = null!;
 
     /// <summary>
     /// 待辦內容
@@ -42,7 +42,7 @@ public class GetTodoByQueryStringResponse
     /// <summary>
     /// 是否完成 (Y/N)
     /// </summary>
-    public string IsComplete { get; set; } = string.Empty;
+    public string IsComplete { get; set; } = null!;
 
     /// <summary>
     /// 完成時間
@@ -57,5 +57,5 @@ public class GetTodoByQueryStringResponse
     /// <summary>
     /// 新增者
     /// </summary>
-    public string AddUserId { get; set; } = string.Empty;
+    public string AddUserId { get; set; } = null!;
 }

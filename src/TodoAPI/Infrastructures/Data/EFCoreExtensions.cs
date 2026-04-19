@@ -103,7 +103,6 @@ public static class EFCoreExtensions
     /// <param name="database">DatabaseFacade</param>
     /// <param name="commandText">The SQL to execute for this query.</param>
     /// <param name="param">The parameters to use for this query.</param>
-    /// <param name="buffered">Whether to buffer the results in memory.</param>
     /// <param name="commandTimeout">The command timeout (in seconds).</param>
     /// <param name="commandType">The type of command to execute.</param>
     /// <returns></returns>

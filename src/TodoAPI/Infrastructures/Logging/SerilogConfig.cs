@@ -12,7 +12,9 @@ public static class SerilogConfig
 {
     public static void AddSerilLog(IConfiguration configuration, IWebHostEnvironment environment)
     {
-        string logPath = configuration.GetValue<string>("SerilLogConfig:LogPath");
+        string logPath =
+            configuration.GetValue<string>("SerilLogConfig:LogPath")
+            ?? throw new InvalidOperationException("SerilLogConfig:LogPath is not set");
         // string seqUrl = configuration.GetValue<string>("SerilLogConfig:SeqUrl");
 
         // 全域設定
@@ -81,7 +83,7 @@ public static class SerilogConfig
 
         string ip =
             request.Headers["X-Forwarded-For"].FirstOrDefault()
-            ?? httpContext?.Connection.RemoteIpAddress?.ToString()
+            ?? httpContext.Connection.RemoteIpAddress?.ToString()
             ?? "Unknown";
         diagnosticContext.Set("RemoteIp", ip);
 

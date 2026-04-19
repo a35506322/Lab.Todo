@@ -8,7 +8,7 @@ public class UpdateTodoByIdRequest
     [Required]
     [Display(Name = "待辦標題")]
     [MaxLength(100)]
-    public string TodoTitle { get; set; } = string.Empty;
+    public string TodoTitle { get; set; } = null!;
 
     /// <summary>
     /// 待辦內容
@@ -23,7 +23,7 @@ public class UpdateTodoByIdRequest
     [Required]
     [Display(Name = "是否完成")]
     [RegularExpression("^[YN]$", ErrorMessage = "IsComplete 必須為 Y 或 N")]
-    public string IsComplete { get; set; } = string.Empty;
+    public string IsComplete { get; set; } = null!;
 }
 
 public class UpdateTodoByIdResponse
@@ -36,7 +36,7 @@ public class UpdateTodoByIdResponse
     /// <summary>
     /// 待辦標題
     /// </summary>
-    public string TodoTitle { get; set; } = string.Empty;
+    public string TodoTitle { get; set; } = null!;
 
     /// <summary>
     /// 待辦內容
@@ -46,7 +46,7 @@ public class UpdateTodoByIdResponse
     /// <summary>
     /// 是否完成 (Y/N)
     /// </summary>
-    public string IsComplete { get; set; } = string.Empty;
+    public string IsComplete { get; set; } = null!;
 
     /// <summary>
     /// 完成時間
@@ -61,5 +61,5 @@ public class UpdateTodoByIdResponse
     /// <summary>
     /// 新增者
     /// </summary>
-    public string AddUserId { get; set; } = string.Empty;
+    public string AddUserId { get; set; } = null!;
 }

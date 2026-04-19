@@ -24,13 +24,6 @@ public record ExceptionDetails(string Type, string Title, string Detail, string?
 /// API 統一回傳格式
 /// </summary>
 /// <typeparam name="T">回傳資料類型</typeparam>
-/// <param name="Code">狀態碼</param>
-/// <param name="Message">訊息</param>
-/// <param name="Data">status code 200 回傳資料</param>
-/// <param name="ValidationErrors">status code 400 資料驗證錯誤</param>
-/// <param name="Exception">status code 500 例外錯誤</param>
-/// <param name="TraceId">追蹤 ID</param>
-///
 public record APIResponse<T>
 {
     public Code Code { get; }

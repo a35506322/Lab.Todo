@@ -39,7 +39,7 @@ public class RequestResponseLoggingMiddleware
 
         var body = request.Body;
         var buffer = new byte[Convert.ToInt32(request.ContentLength)];
-        await request.Body.ReadAsync(buffer, 0, buffer.Length);
+        await request.Body.ReadExactlyAsync(buffer);
         string requestBody = Encoding.UTF8.GetString(buffer);
         body.Seek(0, SeekOrigin.Begin);
         request.Body = body;

@@ -21,7 +21,7 @@ public class CustomHttpContextEnricher : ILogEventEnricher
 
         if (httpContext == null)
             return;
-        string userId = httpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+        string? userId = httpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
         if (!String.IsNullOrEmpty(userId))
         {

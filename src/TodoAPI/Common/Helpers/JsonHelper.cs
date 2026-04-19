@@ -36,7 +36,6 @@ public static class JsonHelper
     /// </summary>
     /// <typeparam name="T">目標型別</typeparam>
     /// <param name="json">JSON 字串</param>
-    /// <param name="options">額外的 JSON 設定（可選）</param>
     /// <returns>反序列化後的物件</returns>
     public static T? FromJson<T>(string json) =>
         JsonSerializer.Deserialize<T>(json, DefaultDeserializeOptions);
@@ -46,7 +45,6 @@ public static class JsonHelper
     /// </summary>
     /// <param name="obj">要序列化的物件</param>
     /// <param name="isIndented">是否為縮排格式</param>
-    /// <param name="options">額外的 JSON 設定（可選）</param>
     /// <returns>JSON 字串</returns>
     public static string ToJson(object obj, bool isIndented = false) =>
         JsonSerializer.Serialize(

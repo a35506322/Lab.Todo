@@ -33,7 +33,7 @@ public static class ValidationErrorLocalizer
 
             return defaultMessage;
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             return defaultMessage;
         }

@@ -31,7 +31,7 @@ public static class SecurityConfig
                     ValidateIssuerSigningKey = false,
                     IssuerSigningKey = new SymmetricSecurityKey(
                         Encoding.UTF8.GetBytes(
-                            configuration.GetValue<string>("JwtSettings:SignKey")
+                            configuration.GetValue<string>("JwtSettings:SignKey")!
                         )
                     ),
                 };

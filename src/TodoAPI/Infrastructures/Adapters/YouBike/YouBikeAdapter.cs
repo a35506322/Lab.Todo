@@ -10,7 +10,10 @@ public class YouBikeAdapter : IYouBikeAdapter
         _httpClient = httpClient;
         _configuration = configuration;
 
-        _httpClient.BaseAddress = new Uri(_configuration.GetValue<string>("YouBike:BaseUrl"));
+        var baseUrl =
+            _configuration.GetValue<string>("YouBike:BaseUrl")
+            ?? throw new InvalidOperationException("YouBike:BaseUrl is not set");
+        _httpClient.BaseAddress = new Uri(baseUrl);
     }
 
     public async Task<IEnumerable<YouBikeImmediateDto>> GetYouBikeImmediateAsync()
