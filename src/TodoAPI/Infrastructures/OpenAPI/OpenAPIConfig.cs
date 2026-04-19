@@ -22,6 +22,9 @@ public static class OpenAPIConfig
             // 註冊 Example Transformer，讓標了 RequestExampleAttribute 和 ResponseExampleAttribute 的 endpoint 自動在 OpenAPI 顯示範例.
             options.AddOperationTransformer(ExampleOperationTransformer.TransformAsync);
 
+            // 註冊 Enum Schema Transformer，讓 enum 在 OpenAPI schema 描述中附上名稱與數值.
+            options.AddSchemaTransformer<EnumSchemaTransformer>();
+
             // 註冊 JWT Security Scheme，讓 OpenAPI 顯示 JWT 認證.
             options.AddDocumentTransformer<BearerSecuritySchemeTransformer>();
         });
