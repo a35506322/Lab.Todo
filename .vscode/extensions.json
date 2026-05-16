@@ -1,0 +1,24 @@
+{
+  "recommendations": [
+    "Vue.volar",
+    "dbaeumer.vscode-eslint",
+    "EditorConfig.EditorConfig",
+    "oxc.oxc-vscode",
+    "esbenp.prettier-vscode",
+    "anysphere.csharp",
+    "ms-ceintl.vscode-language-pack-zh-hant",
+    "csharpier.csharpier-vscode",
+    "nromanov.dotrush",
+    "mhutchie.git-graph",
+    "yzhang.markdown-all-in-one",
+    "christian-kohler.path-intellisense",
+    "bradlc.vscode-tailwindcss",
+    "wayou.vscode-todo-highlight",
+    "vscode-icons-team.vscode-icons",
+    "streetsidesoftware.code-spell-checker",
+    "patcx.vscode-nuget-gallery",
+    "formulahendry.auto-rename-tag",
+    "formulahendry.auto-close-tag",
+    "ms-dotnettools.vscode-dotnet-runtime"
+  ]
+}
