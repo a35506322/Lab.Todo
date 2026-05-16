@@ -7,6 +7,10 @@ description: 適用於編寫 Axios 時最佳實踐。
 
 前端串接 API 使用 Axios 進行串接，並將 API 封裝成函數，方便後續使用。
 
+## 使用時機
+
+- 使用者要求前端串接 API 時。
+
 ## 資料夾位置
 
 ```
@@ -39,7 +43,7 @@ axiosInstance.interceptors.request.use(
     (error) => {
         // Do something with the request error
         return Promise.reject(error);
-    }
+    },
 );
 
 // Add a response interceptor
@@ -54,7 +58,7 @@ axiosInstance.interceptors.response.use(
             router.push("/login");
         }
         return Promise.reject(error);
-    }
+    },
 );
 
 export default axiosInstance;
