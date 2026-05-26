@@ -25,6 +25,10 @@ description: 從單一 API endpoint 程式碼產出規格文件（Markdown）。
 
 ## 執行流程（框架無關）
 
+### Step 0：抓 repo root
+
+跑 `git rev-parse --show-toplevel` 取得 repo 絕對路徑（如 `D:/程式/Lab.Todo`），記下來。**所有檔案連結 URL 都用 `file:///{repo-root}/{相對路徑}#L{行號}` 為前綴**（見硬規則「連結格式」）。
+
 ### Step 1：識別框架
 
 從副檔名與內容推斷：
@@ -83,6 +87,16 @@ description: 從單一 API endpoint 程式碼產出規格文件（Markdown）。
 | Method | [HTTP method]                         |
 | 描述   | [從程式碼註解 / summary attribute 取] |
 | 認證   | [需要 JWT / 不需要 / 需要特定角色]    |
+
+## 程式來源
+
+- [檔名.cs:行號](file:///{repo-root}/{相對路徑}#L{行號}) — endpoint / handler 定義處
+- [檔名.cs:行號](file:///{repo-root}/{相對路徑}#L{行號}) — service / 業務邏輯（若有）
+- [檔名.cs:行號](file:///{repo-root}/{相對路徑}#L{行號}) — DTO / Models（若分離檔案）
+
+> 列出產這份 spec 直接讀過的關鍵檔案。**所有連結 URL 必須是 `file:///{repo-root}/{相對路徑}#L{行號}` 格式**（見硬規則「連結格式」）。
+> 若無行號就省 `#L`：`[檔名.cs](file:///{repo-root}/{相對路徑})`
+> `{repo-root}` 由 Step 0 取得。
 
 ## Request
 
@@ -195,6 +209,13 @@ description: 從單一 API endpoint 程式碼產出規格文件（Markdown）。
 
 ## 注意事項
 
+- **連結格式（硬規則）**：所有檔案連結用 markdown link，URL 必須是 `file:///{repo-root}/{相對路徑}#L{行號}`
+    - 格式：`[檔名:行號](file:///{repo-root}/{相對路徑}#L{行號})`
+    - 例：`[LoginEndpoint.cs:5](file:///D:/程式/Lab.Todo/src/TodoAPI/Modules/Auth/User/Login/LoginEndpoint.cs#L5)`
+    - 沒有行號就省 `#L`：`[LoginEndpoint.cs](file:///{repo-root}/.../LoginEndpoint.cs)`
+    - `{repo-root}` 由 Step 0 的 `git rev-parse --show-toplevel` 取得
+    - **為什麼**：Cursor markdown preview 只認 `file://` + `#L行號`，`src/foo.cs:42` 或 `path/to/foo.cs` 這種寫法**點不開**
+    - **代價**：路徑寫死，跨機器需重跑 skill 重產 — 可接受，因為這份 doc 本來就是「給當下環境快速查」用
 - **巢狀欄位用點記法**：`user.name`、`items[].title`
 - **enum 序列化要看實際**：可能是名稱字串、可能是數字，依專案 JSON 設定判斷，不要憑記憶猜
 - **欄位命名規則因情境而異**：

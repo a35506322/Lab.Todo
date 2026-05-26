@@ -2,6 +2,8 @@
 
 **其他框架（Express / FastAPI / Spring Boot ...）同理**：找路由、找回應結構、找錯誤處理，套同一份模板。
 
+> **連結格式**：所有檔案連結用 `file:///{repo-root}/{相對路徑}#L{行號}`（沒行號就省 `#L`），`{repo-root}` 由 `git rev-parse --show-toplevel` 取得。下方範例用 `{repo-root}` 表示，實際輸出時替換為真路徑（如 `D:/程式/Lab.Todo`）。
+
 ## 輸入
 
 ### `src/TodoAPI/Modules/Todo/GetTodoById/GetTodoByIdEndpoint.cs`
@@ -117,6 +119,13 @@ RouteGroupBuilder endpoints = app.MapGroup("/api");
 | Method | GET |
 | 描述 | 根據 ID 查詢單筆待辦事項 |
 | 認證 | 需要 JWT，角色：Admin |
+
+## 程式來源
+
+- [GetTodoByIdEndpoint.cs:10](file:///{repo-root}/src/TodoAPI/Modules/Todo/GetTodoById/GetTodoByIdEndpoint.cs#L10) — endpoint / handler 定義
+- [Models.cs](file:///{repo-root}/src/TodoAPI/Modules/Todo/GetTodoById/Models.cs) — `GetTodoByIdResponse` DTO
+- [Examples.cs](file:///{repo-root}/src/TodoAPI/Modules/Todo/GetTodoById/Examples.cs) — 200 / 422 範例
+- [TodoGroupEndpoints.cs](file:///{repo-root}/src/TodoAPI/Modules/Todo/TodoGroupEndpoints.cs) — 上層 group（`/todo` + 角色授權）
 
 ## Request
 
