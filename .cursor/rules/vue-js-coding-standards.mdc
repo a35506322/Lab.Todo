@@ -16,7 +16,7 @@ description: Vue 跟 JS 編碼規範和最佳實踐
 6. 資料夾：使用 kebab-case：api/、todo-api/、user-profile/
 7. API 封裝檔：api-instance.js（axios instance）、services/todo-api.js（todo 相關 API 函數）
 
-## Vue 關鍵寫作規範
+## Vue 與 JS 關鍵寫作規範
 
 1. 基於 Vue3 請始終使用 `Composition API` 與 `<script setup>`
 2. 使用 JS 不使用 TS
@@ -77,6 +77,26 @@ const sanitizedContent = computed(() => DOMPurify.sanitize(props.trustedHtml));
 
 9. 元件庫一律使用 `primevue v4.0+`，樣式一律使用 `tailwindcss v4.0+`
 10. 如果需要工具類功能，請一慮先看 VueUse 套件，可使用 `mcp context7` 查詢`VueUse`套件，除非真的沒有才使用自定義 composable
+11. 函數使用 const = function () {} 代替 function () {}
+
+```js
+❌ function () {}
+function handleClick() {
+    console.log("Click");
+}
+
+✅ const = function () {}
+const handleClick = () => {
+console.log("Click");
+};
+
+```
+
+12. **utils / composables 邊界**
+    -   `utils/`：純函式，可在 router、axios、store 等非元件處呼叫；kebab-case 命名
+    -   `composables/`：依賴 Vue 生態（router、toast、ref 等），僅在 setup 使用；`use` 前綴命名
+    -   依賴方向：`composables → utils` ✅，`utils → composables` ❌
+    -   特例：`.vue` 用 `useAppToast`；`axios-instance.js` 用 `useNotificationStore`
 
 ## 禁止事項
 
@@ -224,24 +244,7 @@ const { token, expiresIn } = data;
 </script>
 ```
 
-## JS 關鍵寫作規範
-
-1. 函數使用 const = function () {} 代替 function () {}
-
-```js
-❌ function () {}
-function handleClick() {
-    console.log("Click");
-}
-
-✅ const = function () {}
-const handleClick = () => {
-console.log("Click");
-};
-
-```
-
-## 專案規範
+## 團隊專案規範
 
 1. 在 `.vue` 檔案中使用 `useAppToast` 時，在其餘檔案請使用 `useNotificationStore` 統一管理 toast 訊息
 
