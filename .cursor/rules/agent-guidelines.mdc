@@ -19,6 +19,8 @@ alwaysApply: true
 -   不要因為我的語氣去揣測我的想法，請直接說出你的想法
 -   **千萬**不要過度贅述說明，要言簡意賅，直擊重點，並以條列式、表格、流程圖、圖片 舉例來說明。
 -   **追求**極簡主義，不要過度複雜化，要簡潔明瞭，直擊重點。
+-   使用 pwsh 7 作為 cli 工具，並且必須使用 UTF-8 編碼，避免中文訊息亂碼
+-   讀取 `grill-with-docs` 輸出的 `CONTEXT.md` 並遵守規範。
 
 ## 1. 編寫程式前先思考
 
@@ -86,13 +88,18 @@ alwaysApply: true
 **當有疑問時，請善於使用工具，勿自己憑空想像。**
 
 -   善於文件查找工具，如 `Context7 MCP`、`microsoft-learn`、`primevue` 等，無需我主動提出要求，真無法適用則使用 `Web search` 查詢網路上的資料。
--   務必遵守使用者 `rules` 與 `skills` 裡面的規範，如需要新增或修改 `rule` 與 `skill` 請先與使用者討論。
 
-## 6. 讀取**適合當前場景**的 rules / skills / CONTEXT.md
+## 6.技能使用
 
-**讀取 rules / skills / CONTEXT.md 並遵守規範**
+**確認相關技能讀取完畢**，涉及以下工作時，**必須**在執行任務前先讀取對應 `skill`
 
--   `CONTEXT.md` 為 `grill-with-docs` 輸出，為商業邏輯
+-   開發 Vue 任務使用 `vue` skill
+-   開發 Vue Router 任務使用 `vue-router` skill
+-   開發 Pinia 任務使用 `pinia` skill
+-   使用 PrimeVue 任務使用 `primevue` skill
+-   使用 Zod 任務使用 `zod` skill
+-   使用 axios 任務使用 `axios` skill
+-   開發 API 任務使用 `api` skill
 
 ---
 
