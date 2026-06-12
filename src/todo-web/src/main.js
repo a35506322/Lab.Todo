@@ -5,15 +5,11 @@ import { createApp } from 'vue';
 import { createPinia } from 'pinia';
 import PrimeVue from 'primevue/config';
 import Material from '@primeuix/themes/material';
-import { Form } from '@primevue/forms';
 import { definePreset, palette } from '@primeuix/themes';
 import ToastService from 'primevue/toastservice';
 import ConfirmationService from 'primevue/confirmationservice';
 import App from './App.vue';
 import router from './router';
-import { z } from 'zod';
-
-z.config(z.locales.zhTW());
 
 const app = createApp(App);
 
@@ -66,7 +62,5 @@ app.use(PrimeVue, {
 });
 app.use(ToastService);
 app.use(ConfirmationService);
-
-app.component('Form', Form);
 
 app.mount('#app');

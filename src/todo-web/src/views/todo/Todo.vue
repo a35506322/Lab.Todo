@@ -1,10 +1,10 @@
 <script setup>
-import { ref, reactive, onMounted, computed } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useConfirm } from 'primevue/useconfirm';
 import { useAppToast } from '@/composables/useAppToast';
 import { useLoadingStore } from '@/stores/useLoadingStore';
-import { zodResolver } from '@primevue/forms/resolvers/zod';
-import { z } from 'zod';
+import { useRegle } from '@regle/core';
+import { required, maxLength, regex, withMessage } from '@regle/rules';
 import { getTodos, createTodo, updateTodo, deleteTodo } from '@/services/todo-api';
 import { API_CODE } from '@/constants/api-response-code';
 import { formatTWDateTime } from '@/utils/format';
@@ -27,38 +27,29 @@ const dialogVisible = ref(false);
 const isEditMode = ref(false);
 const currentTodoId = ref(null);
 
-// 表單初始值（必須使用 reactive）
-const initialValues = reactive({
+// 表單狀態
+const form = ref({
   todoTitle: '',
   todoContent: '',
   isComplete: 'N',
 });
 
-// Zod 驗證 schema - 新增
-const createSchema = z.object({
-  todoTitle: z
-    .string()
-    .trim()
-    .min(1, { error: '待辦標題為必填' })
-    .max(100, { error: '待辦標題最多 100 字' }),
-  todoContent: z.string().max(500, { error: '待辦內容最多 500 字' }).optional().or(z.literal('')),
-});
-
-// Zod 驗證 schema - 編輯
-const editSchema = z.object({
-  todoTitle: z
-    .string()
-    .trim()
-    .min(1, { error: '待辦標題為必填' })
-    .max(100, { error: '待辦標題最多 100 字' }),
-  todoContent: z.string().max(500, { error: '待辦內容最多 500 字' }).optional().or(z.literal('')),
-  isComplete: z.string().regex(/^[YN]$/, { error: 'IsComplete 必須為 Y 或 N' }),
-});
-
-// 動態 resolver
-const resolver = computed(() => {
-  return zodResolver(isEditMode.value ? editSchema : createSchema);
-});
+// Regle 驗證規則（isComplete 僅編輯模式驗證）
+const { r$ } = useRegle(form, () => ({
+  todoTitle: {
+    required: withMessage(required, '待辦標題為必填'),
+    maxLength: withMessage(maxLength(100), '待辦標題最多 100 字'),
+  },
+  todoContent: {
+    maxLength: withMessage(maxLength(500), '待辦內容最多 500 字'),
+  },
+  ...(isEditMode.value && {
+    isComplete: {
+      required: withMessage(required, 'IsComplete 必須為 Y 或 N'),
+      regex: withMessage(regex(/^[YN]$/), 'IsComplete 必須為 Y 或 N'),
+    },
+  }),
+}));
 
 // IsComplete 選項
 const isCompleteOptions = [
@@ -112,9 +103,7 @@ const onFilterChange = () => {
 const openCreateDialog = () => {
   isEditMode.value = false;
   currentTodoId.value = null;
-  initialValues.todoTitle = '';
-  initialValues.todoContent = '';
-  initialValues.isComplete = 'N';
+  r$.$reset({ toState: { todoTitle: '', todoContent: '', isComplete: 'N' } });
   dialogVisible.value = true;
 };
 
@@ -122,9 +111,13 @@ const openCreateDialog = () => {
 const openEditDialog = (todo) => {
   isEditMode.value = true;
   currentTodoId.value = todo.todoId;
-  initialValues.todoTitle = todo.todoTitle;
-  initialValues.todoContent = todo.todoContent || '';
-  initialValues.isComplete = todo.isComplete;
+  r$.$reset({
+    toState: {
+      todoTitle: todo.todoTitle,
+      todoContent: todo.todoContent || '',
+      isComplete: todo.isComplete,
+    },
+  });
   dialogVisible.value = true;
 };
 
@@ -134,7 +127,8 @@ const closeDialog = () => {
 };
 
 // 表單提交
-const onFormSubmit = async ({ valid, values, reset }) => {
+const onFormSubmit = async () => {
+  const { valid } = await r$.$validate();
   if (!valid) return;
 
   loadingStore.show();
@@ -142,9 +136,9 @@ const onFormSubmit = async ({ valid, values, reset }) => {
     if (isEditMode.value) {
       // 更新
       const { data } = await updateTodo(currentTodoId.value, {
-        todoTitle: values.todoTitle,
-        todoContent: values.todoContent || null,
-        isComplete: values.isComplete,
+        todoTitle: r$.$value.todoTitle.trim(),
+        todoContent: r$.$value.todoContent || null,
+        isComplete: r$.$value.isComplete,
       });
 
       if (data?.code === API_CODE.SUCCESS) {
@@ -154,14 +148,13 @@ const onFormSubmit = async ({ valid, values, reset }) => {
           detail: '待辦事項已更新',
         });
         closeDialog();
-        reset();
         await loadTodos();
       }
     } else {
       // 新增
       const { data } = await createTodo({
-        todoTitle: values.todoTitle,
-        todoContent: values.todoContent || null,
+        todoTitle: r$.$value.todoTitle.trim(),
+        todoContent: r$.$value.todoContent || null,
       });
 
       if (data?.code === API_CODE.SUCCESS) {
@@ -171,7 +164,6 @@ const onFormSubmit = async ({ valid, values, reset }) => {
           detail: '待辦事項已新增',
         });
         closeDialog();
-        reset();
         await loadTodos();
       }
     }
@@ -377,12 +369,7 @@ onMounted(async () => {
       @hide="closeDialog"
       position="top"
     >
-      <Form
-        v-slot="$form"
-        :initial-values="initialValues"
-        :resolver="resolver"
-        @submit="onFormSubmit"
-      >
+      <form @submit.prevent="onFormSubmit">
         <!-- 待辦標題 -->
         <div class="flex flex-col gap-1 mb-4">
           <label
@@ -393,12 +380,12 @@ onMounted(async () => {
           </label>
           <InputText
             id="todoTitle"
-            name="todoTitle"
+            v-model="r$.$value.todoTitle"
             placeholder="請輸入待辦標題"
             fluid
-            :invalid="$form.todoTitle?.invalid"
+            :invalid="r$.todoTitle.$error"
           />
-          <FormFieldError :field="$form.todoTitle" />
+          <FormFieldError :field="r$.todoTitle" />
         </div>
 
         <!-- 待辦內容 -->
@@ -411,13 +398,13 @@ onMounted(async () => {
           </label>
           <Textarea
             id="todoContent"
-            name="todoContent"
+            v-model="r$.$value.todoContent"
             placeholder="請輸入待辦內容（選填）"
             :rows="5"
             fluid
-            :invalid="$form.todoContent?.invalid"
+            :invalid="r$.todoContent.$error"
           />
-          <FormFieldError :field="$form.todoContent" />
+          <FormFieldError :field="r$.todoContent" />
         </div>
 
         <!-- 是否完成（僅編輯模式顯示） -->
@@ -430,15 +417,15 @@ onMounted(async () => {
           </label>
           <Select
             id="isComplete"
-            name="isComplete"
+            v-model="r$.$value.isComplete"
             :options="isCompleteOptions"
             optionLabel="label"
             optionValue="value"
             placeholder="請選擇"
             fluid
-            :invalid="$form.isComplete?.invalid"
+            :invalid="r$.isComplete.$error"
           />
-          <FormFieldError :field="$form.isComplete" />
+          <FormFieldError :field="r$.isComplete" />
         </div>
 
         <!-- 按鈕 -->
@@ -446,7 +433,7 @@ onMounted(async () => {
           <Button type="button" label="取消" severity="secondary" outlined @click="closeDialog" />
           <Button type="submit" label="儲存" />
         </div>
-      </Form>
+      </form>
     </Dialog>
   </div>
 </template>

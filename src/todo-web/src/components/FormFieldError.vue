@@ -1,8 +1,8 @@
 <script setup>
-const props = defineProps({
+defineProps({
   /**
-   * 表單欄位狀態物件，應包含 invalid 和 error?.message
-   * @type {{ invalid?: boolean, error?: { message?: string } }}
+   * Regle 欄位狀態物件，應包含 $errors
+   * @type {{ $errors?: string[] }}
    */
   field: {
     type: Object,
@@ -12,7 +12,13 @@ const props = defineProps({
 </script>
 
 <template>
-  <Message v-if="field?.invalid" severity="error" size="small" variant="simple">
-    {{ field?.error?.message }}
+  <Message
+    v-for="error of field?.$errors"
+    :key="error"
+    severity="error"
+    size="small"
+    variant="simple"
+  >
+    {{ error }}
   </Message>
 </template>

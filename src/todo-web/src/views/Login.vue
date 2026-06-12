@@ -1,39 +1,37 @@
 <script setup>
-import { reactive, ref } from 'vue';
+import { ref } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { useAppToast } from '@/composables/useAppToast';
-import { zodResolver } from '@primevue/forms/resolvers/zod';
-import { z } from 'zod';
+import { useRegle } from '@regle/core';
+import { required, withMessage } from '@regle/rules';
 import { login } from '@/services/auth-api';
 import { setToken } from '@/composables/useAuth';
 import InteractiveHoverButton from '@/components/InteractiveHoverButton.vue';
 import RadiantText from '@/components/RadiantText.vue';
+import FormFieldError from '@/components/FormFieldError.vue';
 
 const router = useRouter();
 const route = useRoute();
 const toast = useAppToast();
 
-const initialValues = reactive({
-  userId: '',
-  password: '',
-});
-
 const checked = ref(false);
 
-const resolver = zodResolver(
-  z.object({
-    userId: z.string().trim().min(1, { error: '帳號為必填' }),
-    password: z.string().trim().min(1, { error: '密碼為必填' }),
-  }),
+const { r$ } = useRegle(
+  { userId: '', password: '' },
+  {
+    userId: { required: withMessage(required, '帳號為必填') },
+    password: { required: withMessage(required, '密碼為必填') },
+  },
 );
 
-const onFormSubmit = async ({ valid, values }) => {
+const onFormSubmit = async () => {
+  const { valid } = await r$.$validate();
   if (!valid) return;
 
   try {
     const { data } = await login({
-      userId: values.userId,
-      password: values.password,
+      userId: r$.$value.userId.trim(),
+      password: r$.$value.password.trim(),
     });
 
     if (data?.code === 2000 && data?.data?.token) {
@@ -113,12 +111,7 @@ const onFormSubmit = async ({ valid, values }) => {
             <span class="text-muted-color font-medium">登入以繼續</span>
           </div>
 
-          <Form
-            v-slot="$form"
-            :initial-values="initialValues"
-            :resolver="resolver"
-            @submit="onFormSubmit"
-          >
+          <form @submit.prevent="onFormSubmit">
             <div class="mb-4 flex flex-col gap-1">
               <label
                 for="userId1"
@@ -128,16 +121,14 @@ const onFormSubmit = async ({ valid, values }) => {
               </label>
               <InputText
                 id="userId1"
-                name="userId"
+                v-model="r$.$value.userId"
                 type="text"
                 placeholder="帳號"
                 class="w-full md:w-[30rem]"
                 fluid
-                :invalid="$form.userId?.invalid"
+                :invalid="r$.userId.$error"
               />
-              <Message v-if="$form.userId?.invalid" severity="error" size="small" variant="simple">
-                {{ $form.userId?.error?.message }}
-              </Message>
+              <FormFieldError :field="r$.userId" />
             </div>
 
             <div class="mb-4 flex flex-col gap-1">
@@ -149,22 +140,15 @@ const onFormSubmit = async ({ valid, values }) => {
               </label>
               <Password
                 id="password1"
-                name="password"
+                v-model="r$.$value.password"
                 placeholder="密碼"
                 :toggle-mask="true"
                 class="w-full md:w-[30rem]"
                 fluid
                 :feedback="false"
-                :invalid="$form.password?.invalid"
+                :invalid="r$.password.$error"
               />
-              <Message
-                v-if="$form.password?.invalid"
-                severity="error"
-                size="small"
-                variant="simple"
-              >
-                {{ $form.password?.error?.message }}
-              </Message>
+              <FormFieldError :field="r$.password" />
             </div>
 
             <div class="mt-2 mb-8 flex items-center justify-between gap-8">
@@ -178,7 +162,7 @@ const onFormSubmit = async ({ valid, values }) => {
             </div>
 
             <InteractiveHoverButton text="Sign In" class="w-full" type="submit" />
-          </Form>
+          </form>
         </div>
       </div>
     </div>
