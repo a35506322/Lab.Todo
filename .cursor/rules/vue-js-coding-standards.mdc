@@ -39,10 +39,14 @@ onMounted(async () => {
 ```
 
 6. **抽象化時機（YAGNI）**
+
     - 預設：邏輯留在 `.vue` 內，不先抽 `utils` / `composable`　/ `component`
     - 可抽離的條件（滿足其一即可）：
         - 同一段邏輯已在 **2 處以上** 重複使用
     - 抽離前：先確認 `VueUse` 或現有 `utils/` / `composables/` / `components/` 是否已有類似實作
+    - `utils/`：純函式，可在 router、axios、store 等非元件處呼叫；kebab-case 命名
+    - `composables/`：依賴 Vue 生態（router、toast、ref 等），僅在 setup 使用；`use` 前綴命名
+
 7. 小心 `v-html` 的 XSS 攻擊，使用以下方式避免：
 
 ```vue
@@ -80,8 +84,7 @@ const sanitizedContent = computed(() => DOMPurify.sanitize(props.trustedHtml));
 ```
 
 9. 元件庫一律使用 `primevue v4.0+`，樣式一律使用 `tailwindcss v4.0+`
-10. 如果需要工具類功能，請一慮先看 VueUse 套件，可使用 `mcp context7` 查詢`VueUse`套件，除非真的沒有才使用自定義 composable
-11. 函數使用 const = function () {} 代替 function () {}
+10. 函數使用 const = function () {} 代替 function () {}
 
 ```js
 ❌ function () {}
@@ -96,13 +99,7 @@ console.log("Click");
 
 ```
 
-12. **utils / composables 邊界**
-    -   `utils/`：純函式，可在 router、axios、store 等非元件處呼叫；kebab-case 命名
-    -   `composables/`：依賴 Vue 生態（router、toast、ref 等），僅在 setup 使用；`use` 前綴命名
-
-## 禁止事項
-
-1. 不在 `<script setup>` 中使用 `await`但可以在 onMounted 中使用
+12. 不在 `<script setup>` 中使用 `await`但可以在 onMounted 中使用
 
 ```vue
 <script setup>
@@ -116,8 +113,8 @@ onMounted(async () => {
 </script>
 ```
 
-2. 不使用 `reactive` ，請使用 `ref` 與 `shallowRef` 代替
-3. 不要在大資料結構使用 `watch` 時使用
+13. 不使用 `reactive` ，請使用 `ref` 與 `shallowRef` 代替
+14. 不要在大資料結構使用 `watch` 時使用
 
 ```vue
 <script setup>
@@ -143,7 +140,7 @@ watch(
 </script>
 ```
 
-4. 不要在 computed 中 modify other state
+15. 不要在 computed 中 modify other state
 
 ```vue
 <script setup>
@@ -159,7 +156,7 @@ const doubledCount = computed(() => {
 </script>
 ```
 
-5. css 不要針對 DOM 元素進行操作，請使用 class 進行操作。
+16. css 不要針對 DOM 元素進行操作，請使用 class 進行操作。
 
 ```vue
 <template>
@@ -187,7 +184,7 @@ const doubledCount = computed(() => {
 </style>
 ```
 
-6. Tailwind 的建置流程無法偵測動態產生的 class 名稱
+17. Tailwind 的建置流程無法偵測動態產生的 class 名稱
 
 ```vue
 <script setup>
@@ -203,7 +200,7 @@ const props = defineProps({
 </template>
 ```
 
-8. pinia 的 state 不要隨意修改應使用 actions 進行修改
+18. pinia 的 state 不要隨意修改應使用 actions 進行修改
 
 ```vue
 <script setup>
@@ -219,7 +216,7 @@ store.increment();
 </script>
 ```
 
-9. 撰寫 api 時對應 request 與 response 的屬性命名一律以小駝峰命名
+19. 撰寫 api 時對應 request 與 response 的屬性命名一律以小駝峰命名
 
 ```vue
 <script setup>
@@ -278,10 +275,3 @@ notificationStore.add({
 
 -   避免不必要的註解：程式碼應具有自明性
 -   解釋「為什麼」而非「如何做」：註解應描述背後的邏輯或意圖，而非程式碼的執行內容
-
-## 外部資源參考
-
-如果有任何疑問可以參考以下資源：
-
-1. mcp context7
-2. `vue` 相關 skill
