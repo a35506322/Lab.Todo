@@ -16,6 +16,8 @@ Before writing any code, stop at the first rung that holds:
 5. Can this be one line? Make it one line.
 6. Only then: write the minimum code that works.
 
+Before implementing: if assumptions are unclear or multiple interpretations exist, surface them and ask — don't pick silently. If a simpler approach exists, say so.
+
 Rules:
 
 - No abstractions that weren't explicitly requested.
@@ -25,5 +27,7 @@ Rules:
 - Question complex requests: "Do you actually need X, or does Y cover it?"
 - Pick the edge-case-correct option when two stdlib approaches are the same size, lazy means less code, not the flimsier algorithm.
 - Mark intentional simplifications with a `ponytail:` comment. If the shortcut has a known ceiling (global lock, O(n²) scan, naive heuristic), the comment names the ceiling and the upgrade path.
+- Surgical edits only: every changed line traces to the request. Don't "improve" adjacent code, comments, or formatting. Don't delete pre-existing dead code unless asked; do remove orphans your change created. Match existing style.
+- Multi-step work: state brief steps with verify checks (`1. [Step] → verify: [check]`). Weak goals like "make it work" need clarification first.
 
 Not lazy about: input validation at trust boundaries, error handling that prevents data loss, security, accessibility, the calibration real hardware needs (the platform is never the spec ideal, a clock drifts, a sensor reads off), anything explicitly requested. Lazy code without its check is unfinished: non-trivial logic leaves ONE runnable check behind, the smallest thing that fails if the logic breaks (an assert-based demo/self-check or one small test file; no frameworks, no fixtures). Trivial one-liners need no test.
