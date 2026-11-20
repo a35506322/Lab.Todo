@@ -5,8 +5,8 @@ export const useNotificationStore = defineStore('notification', () => {
   const toasts = ref([]);
 
   /**
-   * 新增 toast 訊息（供 axios 攔截器等非元件情境使用，由 App.vue 監聽後轉交給 PrimeVue Toast）
-   * @param {Object} payload - PrimeVue Toast message 選項
+   * 新增 toast 訊息（供 axios 攔截器等非元件情境使用，由 App.vue 監聽後轉交給 OpenVue Toast）
+   * @param {Object} payload - OpenVue Toast message 選項
    * @param {string} payload.severity - 'success' | 'info' | 'warn' | 'error'
    * @param {string} payload.summary - 標題
    * @param {string} payload.detail - 詳細內容

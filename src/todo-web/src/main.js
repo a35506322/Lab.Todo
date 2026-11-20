@@ -3,11 +3,11 @@ import './assets/layout.scss';
 
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
-import PrimeVue from 'primevue/config';
-import Material from '@primeuix/themes/material';
-import { definePreset, palette } from '@primeuix/themes';
-import ToastService from 'primevue/toastservice';
-import ConfirmationService from 'primevue/confirmationservice';
+import OpenVue from 'openvue/config';
+import Material from '@openvue/themes/material';
+import { definePreset, palette } from '@openvue/themes';
+import ToastService from 'openvue/toastservice';
+import ConfirmationService from 'openvue/confirmationservice';
 import App from './App.vue';
 import router from './router';
 
@@ -48,7 +48,7 @@ const customPreset = definePreset(Material, {
 
 app.use(createPinia());
 app.use(router);
-app.use(PrimeVue, {
+app.use(OpenVue, {
   theme: {
     preset: customPreset,
     options: {

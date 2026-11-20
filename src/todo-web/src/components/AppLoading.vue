@@ -1,8 +1,8 @@
 <script setup>
 import { storeToRefs } from 'pinia';
 import { useLoadingStore } from '@/stores/useLoadingStore';
-import BlockUI from 'primevue/blockui';
-import ProgressSpinner from 'primevue/progressspinner';
+import BlockUI from 'openvue/blockui';
+import ProgressSpinner from 'openvue/progressspinner';
 
 const loadingStore = useLoadingStore();
 const { isLoading } = storeToRefs(loadingStore);

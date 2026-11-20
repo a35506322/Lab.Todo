@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue';
-import { useConfirm } from 'primevue/useconfirm';
+import { useConfirm } from 'openvue/useconfirm';
 import { useAppToast } from '@/composables/useAppToast';
 import { useLoadingStore } from '@/stores/useLoadingStore';
 import { useRegle } from '@regle/core';

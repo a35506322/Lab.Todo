@@ -1,4 +1,4 @@
-import { useToast } from 'primevue/usetoast';
+import { useToast } from 'openvue/usetoast';
 
 /**
  * 應用程式統一的 Toast composable
@@ -8,7 +8,7 @@ export function useAppToast() {
 
   /**
    * 新增 toast 訊息
-   * @param {Object} options - PrimeVue Toast message 選項
+   * @param {Object} options - OpenVue Toast message 選項
    * @param {string} options.severity - 'success' | 'info' | 'warn' | 'error'
    * @param {string} options.summary - 標題
    * @param {string} options.detail - 詳細內容

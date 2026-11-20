@@ -3,7 +3,7 @@ import { defineConfig, loadEnv } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import vueDevTools from 'vite-plugin-vue-devtools';
 import Components from 'unplugin-vue-components/vite';
-import { PrimeVueResolver } from '@primevue/auto-import-resolver';
+import { PrimeVueResolver } from '@openvue/auto-import-resolver';
 import tailwindcss from '@tailwindcss/vite';
 
 // https://vite.dev/config/
