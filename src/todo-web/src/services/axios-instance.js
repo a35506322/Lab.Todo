@@ -1,10 +1,10 @@
 import axios from 'axios';
 import router from '@/router';
-import { getToken, removeToken } from '@/composables/useAuth';
+import { getToken, removeToken } from '@/utils/auth-token';
 import { useNotificationStore } from '@/stores/useNotificationStore';
 
-const baseURL = import.meta.env.VITE_API_BASE_URL;
-const globalErrorToastMap = {
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const GLOBAL_ERROR_TOAST_MAP = {
   401: {
     severity: 'error',
     summary: '登入失敗',
@@ -28,7 +28,7 @@ const globalErrorToastMap = {
 };
 
 const axiosInstance = axios.create({
-  baseURL,
+  baseURL: API_BASE_URL,
 });
 
 axiosInstance.interceptors.request.use(
@@ -49,8 +49,8 @@ axiosInstance.interceptors.response.use(
     const status = error.response?.status;
     const notificationStore = useNotificationStore();
 
-    if (globalErrorToastMap[status]) {
-      const toastConfig = { ...globalErrorToastMap[status] };
+    if (GLOBAL_ERROR_TOAST_MAP[status]) {
+      const toastConfig = { ...GLOBAL_ERROR_TOAST_MAP[status] };
       if (error.response?.data?.message) {
         toastConfig.detail = error.response.data.message;
       }

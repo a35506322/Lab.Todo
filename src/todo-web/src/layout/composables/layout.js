@@ -20,7 +20,7 @@ const layoutState = reactive({
 });
 
 export function useLayout() {
-  const toggleDarkMode = () => {
+  function toggleDarkMode() {
     if (!document.startViewTransition) {
       executeDarkModeToggle();
 
@@ -28,14 +28,14 @@ export function useLayout() {
     }
 
     document.startViewTransition(() => executeDarkModeToggle(event));
-  };
+  }
 
-  const executeDarkModeToggle = () => {
+  function executeDarkModeToggle() {
     layoutConfig.darkTheme = !layoutConfig.darkTheme;
     document.documentElement.classList.toggle('app-dark');
-  };
+  }
 
-  const toggleMenu = () => {
+  function toggleMenu() {
     if (isDesktop()) {
       if (layoutConfig.menuMode === 'static') {
         layoutState.staticMenuInactive = !layoutState.staticMenuInactive;
@@ -47,27 +47,29 @@ export function useLayout() {
     } else {
       layoutState.mobileMenuActive = !layoutState.mobileMenuActive;
     }
-  };
+  }
 
-  const toggleConfigSidebar = () => {
+  function toggleConfigSidebar() {
     layoutState.configSidebarVisible = !layoutState.configSidebarVisible;
-  };
+  }
 
-  const hideMobileMenu = () => {
+  function hideMobileMenu() {
     layoutState.mobileMenuActive = false;
-  };
+  }
 
-  const changeMenuMode = (event) => {
+  function changeMenuMode(event) {
     layoutConfig.menuMode = event.value;
     layoutState.staticMenuInactive = false;
     layoutState.mobileMenuActive = false;
     layoutState.sidebarExpanded = false;
     layoutState.menuHoverActive = false;
     layoutState.anchored = false;
-  };
+  }
 
   const isDarkTheme = computed(() => layoutConfig.darkTheme);
-  const isDesktop = () => window.innerWidth > 991;
+  function isDesktop() {
+    return window.innerWidth > 991;
+  }
 
   const hasOpenOverlay = computed(() => layoutState.overlayMenuActive);
 

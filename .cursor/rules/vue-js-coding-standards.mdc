@@ -20,10 +20,7 @@ description: Vue 跟 JS 編碼規範和最佳實踐
 
 1. 基於 Vue3 請始終使用 `Composition API` 與 `<script setup>`
 2. 使用 JS 不使用 TS
-3. 若無需響應式，為提升效能，請優先選用 `shallowRef` 而非 `ref`
-4. 當您需要從 `ref` 推導值時，請優先使用 `computed` 而非 `function`或者 `watch`，以實現自動快取與優化的重新渲染。
-
-5. **抽象化時機（YAGNI）**
+3. **抽象化時機（YAGNI）**
     - 預設：邏輯留在 `.vue` 內，不先抽 `utils` / `composable`　/ `component`
     - 可抽離的條件（滿足其一即可）：
         - 同一段邏輯已在 **2 處以上** 重複使用
@@ -31,7 +28,7 @@ description: Vue 跟 JS 編碼規範和最佳實踐
     - `utils/`：純函式，可在 router、axios、store 等非元件處呼叫；kebab-case 命名
     - `composables/`：依賴 Vue 生態（router、toast、ref 等），僅在 setup 使用；`use` 前綴命名
 
-6. 函數使用 function () {}
+4. 函數使用 function () {}
 
 ```js
 ✅ function () {}
@@ -41,7 +38,7 @@ function handleClick() {
 
 ```
 
-7. 撰寫 api 時對應 request 與 response 的屬性命名一律以小駝峰命名
+5. 撰寫 api 時對應 request 與 response 的屬性命名一律以小駝峰命名
 
 ```vue
 <script setup>
@@ -68,7 +65,7 @@ const { token, expiresIn } = data;
 </script>
 ```
 
-8. 在 `.vue` 檔案中使用 `useAppToast` 時，在其餘檔案請使用 `useNotificationStore` 統一管理 toast 訊息
+6. 在 `.vue` 檔案中使用 `useAppToast` 時，在其餘檔案請使用 `useNotificationStore` 統一管理 toast 訊息
 
 ```vue
 <script setup>
@@ -91,5 +88,5 @@ notificationStore.add({
 });
 ```
 
-9. 使用 `<Dialog>` 等彈窗元件時，請使用 `position="top"`，一率都置中往上顯示
-10. 驗證表單時錯誤訊息請使用 `FormFieldError` 元件顯示
+7. 使用 `<Dialog>` 等彈窗元件時，請使用 `position="top"`，一率都置中往上顯示
+8. 驗證表單時錯誤訊息請使用 `FormFieldError` 元件顯示

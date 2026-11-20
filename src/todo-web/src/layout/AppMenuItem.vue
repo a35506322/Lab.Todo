@@ -33,7 +33,7 @@ const isActive = computed(() => {
     : layoutState.activePath === props.item.to;
 });
 
-const itemClick = (event, item) => {
+function itemClick(event, item) {
   if (item.disabled) {
     event.preventDefault();
     return;
@@ -55,13 +55,13 @@ const itemClick = (event, item) => {
     layoutState.mobileMenuActive = false;
     layoutState.menuHoverActive = false;
   }
-};
+}
 
-const onMouseEnter = () => {
+function onMouseEnter() {
   if (isDesktop() && props.root && props.item.items && layoutState.menuHoverActive) {
     layoutState.activePath = fullPath.value;
   }
-};
+}
 </script>
 
 <template>

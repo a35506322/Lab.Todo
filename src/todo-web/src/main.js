@@ -15,7 +15,7 @@ const app = createApp(App);
 
 const customPrimaryPalette = palette('#8b5cf6');
 
-const CustomPreset = definePreset(Material, {
+const customPreset = definePreset(Material, {
   semantic: {
     primary: {
       50: customPrimaryPalette[50],
@@ -50,7 +50,7 @@ app.use(createPinia());
 app.use(router);
 app.use(PrimeVue, {
   theme: {
-    preset: CustomPreset,
+    preset: customPreset,
     options: {
       darkModeSelector: false, // 停用 dark mode，永遠 light mode
       cssLayer: {

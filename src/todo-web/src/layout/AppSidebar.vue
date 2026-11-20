@@ -29,7 +29,7 @@ watch(hasOpenOverlay, (newVal) => {
   }
 });
 
-const bindOutsideClickListener = () => {
+function bindOutsideClickListener() {
   if (!outsideClickListener) {
     outsideClickListener = (event) => {
       if (isOutsideClicked(event)) {
@@ -39,16 +39,16 @@ const bindOutsideClickListener = () => {
 
     document.addEventListener('click', outsideClickListener);
   }
-};
+}
 
-const unbindOutsideClickListener = () => {
+function unbindOutsideClickListener() {
   if (outsideClickListener) {
     document.removeEventListener('click', outsideClickListener);
     outsideClickListener = null;
   }
-};
+}
 
-const isOutsideClicked = (event) => {
+function isOutsideClicked(event) {
   const topbarButtonEl = document.querySelector('.layout-menu-button');
 
   return !(
@@ -57,7 +57,7 @@ const isOutsideClicked = (event) => {
     topbarButtonEl?.isSameNode(event.target) ||
     topbarButtonEl?.contains(event.target)
   );
-};
+}
 
 onBeforeUnmount(() => {
   unbindOutsideClickListener();

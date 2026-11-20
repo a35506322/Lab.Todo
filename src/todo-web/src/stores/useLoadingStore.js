@@ -12,25 +12,25 @@ export const useLoadingStore = defineStore('loading', () => {
   /**
    * 顯示 loading（計數器 +1）
    */
-  const show = () => {
+  function show() {
     loadingCount.value++;
-  };
+  }
 
   /**
    * 隱藏 loading（計數器 -1，不小於 0）
    */
-  const hide = () => {
+  function hide() {
     if (loadingCount.value > 0) {
       loadingCount.value--;
     }
-  };
+  }
 
   /**
    * 重置 loading 計數器
    */
-  const reset = () => {
+  function reset() {
     loadingCount.value = 0;
-  };
+  }
 
   return { isLoading, show, hide, reset };
 });

@@ -1,10 +1,10 @@
 <script setup>
 import { watch } from 'vue';
-import { useToast } from 'primevue/usetoast';
+import { useAppToast } from '@/composables/useAppToast';
 import { useNotificationStore } from '@/stores/useNotificationStore';
 import AppLoading from '@/components/AppLoading.vue';
 
-const toast = useToast();
+const toast = useAppToast();
 const notificationStore = useNotificationStore();
 
 // Tips: 主要因 axios 攔截器中，將全域錯誤的 toast 設定儲存至 notificationStore，因此需要在 App.vue 中監聽 notificationStore.toasts 的變化，並顯示所有待顯示的 toasts

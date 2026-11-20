@@ -12,19 +12,19 @@ export const useNotificationStore = defineStore('notification', () => {
    * @param {string} payload.detail - 詳細內容
    * @param {number} [payload.life] - 顯示時間（毫秒），預設 5000
    */
-  const add = (payload) => {
+  function add(payload) {
     toasts.value.push({
       life: 5000,
       ...payload,
     });
-  };
+  }
 
   /**
    * 清空所有待顯示的 toasts
    */
-  const clear = () => {
+  function clear() {
     toasts.value = [];
-  };
+  }
 
   return { toasts, add, clear };
 });

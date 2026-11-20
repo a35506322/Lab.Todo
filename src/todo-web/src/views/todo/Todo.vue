@@ -7,7 +7,6 @@ import { useRegle } from '@regle/core';
 import { required, maxLength, regex, withMessage } from '@regle/rules';
 import { getTodos, createTodo, updateTodo, deleteTodo } from '@/services/todo-api';
 import { API_CODE } from '@/constants/api-response-code';
-import { formatTWDateTime } from '@/utils/format';
 import FormFieldError from '@/components/FormFieldError.vue';
 
 const confirm = useConfirm();
@@ -64,8 +63,26 @@ const filterOptions = [
   { label: '已完成', value: 'Y' },
 ];
 
+/**
+ * 格式化日期為台灣格式 (YYYY/MM/DD)
+ * @param {string} dateString - 日期字串
+ * @returns {string} 格式化後的日期字串，若輸入為空則回傳 '-'
+ */
+function formatTWDateTime(dateString) {
+  if (!dateString) return '-';
+  const date = new Date(dateString);
+  return date.toLocaleString('zh-TW', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+  });
+}
+
 // 載入待辦清單
-const loadTodos = async () => {
+async function loadTodos() {
   loadingStore.show();
   try {
     const params = {};
@@ -88,27 +105,27 @@ const loadTodos = async () => {
   } finally {
     loadingStore.hide();
   }
-};
+}
 
 // 搜尋篩選變更時重新載入
-const onSearchChange = () => {
+function onSearchChange() {
   loadTodos();
-};
+}
 
-const onFilterChange = () => {
+function onFilterChange() {
   loadTodos();
-};
+}
 
 // 開啟新增 Dialog
-const openCreateDialog = () => {
+function openCreateDialog() {
   isEditMode.value = false;
   currentTodoId.value = null;
   r$.$reset({ toState: { todoTitle: '', todoContent: '', isComplete: 'N' } });
   dialogVisible.value = true;
-};
+}
 
 // 開啟編輯 Dialog
-const openEditDialog = (todo) => {
+function openEditDialog(todo) {
   isEditMode.value = true;
   currentTodoId.value = todo.todoId;
   r$.$reset({
@@ -119,15 +136,15 @@ const openEditDialog = (todo) => {
     },
   });
   dialogVisible.value = true;
-};
+}
 
 // 關閉 Dialog
-const closeDialog = () => {
+function closeDialog() {
   dialogVisible.value = false;
-};
+}
 
 // 表單提交
-const onFormSubmit = async () => {
+async function onFormSubmit() {
   const { valid } = await r$.$validate();
   if (!valid) return;
 
@@ -172,10 +189,10 @@ const onFormSubmit = async () => {
   } finally {
     loadingStore.hide();
   }
-};
+}
 
 // 刪除單筆
-const handleDelete = (todo) => {
+function handleDelete(todo) {
   confirm.require({
     message: `確定要刪除「${todo.todoTitle}」嗎？`,
     header: '確認刪除',
@@ -209,10 +226,10 @@ const handleDelete = (todo) => {
       }
     },
   });
-};
+}
 
 // 批量刪除
-const handleBatchDelete = () => {
+function handleBatchDelete() {
   if (selectedTodos.value.length === 0) {
     toast.add({
       severity: 'warn',
@@ -256,7 +273,7 @@ const handleBatchDelete = () => {
       }
     },
   });
-};
+}
 
 // 初始化載入
 onMounted(async () => {

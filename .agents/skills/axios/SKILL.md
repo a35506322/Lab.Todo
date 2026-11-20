@@ -23,11 +23,12 @@ services/
 
 ```js
 import axios from "axios";
+import router from "@/router";
 
-const baseURL = import.meta.env.VITE_API_BASE_URL;
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-const axiosInstance = xios.create({
-    baseURL: baseURL,
+const axiosInstance = axios.create({
+    baseURL: API_BASE_URL,
 });
 
 // Add a request interceptor
@@ -53,7 +54,7 @@ axiosInstance.interceptors.response.use(
     },
     (error) => {
         // 根據 response.status 進行錯誤處理
-        if (response.status === 401) {
+        if (error.response?.status === 401) {
             // .... 進行錯誤處理
             router.push("/login");
         }
@@ -74,20 +75,29 @@ export default axiosInstance;
 import axiosInstance from "./axios-instance";
 
 // 取得全部 Todo
-export const getTodos = () => axiosInstance.get("/todos");
+export function getTodos() {
+    return axiosInstance.get("/todos");
+}
 
 // 取得單一 Todo
-export const getTodoById = (id) => axiosInstance.get(`/todos/${id}`);
+export function getTodoById(id) {
+    return axiosInstance.get(`/todos/${id}`);
+}
 
 // 新增 Todo
-export const createTodo = (payload) => axiosInstance.post("/todos", payload);
+export function createTodo(payload) {
+    return axiosInstance.post("/todos", payload);
+}
 
 // 更新 Todo
-export const updateTodo = (id, payload) =>
-    axiosInstance.put(`/todos/${id}`, payload);
+export function updateTodo(id, payload) {
+    return axiosInstance.put(`/todos/${id}`, payload);
+}
 
 // 刪除 Todo
-export const deleteTodo = (id) => axiosInstance.delete(`/todos/${id}`);
+export function deleteTodo(id) {
+    return axiosInstance.delete(`/todos/${id}`);
+}
 ```
 
 ## 使用方式

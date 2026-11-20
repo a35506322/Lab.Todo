@@ -5,7 +5,7 @@ import { useAppToast } from '@/composables/useAppToast';
 import { useRegle } from '@regle/core';
 import { required, withMessage } from '@regle/rules';
 import { login } from '@/services/auth-api';
-import { setToken } from '@/composables/useAuth';
+import { setToken } from '@/utils/auth-token';
 import InteractiveHoverButton from '@/components/InteractiveHoverButton.vue';
 import RadiantText from '@/components/RadiantText.vue';
 import FormFieldError from '@/components/FormFieldError.vue';
@@ -24,7 +24,7 @@ const { r$ } = useRegle(
   },
 );
 
-const onFormSubmit = async () => {
+async function onFormSubmit() {
   const { valid } = await r$.$validate();
   if (!valid) return;
 
@@ -50,7 +50,7 @@ const onFormSubmit = async () => {
   } catch {
     // 錯誤由 axios interceptor 統一處理並顯示 toast
   }
-};
+}
 </script>
 
 <template>

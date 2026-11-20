@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import HomeView from '../views/HomeView.vue';
 import AppLayout from '@/layout/AppLayout.vue';
-import { getToken } from '@/composables/useAuth';
+import { getToken } from '@/utils/auth-token';
 import { useNotificationStore } from '@/stores/useNotificationStore';
 
 const router = createRouter({
