@@ -27,13 +27,15 @@ public class EnumSchemaTransformer : IOpenApiSchemaTransformer
             return Task.CompletedTask;
         }
 
-        var valueNodes = new List<JsonNode?>();
+        var valueNodes = new List<JsonNode>();
         foreach (var name in Enum.GetNames(targetType))
         {
             var field = targetType.GetField(name, BindingFlags.Public | BindingFlags.Static);
             var desc = field?.GetCustomAttribute<DescriptionAttribute>()?.Description;
             var intVal = Convert.ToInt32(Enum.Parse(targetType, name));
-            var part = string.IsNullOrWhiteSpace(desc) ? $"{intVal} = {name}" : $"{intVal} = {name}（{desc}）";
+            var part = string.IsNullOrWhiteSpace(desc)
+                ? $"{intVal} = {name}"
+                : $"{intVal} = {name}（{desc}）";
             valueNodes.Add(JsonValue.Create(part));
         }
         schema.Enum = valueNodes;
