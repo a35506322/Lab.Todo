@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "TodoAPI.IntegrationTest": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:60596;http://localhost:60597"
+    }
+  }
+}
