@@ -81,7 +81,7 @@ public class TodoCrudFlowTests
     /// </summary>
     private async Task<long> InsertTodoAsync(InsertTodoRequest request)
     {
-        var insertResponse = await _client.PostAsJsonAsync("/api/todo/todo", request);
+        var insertResponse = await _client.PostAsJsonAsync("/api/todo/insertTodo", request);
         insertResponse.EnsureSuccessStatusCode();
 
         var insertApiResponse = await insertResponse.Content.ReadFromJsonAsync<
@@ -109,7 +109,7 @@ public class TodoCrudFlowTests
         string expectedIsComplete
     )
     {
-        var getResponse = await _client.GetAsync($"/api/todo/todo/{todoId}");
+        var getResponse = await _client.GetAsync($"/api/todo/getTodoById/{todoId}");
         getResponse.EnsureSuccessStatusCode();
 
         var getApiResponse = await getResponse.Content.ReadFromJsonAsync<
@@ -138,7 +138,7 @@ public class TodoCrudFlowTests
         };
 
         var updateResponse = await _client.PutAsJsonAsync(
-            $"/api/todo/todo/{todoId}",
+            $"/api/todo/updateTodoById/{todoId}",
             updateRequest
         );
         updateResponse.EnsureSuccessStatusCode();
@@ -162,7 +162,7 @@ public class TodoCrudFlowTests
     /// </summary>
     private async Task DeleteTodoByIdAsync(long todoId)
     {
-        var deleteResponse = await _client.DeleteAsync($"/api/todo/todo/{todoId}");
+        var deleteResponse = await _client.DeleteAsync($"/api/todo/deleteTodoById/{todoId}");
         deleteResponse.EnsureSuccessStatusCode();
 
         var deleteApiResponse = await deleteResponse.Content.ReadFromJsonAsync<
@@ -180,7 +180,7 @@ public class TodoCrudFlowTests
     /// </summary>
     private async Task VerifyTodoDeletedAsync(long todoId)
     {
-        var getAfterDeleteResponse = await _client.GetAsync($"/api/todo/todo/{todoId}");
+        var getAfterDeleteResponse = await _client.GetAsync($"/api/todo/getTodoById/{todoId}");
         Assert.AreEqual(HttpStatusCode.UnprocessableEntity, getAfterDeleteResponse.StatusCode);
 
         var getAfterDeleteApiResponse = await getAfterDeleteResponse.Content.ReadFromJsonAsync<

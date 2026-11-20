@@ -59,7 +59,7 @@ public class UpdateTodoByIdEndpointTests
             TodoContent = "原始內容",
         };
 
-        var insertResponse = await _client.PostAsJsonAsync("/api/todo/todo", insertRequest);
+        var insertResponse = await _client.PostAsJsonAsync("/api/todo/insertTodo", insertRequest);
         insertResponse.EnsureSuccessStatusCode();
 
         var insertApiResponse = await insertResponse.Content.ReadFromJsonAsync<
@@ -76,7 +76,7 @@ public class UpdateTodoByIdEndpointTests
         };
 
         var updateResponse = await _client.PutAsJsonAsync(
-            $"/api/todo/todo/{todoId}",
+            $"/api/todo/updateTodoById/{todoId}",
             updateRequest
         );
 
@@ -97,7 +97,7 @@ public class UpdateTodoByIdEndpointTests
         Assert.AreEqual(updateRequest.IsComplete, updateApiResponse.Data.IsComplete);
 
         // 驗證資料已更新：查詢更新後的 Todo
-        var getResponse = await _client.GetAsync($"/api/todo/todo/{todoId}");
+        var getResponse = await _client.GetAsync($"/api/todo/getTodoById/{todoId}");
         getResponse.EnsureSuccessStatusCode();
 
         var getApiResponse = await getResponse.Content.ReadFromJsonAsync<
@@ -129,7 +129,7 @@ public class UpdateTodoByIdEndpointTests
 
         // Act
         var updateResponse = await _client.PutAsJsonAsync(
-            $"/api/todo/todo/{invalidId}",
+            $"/api/todo/updateTodoById/{invalidId}",
             updateRequest
         );
 
@@ -158,7 +158,7 @@ public class UpdateTodoByIdEndpointTests
             TodoContent = "測試內容",
         };
 
-        var insertResponse = await _client.PostAsJsonAsync("/api/todo/todo", insertRequest);
+        var insertResponse = await _client.PostAsJsonAsync("/api/todo/insertTodo", insertRequest);
         insertResponse.EnsureSuccessStatusCode();
 
         var insertApiResponse = await insertResponse.Content.ReadFromJsonAsync<
@@ -175,7 +175,7 @@ public class UpdateTodoByIdEndpointTests
         };
 
         var updateResponse = await _client.PutAsJsonAsync(
-            $"/api/todo/todo/{todoId}",
+            $"/api/todo/updateTodoById/{todoId}",
             updateRequest
         );
 
@@ -193,7 +193,7 @@ public class UpdateTodoByIdEndpointTests
         Assert.IsNotNull(updateApiResponse.Data.CompleteTime, "完成時間應已設定");
 
         // 驗證資料已更新：查詢更新後的 Todo
-        var getResponse = await _client.GetAsync($"/api/todo/todo/{todoId}");
+        var getResponse = await _client.GetAsync($"/api/todo/getTodoById/{todoId}");
         getResponse.EnsureSuccessStatusCode();
 
         var getApiResponse = await getResponse.Content.ReadFromJsonAsync<

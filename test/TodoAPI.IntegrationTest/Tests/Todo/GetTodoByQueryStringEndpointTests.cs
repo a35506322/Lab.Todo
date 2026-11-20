@@ -55,11 +55,11 @@ public class GetTodoByQueryStringEndpointTests
         var insertRequest1 = new InsertTodoRequest { TodoTitle = "待辦1", TodoContent = "內容1" };
         var insertRequest2 = new InsertTodoRequest { TodoTitle = "待辦2", TodoContent = "內容2" };
 
-        await _client.PostAsJsonAsync("/api/todo/todo", insertRequest1);
-        await _client.PostAsJsonAsync("/api/todo/todo", insertRequest2);
+        await _client.PostAsJsonAsync("/api/todo/insertTodo", insertRequest1);
+        await _client.PostAsJsonAsync("/api/todo/insertTodo", insertRequest2);
 
         // Act: 查詢所有 Todo
-        var getResponse = await _client.GetAsync("/api/todo/todo");
+        var getResponse = await _client.GetAsync("/api/todo/getTodoByQueryString");
 
         // Assert
         getResponse.EnsureSuccessStatusCode();
@@ -93,11 +93,11 @@ public class GetTodoByQueryStringEndpointTests
             TodoContent = "內容2",
         };
 
-        await _client.PostAsJsonAsync("/api/todo/todo", insertRequest1);
-        await _client.PostAsJsonAsync("/api/todo/todo", insertRequest2);
+        await _client.PostAsJsonAsync("/api/todo/insertTodo", insertRequest1);
+        await _client.PostAsJsonAsync("/api/todo/insertTodo", insertRequest2);
 
         // Act: 使用標題篩選查詢
-        var getResponse = await _client.GetAsync("/api/todo/todo?TodoTitle=測試");
+        var getResponse = await _client.GetAsync("/api/todo/getTodoByQueryString?TodoTitle=測試");
 
         // Assert
         getResponse.EnsureSuccessStatusCode();
@@ -126,8 +126,8 @@ public class GetTodoByQueryStringEndpointTests
         var insertRequest1 = new InsertTodoRequest { TodoTitle = "待辦1", TodoContent = "內容1" };
         var insertRequest2 = new InsertTodoRequest { TodoTitle = "待辦2", TodoContent = "內容2" };
 
-        var insertResponse1 = await _client.PostAsJsonAsync("/api/todo/todo", insertRequest1);
-        var insertResponse2 = await _client.PostAsJsonAsync("/api/todo/todo", insertRequest2);
+        var insertResponse1 = await _client.PostAsJsonAsync("/api/todo/insertTodo", insertRequest1);
+        var insertResponse2 = await _client.PostAsJsonAsync("/api/todo/insertTodo", insertRequest2);
 
         var insertApiResponse1 = await insertResponse1.Content.ReadFromJsonAsync<
             APIResponse<InsertTodoResponse>
@@ -144,12 +144,12 @@ public class GetTodoByQueryStringEndpointTests
             IsComplete = "Y",
         };
         await _client.PutAsJsonAsync(
-            $"/api/todo/todo/{insertApiResponse2!.Data!.TodoId}",
+            $"/api/todo/updateTodoById/{insertApiResponse2!.Data!.TodoId}",
             updateRequest
         );
 
         // Act: 使用完成狀態篩選查詢
-        var getResponse = await _client.GetAsync("/api/todo/todo?IsComplete=Y");
+        var getResponse = await _client.GetAsync("/api/todo/getTodoByQueryString?IsComplete=Y");
 
         // Assert
         getResponse.EnsureSuccessStatusCode();
@@ -188,9 +188,9 @@ public class GetTodoByQueryStringEndpointTests
             TodoContent = "內容3",
         };
 
-        await _client.PostAsJsonAsync("/api/todo/todo", insertRequest1);
-        var insertResponse2 = await _client.PostAsJsonAsync("/api/todo/todo", insertRequest2);
-        await _client.PostAsJsonAsync("/api/todo/todo", insertRequest3);
+        await _client.PostAsJsonAsync("/api/todo/insertTodo", insertRequest1);
+        var insertResponse2 = await _client.PostAsJsonAsync("/api/todo/insertTodo", insertRequest2);
+        await _client.PostAsJsonAsync("/api/todo/insertTodo", insertRequest3);
 
         // 將第二個 Todo 標記為完成
         var insertApiResponse2 = await insertResponse2.Content.ReadFromJsonAsync<
@@ -203,12 +203,12 @@ public class GetTodoByQueryStringEndpointTests
             IsComplete = "Y",
         };
         await _client.PutAsJsonAsync(
-            $"/api/todo/todo/{insertApiResponse2!.Data!.TodoId}",
+            $"/api/todo/updateTodoById/{insertApiResponse2!.Data!.TodoId}",
             updateRequest
         );
 
         // Act: 使用多個篩選條件查詢（標題包含「測試」且未完成）
-        var getResponse = await _client.GetAsync("/api/todo/todo?TodoTitle=測試&IsComplete=N");
+        var getResponse = await _client.GetAsync("/api/todo/getTodoByQueryString?TodoTitle=測試&IsComplete=N");
 
         // Assert
         getResponse.EnsureSuccessStatusCode();

@@ -54,7 +54,7 @@ public class InsertTodoEndpointTests
         var request = new InsertTodoRequest { TodoTitle = "測試待辦", TodoContent = "測試內容" };
 
         // Act
-        var response = await _client.PostAsJsonAsync("/api/todo/todo", request);
+        var response = await _client.PostAsJsonAsync("/api/todo/insertTodo", request);
 
         // Assert
         response.EnsureSuccessStatusCode();
@@ -73,7 +73,7 @@ public class InsertTodoEndpointTests
         Assert.AreEqual("N", apiResponse.Data.IsComplete);
 
         // 驗證資料已儲存到資料庫：查詢剛新增的 Todo
-        var getResponse = await _client.GetAsync($"/api/todo/todo/{apiResponse.Data.TodoId}");
+        var getResponse = await _client.GetAsync($"/api/todo/getTodoById/{apiResponse.Data.TodoId}");
         getResponse.EnsureSuccessStatusCode();
 
         var getApiResponse = await getResponse.Content.ReadFromJsonAsync<

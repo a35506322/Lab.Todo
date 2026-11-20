@@ -124,7 +124,7 @@ public class LoginEndpointTests
             new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
 
         // 嘗試查詢 Todo 列表（需要認證）
-        var getResponse = await _client.GetAsync("/api/todo/todo");
+        var getResponse = await _client.GetAsync("/api/todo/getTodoByQueryString");
 
         // Assert: 應成功通過認證（可能返回空列表或成功）
         Assert.AreNotEqual(HttpStatusCode.Unauthorized, getResponse.StatusCode);

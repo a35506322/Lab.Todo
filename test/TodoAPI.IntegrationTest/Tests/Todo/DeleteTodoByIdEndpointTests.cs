@@ -59,7 +59,7 @@ public class DeleteTodoByIdEndpointTests
             TodoContent = "這是待刪除的內容",
         };
 
-        var insertResponse = await _client.PostAsJsonAsync("/api/todo/todo", insertRequest);
+        var insertResponse = await _client.PostAsJsonAsync("/api/todo/insertTodo", insertRequest);
         insertResponse.EnsureSuccessStatusCode();
 
         var insertApiResponse = await insertResponse.Content.ReadFromJsonAsync<
@@ -68,7 +68,7 @@ public class DeleteTodoByIdEndpointTests
         var todoId = insertApiResponse!.Data!.TodoId;
 
         // Act: 刪除 Todo
-        var deleteResponse = await _client.DeleteAsync($"/api/todo/todo/{todoId}");
+        var deleteResponse = await _client.DeleteAsync($"/api/todo/deleteTodoById/{todoId}");
 
         // Assert
         deleteResponse.EnsureSuccessStatusCode();
@@ -84,7 +84,7 @@ public class DeleteTodoByIdEndpointTests
         Assert.AreEqual(todoId, deleteApiResponse.Data.TodoId);
 
         // 驗證資料已刪除：查詢應返回 422
-        var getAfterDeleteResponse = await _client.GetAsync($"/api/todo/todo/{todoId}");
+        var getAfterDeleteResponse = await _client.GetAsync($"/api/todo/getTodoById/{todoId}");
         Assert.AreEqual(HttpStatusCode.UnprocessableEntity, getAfterDeleteResponse.StatusCode);
 
         var getAfterDeleteApiResponse = await getAfterDeleteResponse.Content.ReadFromJsonAsync<
@@ -106,7 +106,7 @@ public class DeleteTodoByIdEndpointTests
         var invalidId = 999L;
 
         // Act
-        var deleteResponse = await _client.DeleteAsync($"/api/todo/todo/{invalidId}");
+        var deleteResponse = await _client.DeleteAsync($"/api/todo/deleteTodoById/{invalidId}");
 
         // Assert
         Assert.AreEqual(HttpStatusCode.UnprocessableEntity, deleteResponse.StatusCode);

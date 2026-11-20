@@ -58,7 +58,7 @@ public class GetTodoByIdEndpointTests
             TodoContent = "測試內容",
         };
 
-        var insertResponse = await _client.PostAsJsonAsync("/api/todo/todo", insertRequest);
+        var insertResponse = await _client.PostAsJsonAsync("/api/todo/insertTodo", insertRequest);
         insertResponse.EnsureSuccessStatusCode();
 
         var insertApiResponse = await insertResponse.Content.ReadFromJsonAsync<
@@ -67,7 +67,7 @@ public class GetTodoByIdEndpointTests
         var todoId = insertApiResponse!.Data!.TodoId;
 
         // Act: 查詢 Todo
-        var getResponse = await _client.GetAsync($"/api/todo/todo/{todoId}");
+        var getResponse = await _client.GetAsync($"/api/todo/getTodoById/{todoId}");
 
         // Assert
         getResponse.EnsureSuccessStatusCode();
@@ -96,7 +96,7 @@ public class GetTodoByIdEndpointTests
         var invalidId = 999L;
 
         // Act
-        var getResponse = await _client.GetAsync($"/api/todo/todo/{invalidId}");
+        var getResponse = await _client.GetAsync($"/api/todo/getTodoById/{invalidId}");
 
         // Assert
         Assert.AreEqual(HttpStatusCode.UnprocessableEntity, getResponse.StatusCode);
