@@ -7,9 +7,9 @@
       "type": "http",
       "url": "https://learn.microsoft.com/api/mcp"
     },
-    "primevue": {
+    "openvue": {
       "command": "npx",
-      "args": ["-y", "@primevue/mcp"]
+      "args": ["-y", "@openvue/mcp"]
     }
   }
 }

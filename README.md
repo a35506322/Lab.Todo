@@ -53,6 +53,8 @@
 
 **已設定好 MCP 工具** 只要確保 AI 每次讀取都是官網維護的資料基本都不會有什麼太大問題
 
+Cursor 設定在 `.cursor/mcp.json`：
+
 ```json
 {
     "mcpServers": {
@@ -65,10 +67,31 @@
             "url": "https://learn.microsoft.com/api/mcp",
             "modes": ["ask", "agent"]
         },
-        "primevue": {
+        "openvue": {
             "command": "npx",
-            "args": ["-y", "@primevue/mcp"],
+            "args": ["-y", "@openvue/mcp"],
             "modes": ["ask", "agent"]
+        }
+    }
+}
+```
+
+Claude Code 設定在 `.mcp.json`（與 `.cursor/mcp.json` 格式不相容，需手動同步兩邊）：
+
+```json
+{
+    "mcpServers": {
+        "openvue": {
+            "command": "npx",
+            "args": ["-y", "@openvue/mcp"]
+        },
+        "Context7": {
+            "type": "http",
+            "url": "https://mcp.context7.com/mcp"
+        },
+        "microsoft-learn": {
+            "type": "http",
+            "url": "https://learn.microsoft.com/api/mcp"
         }
     }
 }

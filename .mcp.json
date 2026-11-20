@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "openvue": {
+      "command": "npx",
+      "args": ["-y", "@openvue/mcp"]
+    },
+    "Context7": {
+      "type": "http",
+      "url": "https://mcp.context7.com/mcp"
+    },
+    "microsoft-learn": {
+      "type": "http",
+      "url": "https://learn.microsoft.com/api/mcp"
+    }
+  }
+}
