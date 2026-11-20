@@ -5,12 +5,12 @@
 - [x] Vue 3
 - [x] Vite
 - [x] TailwindCSS
-- [x] PrimeVue UI
+- [x] OpenVue UI
 
 ## Features
 
 - [x] 使用 Sakai 官方 Dashboard Template
-- [x] PrimeVue UI 組件
+- [x] OpenVue UI 組件
 - [x] TailwindCSS 樣式
 - [x] Axios 串接 API
 - [x] Axios 攔截器

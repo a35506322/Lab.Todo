@@ -15,7 +15,7 @@ description: TodoWeb 專案結構和架構指南
 - Vue 3
 - Vite
 - TailwindCSS
-- PrimeVue UI
+- OpenVue UI
 - Vue Router
 - Pinia
 - Axios
