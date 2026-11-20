@@ -1,18 +1,15 @@
 {
   "mcpServers": {
     "Context7": {
-      "url": "https://mcp.context7.com/mcp",
-      "modes": ["ask", "agent"]
+      "url": "https://mcp.context7.com/mcp"
     },
     "microsoft-learn": {
       "type": "http",
-      "url": "https://learn.microsoft.com/api/mcp",
-      "modes": ["ask", "agent"]
+      "url": "https://learn.microsoft.com/api/mcp"
     },
     "primevue": {
       "command": "npx",
-      "args": ["-y", "@primevue/mcp"],
-      "modes": ["ask", "agent"]
+      "args": ["-y", "@primevue/mcp"]
     }
   }
 }

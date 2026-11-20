@@ -1,5 +1,5 @@
 ---
-globs: *.vue, *.js
+globs: **/*.vue, **/*.js
 alwaysApply: false
 description: Vue 跟 JS 編碼規範和最佳實踐
 ---
@@ -22,24 +22,8 @@ description: Vue 跟 JS 編碼規範和最佳實踐
 2. 使用 JS 不使用 TS
 3. 若無需響應式，為提升效能，請優先選用 `shallowRef` 而非 `ref`
 4. 當您需要從 `ref` 推導值時，請優先使用 `computed` 而非 `function`或者 `watch`，以實現自動快取與優化的重新渲染。
-5. 請在 `onMounted` 中初始化資料，並請使用 `try catch` 包裹，避免程式崩潰
 
-```vue
-<script setup>
-import { onMounted } from "vue";
-
-onMounted(async () => {
-    try {
-        const data = await fetch("/api/data");
-    } catch (error) {
-        console.error(error);
-    }
-});
-</script>
-```
-
-6. **抽象化時機（YAGNI）**
-
+5. **抽象化時機（YAGNI）**
     - 預設：邏輯留在 `.vue` 內，不先抽 `utils` / `composable`　/ `component`
     - 可抽離的條件（滿足其一即可）：
         - 同一段邏輯已在 **2 處以上** 重複使用
@@ -47,176 +31,17 @@ onMounted(async () => {
     - `utils/`：純函式，可在 router、axios、store 等非元件處呼叫；kebab-case 命名
     - `composables/`：依賴 Vue 生態（router、toast、ref 等），僅在 setup 使用；`use` 前綴命名
 
-7. 小心 `v-html` 的 XSS 攻擊，使用以下方式避免：
-
-```vue
-<script setup>
-import { computed } from "vue";
-import DOMPurify from "dompurify";
-
-const props = defineProps(["comment", "trustedHtml"]);
-
-// Option 1: Use text interpolation (recommended)
-const userComment = computed(() => props.comment);
-
-// Option 2: Sanitize if raw HTML is truly needed
-const sanitizedContent = computed(() => DOMPurify.sanitize(props.trustedHtml));
-</script>
-
-<template>
-    <!-- SAFE: Text interpolation escapes HTML -->
-    <div>{{ userComment }}</div>
-
-    <!-- SAFE: Use components for rich content -->
-    <CommentRenderer :content="userComment" />
-
-    <!-- SAFE: Only use v-html with trusted, sanitized content -->
-    <div v-html="sanitizedContent"></div>
-</template>
-```
-
-8. 使用 camelCase 進行 style binding 的屬性
-
-```vue
-<template>
-    <div :style="{ fontSize: '16px' }"></div>
-</template>
-```
-
-9. 元件庫一律使用 `primevue v4.0+`，樣式一律使用 `tailwindcss v4.0+`
-10. 函數使用 const = function () {} 代替 function () {}
+6. 函數使用 function () {}
 
 ```js
-❌ function () {}
+✅ function () {}
 function handleClick() {
     console.log("Click");
 }
 
-✅ const = function () {}
-const handleClick = () => {
-console.log("Click");
-};
-
 ```
 
-12. 不在 `<script setup>` 中使用 `await`但可以在 onMounted 中使用
-
-```vue
-<script setup>
-❌ 不在 `<script setup>` 中使用 `await`
-const data = await fetch("/api/data").then((r) => r.json());
-
-✅ 在 onMounted 中使用 `await`
-onMounted(async () => {
-    const data = await fetch("/api/data").then((r) => r.json());
-});
-</script>
-```
-
-13. 不使用 `reactive` ，請使用 `ref` 與 `shallowRef` 代替
-14. 不要在大資料結構使用 `watch` 時使用
-
-```vue
-<script setup>
-import { reactive, watch } from "vue";
-
-// Large data structure with many nested properties
-const state = reactive({
-    users: [], // Could contain thousands of user objects
-    products: [], // Each with nested variants, images, etc.
-    settings: {
-        /* deeply nested config */
-    },
-});
-
-❌ Traverses entire state tree on every change
-watch(
-    state,
-    (newState) => {
-        console.log("State changed");
-    },
-    { deep: true }
-);
-</script>
-```
-
-15. 不要在 computed 中 modify other state
-
-```vue
-<script setup>
-import { ref, computed } from 'vue'
-
-const count = ref(0)
-
-❌ Mutates other state
-const doubledCount = computed(() => {
-  count.value++  // Side effect - modifying state!
-  return count.value * 2
-})
-</script>
-```
-
-16. css 不要針對 DOM 元素進行操作，請使用 class 進行操作。
-
-```vue
-<template>
-    <article class="article">
-        <header>
-            <h1>{{ title }}</h1>
-            <p>{{ subtitle }}</p>
-        </header>
-        <section>
-            <p>{{ content }}</p>
-            <ul>
-                <li v-for="item in items" :key="item">{{ item }}</li>
-            </ul>
-        </section>
-    </article>
-</template>
-
-<style scoped>
-❌ Element selectors are slower when scoped article {
-    max-width: 800px;
-}
-✅ Class selectors are faster when scoped .article {
-    max-width: 800px;
-}
-</style>
-```
-
-17. Tailwind 的建置流程無法偵測動態產生的 class 名稱
-
-```vue
-<script setup>
-const props = defineProps({
-    color: String, // 'red', 'blue', 'green'
-    size: String, // 'sm', 'md', 'lg'
-});
-</script>
-
-<template>
-    ❌ Tailwind cannot detect these classes
-    <div :class="`bg-${color}-500 text-${size}`">Content</div>
-</template>
-```
-
-18. pinia 的 state 不要隨意修改應使用 actions 進行修改
-
-```vue
-<script setup>
-import { useCounterStore } from "@/stores/counter";
-
-const store = useCounterStore();
-
-❌ Mutates state directly
-store.count++;
-
-✅ Use actions to modify state
-store.increment();
-</script>
-```
-
-19. 撰寫 api 時對應 request 與 response 的屬性命名一律以小駝峰命名
+7. 撰寫 api 時對應 request 與 response 的屬性命名一律以小駝峰命名
 
 ```vue
 <script setup>
@@ -243,9 +68,7 @@ const { token, expiresIn } = data;
 </script>
 ```
 
-## 團隊專案規範
-
-1. 在 `.vue` 檔案中使用 `useAppToast` 時，在其餘檔案請使用 `useNotificationStore` 統一管理 toast 訊息
+8. 在 `.vue` 檔案中使用 `useAppToast` 時，在其餘檔案請使用 `useNotificationStore` 統一管理 toast 訊息
 
 ```vue
 <script setup>
@@ -268,10 +91,5 @@ notificationStore.add({
 });
 ```
 
-2. 使用 `<Dialog>` 等彈窗元件時，請使用 `position="top"`，一率都置中往上顯示
-3. 驗證表單時錯誤訊息請使用 `FormFieldError` 元件顯示
-
-## Comments
-
--   避免不必要的註解：程式碼應具有自明性
--   解釋「為什麼」而非「如何做」：註解應描述背後的邏輯或意圖，而非程式碼的執行內容
+9. 使用 `<Dialog>` 等彈窗元件時，請使用 `position="top"`，一率都置中往上顯示
+10. 驗證表單時錯誤訊息請使用 `FormFieldError` 元件顯示

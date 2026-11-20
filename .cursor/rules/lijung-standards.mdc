@@ -1,11 +1,11 @@
 ---
-description: 理竣的編碼規範。
+description: 理竣 agent 規範。
 alwaysApply: true
 ---
 
-## 1. 使用者喜好
+## 1. agent 最高規範
 
-**使用者喜好為最高原則**
+**agent 最高規範為最高原則，所有規範都必須遵守。**
 
 - 始終以繁體中文回答
 - 請以平輩跟我說話與討論，不需要刻意討好我
@@ -13,12 +13,40 @@ alwaysApply: true
 - 不要因為我的語氣去揣測我的想法，請直接說出你的想法
 - **千萬**不要過度贅述說明，要言簡意賅，直擊重點，並以條列式、表格、流程圖、圖片 舉例來說明。
 - **追求**極簡主義，不要過度複雜化，要簡潔明瞭，直擊重點。
-- 使用 pwsh 7 作為 cli 工具，並且必須使用 UTF-8 編碼，避免中文訊息亂碼
-- 讀取 `grill-with-docs` 輸出的 `CONTEXT.md` 並遵守規範。
+- 使用 pwsh7 作為 cli 工具，並且必須使用 UTF-8 編碼，避免中文訊息亂碼
+- 溝通、撰寫文件、註解時勿壓縮詞彙，要完整表達。
+- 當遇到 `skill`、`rule` 規範有衝突時應該與使用者討論應遵守哪個規範。
 
 ## 2. 善於使用工具解決問題
 
 **當有疑問時，請善於使用工具，勿自己憑空想像。**
 
 - 善於文件查找工具，如 `Context7 MCP`、`microsoft-learn`、`primevue` 等，無需我主動提出要求，真無法適用則使用 `Web search` 查詢網路上的資料。
-- 善於使用專案內 `skills` 目錄下的技能達成專案規範。
+
+## 3. 嚴禁禁止事項
+
+**絕對禁止再說一次絕對禁止事項**
+
+- 當 `.cursorignore` 有設定不能讀取該檔案時嚴禁讀取，並且嚴禁更改，如需更改請告知使用者請他手動更改。
+
+## 4. 程式碼寫作原則
+
+**撰寫程式碼時，請遵守以下原則**
+
+- 程式碼需要有自明性及良好可讀性，如變數名稱、方法名稱、類別名稱等勿壓縮詞彙，要完整表達。
+- 防呆原則請以商業邏輯留成來判斷在此路徑是否會有錯誤，勿過度防呆。
+- 撰寫程式碼原則請以`ponytail`為原則，並遵守`csharp-coding-standards`規範， `csharp-coding-standards` 規範大於 `ponytail`。
+- 撰寫測試請先以正常情境為主，勿過度揣扯異常情境。
+- 未共用的邏輯請直接寫在呼叫端，不要為了可讀性抽成 private method。只有出現第二處使用，或跨越不同職責邊界（例如 HTTP 與領域、寫檔與商業規則）時才拆。
+- 專案結構資料夾應以各專案的 `project-structure.mdc` 規範為主如需增加請告知使用者。
+
+## 5. Claude Code 同步
+
+**本專案以 `.cursor` 與 `.agents` 為唯一來源，`.claude/` 是產生物且不進版控，嚴禁直接修改。**
+
+- 規則只改 `.cursor/rules/**/*.mdc`；`alwaysApply: true` 或沒有 `globs` 會常駐載入，有 `globs` 會轉成 Claude 的 `paths`。
+- skills 只改 `.agents/skills/`。
+- clone 後，以及每次新增、修改、刪除規則或 skill 後，於專案根目錄執行：
+    - `node scripts/syncClaudeRules.mjs`（`.cursor/rules` → `.claude/rules`）
+    - `node scripts/linkClaudeSkills.mjs`（`.agents/skills` → `.claude/skills` junction）
+- MCP 設定 `.cursor/mcp.json` 與 `.mcp.json` 格式不相容，需手動同步兩邊。
