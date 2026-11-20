@@ -40,6 +40,15 @@
 3. 個別專案的 `Rule`（例如團隊規範、重要的商業邏輯）放進對應的資料夾，例如 `TodoAPI` 放 `.cursor/rules/TodoAPI/`，其他專案以此類推。
 4. 常用、又會重複做的修改可以包成 `Skill` 方便重用。用 `writing-for-agents` 技能就能很快產生 `Skill` 檔案。
 
+### 好用的 Skill
+
+| Skill             | 用途                                               | 使用時機                                       |
+| ----------------- | -------------------------------------------------- | ---------------------------------------------- |
+| `grill-with-docs` | 反覆追問釐清需求，同時產生 ADR 與名詞表            | 開發新功能前                                   |
+| `microsoft-docs`  | 查詢 Microsoft 官方文件（.NET、Azure 等）          | 遇到 .NET 相關問題時                           |
+| `commit-msg`      | 依 staged 變更產生條列式的詳細 commit message      | 準備 commit 前（需先 `git add`）               |
+| `handoff`         | 將目前對話整理成交接文件，供新的 session 接手      | context 用量達 50% 左右時，換新 session 繼續做 |
+
 ### MCP 工具
 
 **已設定好 MCP 工具** 只要確保 AI 每次讀取都是官網維護的資料基本都不會有什麼太大問題
