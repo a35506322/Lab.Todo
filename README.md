@@ -1,13 +1,14 @@
 # Lab 專案
 
-此專案為演示前後端分離範本專案 + Cursor Rule 及 Skill 使用<br>
+此專案為演示前後端分離範本專案及 AI 輔助開發工具使用<br>
 目前所有的 AI 工具基本都大同小異，應都已實裝 MCP、Rule、Skill、AGENTS.md 等規範與工具，在自行按照工具調整即可
 
 ## 環境
 
--   .NET 10.0
--   Cursor 2.4+
--   Node.js 22.21.1+
+- .NET 10.0
+- Cursor 3.31 (主要)
+- Claude Code Desktop (輔助)
+- Node.js 22.21.1+
 
 ---
 
@@ -24,84 +25,20 @@
 
 ## 如何開發
 
-1. 整理文件
-
-**可以按照自己的 flow 設計出 skill 產生文件**
-
-| 文件類型       | 說明                     |
-| -------------- | ------------------------ |
-| **使用者故事** | 從使用者角度描述功能需求 |
-| **流程圖**     | 視覺化呈現業務流程       |
-| **商業邏輯**   | 商業邏輯規則             |
-| **會議紀錄**   | 條列式記錄討論與決策     |
-| **UIUX 設計**  | 視覺化呈現 UIUX 設計     |
-
-2. 設計 DB 規格
-3. 設計 API 規格
-4. 後端開發 API
-5. 前端開發 UIUX
-6. 前端串接 API
-
-> ⚠️ 關鍵是在於整理文件，以及一開始的專案開發架構，**雛形最為重要**，只要架構完整，文件寫得自己能夠理解那麼 AI 才能夠幫助你更快完成開發
-
-## AI 輔助開發 (Ask - Plan - Agent 模式)
-
-1. 使用 `Ask` 模式+`grill-with-docs` 跟 AI 討論需求和文件，並確認他真的理解需求
-2. 使用`Plan` 模式，規劃實作步驟，並且仔細閱讀規劃書，反覆跟 AI 討論確認直到滿意為止 (**有 grill-with-docs 其實已經計畫完畢可以略過**)
-3. 切換到 `Agent` 模式，讓 AI 開始開發
-4. 當成品滿意 80 趴左右，就可以自己接受完成後續，記得需要 Review 跟手動測試
-5. 如需重構一些程式碼可以繼續 `Ask` -> `Plan` -> `Agent` 這個循環
-6. 建議如果發現 AI 程式碼產生的都是錯的，直接 `Rollback` 重新開始，調整`AI 規則`跟 `Prompt` 繼續，或者可以選擇高等模型如 `Opus4.6` 討論，實作建議模型直接使用 `Auto` 或著 `Composer 2.5` 模型進行實作
-
-🤖 哪些可以交給 Agent？
-
-| 工作項目     | 可否 Agent 開發  |
-| ------------ | :--------------: |
-| 整理文件     |     ‼️ 手動      |
-| 定義 DB 規格 |     ‼️ 手動      |
-| API 開發     |     ✅ Agent     |
-| UIUX 設計    | 🟡 半自動化/手動 |
-| 前端開發     |     ✅ Agent     |
-| 單元測試     |     ✅ Agent     |
-| 整合測試     |     ✅ Agent     |
-
-開發後端時 Agent 可搭配 TDD 模式 **（可選）**
-
-本專案已內建 TDD 相關 Skill：
-
-```
-.cursor/skills/
-├── backend-tdd-workflow/     # TDD 開發流程
-├── mstest-unit-test/         # 單元測試
-└── mstest-integration-test/  # 整合測試
-```
-
-**想要啟用 TDD？** → 讓 Agent 讀取 `backend-tdd-workflow/SKILL.md`
-
-> ⚠️ 以上開發流程僅供參考，可以依據個人喜好調整，但其實會建議在開發時候最重要的是文件以及設定 Agent 的規則跟技能，要讓 Agent 知道什麼是什麼，這樣才能讓 Agent 幫助你更快完成開發。
-
-開發前端時 Agent 可搭配 Dev Workflow **（可選）**
-
-```
-.cursor/skills/
-├── frontend-dev-workflow/     # 前端開發流程
-└── uiux-dev/     # UIUX 開發流程
-```
-
-**前端 dev workflow** → 讓 Agent 讀取 `frontend-dev-workflow/SKILL.md`
-
-> ⚠️ 前端我沒有使用 TDD 之類的 Workflow ，主要因為只有串接 API，至於 E2E 測試目前很消耗 AI Token，所以我採取手動測試為主，裡面寫的 workflow 是平常開發人員的習慣。
-
----
+1. 使用技能 `grill-with-docs` 討論需求
+2. 實作，就這麼簡單
+3. 複雜需求：討論完後依序使用技能 `to-spec`（整理成規格）→ `to-issues`（拆成垂直切片 issue）→ `implement-spec`（依 issue 相依關係平行實作）
+    - `implement-spec` 會一次開多個 subagent，各自在獨立的 worktree 平行實作，最後再跑 `code-review`，花費較高
+    - 中型需求改用 `implement` 逐一實作 issue 即可，較省
 
 ## AI 工具
 
 ### 使用建議
 
-1. 不想被 `Cursor` 讀取的檔案加入 `.cursorignore` 或者 `.gitignore` 檔案中，
-2. `.cursor` 資料夾已有設定基本 `Rule` 跟 `Skill`，可以隨個人喜好而去調整
-3. 如有各項專案的 `Rule` 如 `TodoAPI` 專案，可以加入 `.cursor/rules/TodoAPI` 資料夾中 (以次類推)，比如些團隊規範或重要商業邏輯規範
-4. 能將重複且常用邏輯的變更包裝成 `Skill`，方便下次使用，可以使用 `Cursor` 內建 `create-skill` 指令，快速生成 `Skill` 檔案
+1. 不想讓 `Cursor` 讀取的檔案，加進 `.cursorignore` 或 `.gitignore`。
+2. 基本的 `Rule` 放在 `.cursor/rules`，`Skill` 放在 `.agents/skills`，可以依個人習慣調整。使用 Claude Code Desktop 的話，執行 `scripts/` 裡的同步腳本即可共用同一套設定。
+3. 個別專案的 `Rule`（例如團隊規範、重要的商業邏輯）放進對應的資料夾，例如 `TodoAPI` 放 `.cursor/rules/TodoAPI/`，其他專案以此類推。
+4. 常用、又會重複做的修改可以包成 `Skill` 方便重用。用 `writing-for-agents` 技能就能很快產生 `Skill` 檔案。
 
 ### MCP 工具
 

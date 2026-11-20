@@ -363,3 +363,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Claude Code 產生物（由 scripts/syncClaudeRules.mjs、scripts/linkClaudeSkills.mjs 產生）
+.claude/
